@@ -61,22 +61,22 @@ export default function TextFieldTextEditor() {
     <StyledContainer>
       <ButtonContainer>
         <StyledImg>
-          <img src={bold} />
-          <img src={italic} />
-          <img src={underScore} />
+          <img src={bold} alt="bold" />
+          <img src={italic} alt="italic" />
+          <img src={underScore} alt="underScore" />
         </StyledImg>
         <StyledImg>
-          <img src={centerAligned} />
-          <img src={rightAligned} />
-          <img src={justify} />
+          <img src={centerAligned} alt="centerAligned" />
+          <img src={rightAligned} alt="rightAligned" />
+          <img src={justify} alt="justify" />
         </StyledImg>
         <StyledImg>
-          <img src={numbering} />
-          <img src={bullet} />
+          <img src={numbering} alt="numbering" />
+          <img src={bullet} alt="bullet" />
         </StyledImg>
         <StyledImg>
-          <img src={fill} />
-          <img src={fontSize} />
+          <img src={fill} alt="fill" />
+          <img src={fontSize} alt="fontSize" />
         </StyledImg>
       </ButtonContainer>
       <StyledInput placeholder="I am your reach text editor." />
