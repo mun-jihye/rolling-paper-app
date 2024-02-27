@@ -3,6 +3,7 @@ import CardList from 'components/commons/cardList/CardList';
 
 const CardLIstPage = () => {
   return <CardList />;
+
 };
 
 export default CardLIstPage;
