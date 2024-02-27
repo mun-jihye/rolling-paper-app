@@ -1,3 +1,3 @@
-export function TextFieldTextEditor() {
+export default function TextFieldTextEditor() {
   return <div></div>;
 }
