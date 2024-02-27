@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import ButtonPage from 'components/pages/ButtonPage';
 import FormPage from 'components/pages/FormPage';
 import Header from 'components/pages/Header';
-import Modal from 'components/pages/Modal';
+import ModalPage from 'components/pages/ModalPage';
 import CardListPage from 'components/pages/CardLIstPage';
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
       <Route path={routes.form} element={<FormPage />}></Route>
       <Route path={routes.header} element={<Header />}></Route>
       <Route path={routes.cardList} element={<CardListPage />}></Route>
-      <Route path={routes.modal} element={<Modal />}></Route>
+      <Route path={routes.modal} element={<ModalPage />}></Route>
     </Routes>
   );
 }
