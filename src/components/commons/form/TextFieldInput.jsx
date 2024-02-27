@@ -26,7 +26,11 @@ const StyledInput = style.input`
 
 const StyledSpan = style.span`
   color: ${theme.error};
+
+  font-weight: 400;
   font-size: 1.2rem;
+  line-height: 1.8rem;
+  letter-spacing: -0.005em;
 `;
 
 export default function TextFieldInput() {

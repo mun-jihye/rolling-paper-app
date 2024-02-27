@@ -21,7 +21,7 @@ export const InputStatus = {
     backgroundColor: `$#fff`,
   },
   disabled: {
-    color: `${theme.gray300}`,
+    color: `${theme.gray400}`,
     border: `1px solid ${theme.gray300}`,
     backgroundColor: `${theme.gray100}`,
   },
