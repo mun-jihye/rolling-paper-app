@@ -28,10 +28,9 @@ const ImgContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 10rem;
   border: 0.1rem solid
     ${({ theme, isModal }) => (isModal ? theme.gray200 : theme.white)};
 `;
 
 export default Profile;
-
-<Profile size="12px" />;
