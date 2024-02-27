@@ -66,6 +66,7 @@ export default function TextFieldInput() {
   return (
     <StyledDiv>
       <StyledInput
+        placeholder="Placeholder"
         type="text"
         $status={status}
         onFocus={handleFocus}
@@ -74,7 +75,7 @@ export default function TextFieldInput() {
         onMouseOver={handleMouseOver}
         onMouseOut={handleMouseOut}
       />
-      <StyledSpan>message</StyledSpan>
+      <StyledSpan>Error Message</StyledSpan>
     </StyledDiv>
   );
 }

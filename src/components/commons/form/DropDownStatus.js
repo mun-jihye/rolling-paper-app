@@ -1,22 +1,22 @@
 import { theme } from 'components/styles/theme';
 export const DropDownStatus = {
   inActive: {
-    color: `${theme.gray300}`,
+    color: `${theme.gray500}`,
     border: `1px solid ${theme.gray300}`,
     backgroundColor: `#fff`,
   },
   focused: {
-    color: `${theme.gray300}`,
+    color: `${theme.gray900}`,
     border: `2px solid ${theme.gray500}`,
     backgroundColor: `#fff`,
   },
   active: {
-    color: `${theme.gray300}`,
-    border: `2px solid ${theme.gray700}`,
+    color: `${theme.gray900}`,
+    border: `2px solid ${theme.gray500}`,
     backgroundColor: `#fff`,
   },
   hover: {
-    color: `${theme.gray300}`,
+    color: `${theme.gray500}`,
     border: `1px solid ${theme.gray500}`,
     backgroundColor: `#fff`,
   },
