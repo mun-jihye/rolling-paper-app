@@ -3,6 +3,8 @@ import style from 'styled-components';
 import { theme } from 'components/styles/theme';
 import { DropDownStatus } from './DropDownStatus';
 
+//이미지 변화도 넣어야 한다.
+
 const StyledDiv = style.div`
   display: flex;
   flex-direction: column;
