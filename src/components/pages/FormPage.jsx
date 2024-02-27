@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 17a22c3 (feat: 초기 라우트 설정)
 import React from 'react';
 
 const formPage = () => {
@@ -6,6 +9,7 @@ const formPage = () => {
 };
 
 export default formPage;
+<<<<<<< HEAD
 =======
 import { React, useState } from 'react';
 import {
@@ -34,3 +38,5 @@ const FormPage = () => {
 
 export default FormPage;
 >>>>>>> 4c4bff5 (test commit)
+=======
+>>>>>>> 17a22c3 (feat: 초기 라우트 설정)
