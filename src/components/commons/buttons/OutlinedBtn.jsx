@@ -14,6 +14,12 @@ const OutBtn = styled(ButtonStyle)`
     background: ${({ theme }) => theme.white};
     border: 1px solid ${({ theme }) => theme.gray100};
   }
+  @media (max-width: 90rem) {
+    height: 3.6rem;
+  }
+  @media (max-width: 70rem) {
+    height: 2.8rem;
+  }
 `;
 
 export function OutlineBtn() {

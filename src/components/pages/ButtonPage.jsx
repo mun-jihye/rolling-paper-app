@@ -3,23 +3,19 @@ import { PrimaryBtn } from 'components/commons/buttons/PrimaryBtn';
 import { Secondary } from 'components/commons/buttons/SecondaryBtn';
 import ToggleBtn from 'components/commons/buttons/ToggleBtn';
 import { OutlineBtn } from 'components/commons/buttons/OutlinedBtn';
-// import { PrimaryButton } from 'components/commons/buttons/ButtonStyle';
-// import { theme } from 'components/styles/theme';
+import { ArrowBtnL, ArrowBtnR } from 'components/commons/buttons/ArrowBtn';
+import PlusBtn from 'components/commons/buttons/PlusBtn';
 
 const buttonPage = () => {
-  // const [status, setStatus] = useState(PrimaryButton.enabled);
   return (
     <div>
-      <PrimaryBtn
-        width="12rem"
-        height="4rem"
-        borderRadius="0.6rem"
-        fonSize="1.4rem"
-        fontWeight="400"
-      />
+      <PrimaryBtn />
       <Secondary />
       <ToggleBtn />
       <OutlineBtn />
+      <ArrowBtnR />
+      <ArrowBtnL />
+      <PlusBtn />
     </div>
   );
 };
