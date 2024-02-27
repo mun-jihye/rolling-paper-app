@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { ButtonStyle } from './PrimaryBtn';
+import { PrimaryBtn } from './PrimaryBtn';
 
-const OutBtn = styled(ButtonStyle)`
+export const OutlineBtn = styled(PrimaryBtn)`
   border: 1px solid ${({ theme }) => theme.gray300};
   color: ${({ theme }) => theme.gray300};
   background: ${({ theme }) => theme.white};
@@ -14,18 +14,10 @@ const OutBtn = styled(ButtonStyle)`
     background: ${({ theme }) => theme.white};
     border: 1px solid ${({ theme }) => theme.gray100};
   }
-  @media (max-width: 90rem) {
+  @media (max-width: 80rem) {
     height: 3.6rem;
   }
   @media (max-width: 70rem) {
     height: 2.8rem;
   }
 `;
-
-export function OutlineBtn() {
-  return (
-    <div>
-      <OutBtn>dfs</OutBtn>
-    </div>
-  );
-}

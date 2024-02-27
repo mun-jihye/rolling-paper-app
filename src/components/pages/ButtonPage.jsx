@@ -9,12 +9,12 @@ import PlusBtn from 'components/commons/buttons/PlusBtn';
 const buttonPage = () => {
   return (
     <div>
-      <PrimaryBtn />
-      <Secondary />
+      <PrimaryBtn>PrimaryBtn</PrimaryBtn>
+      <Secondary>Secondary</Secondary>
       <ToggleBtn />
-      <OutlineBtn />
-      <ArrowBtnR />
+      <OutlineBtn>Outline</OutlineBtn>
       <ArrowBtnL />
+      <ArrowBtnR />
       <PlusBtn />
     </div>
   );

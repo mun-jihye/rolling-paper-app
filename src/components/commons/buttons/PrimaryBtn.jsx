@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
-export const ButtonStyle = styled.button`
+export const PrimaryBtn = styled.button`
+  padding: 1.4rem 2.4rem;
   width: 20rem;
   height: 5.6rem;
   border-radius: 0.8rem;
@@ -20,7 +21,8 @@ export const ButtonStyle = styled.button`
   &:disabled {
     background: ${({ theme }) => theme.gray300};
   }
-  @media (max-width: 70rem) {
+  @media (max-width: 90rem) {
+    padding: 0.7rem 1.6rem;
     width: 12rem;
     height: 4rem;
     border-radius: 0.6rem;
@@ -28,12 +30,3 @@ export const ButtonStyle = styled.button`
     font-weight: 400;
   }
 `;
-
-export function PrimaryBtn() {
-  return (
-    <div>
-      <ButtonStyle>ditgyi</ButtonStyle>
-      <ButtonStyle>dfs</ButtonStyle>
-    </div>
-  );
-}

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { ButtonStyle } from './PrimaryBtn';
+import { PrimaryBtn } from './PrimaryBtn';
 
-const ScdButton = styled(ButtonStyle)`
+export const Secondary = styled(PrimaryBtn)`
   width: 122px;
   height: 40px;
   padding: 7px 16px;
@@ -20,7 +20,3 @@ const ScdButton = styled(ButtonStyle)`
     background: ${({ theme }) => theme.white};
   }
 `;
-
-export function Secondary() {
-  return <ScdButton>sdfsf</ScdButton>;
-}
