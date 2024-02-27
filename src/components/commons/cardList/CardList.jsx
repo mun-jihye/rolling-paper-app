@@ -21,6 +21,16 @@ const StyledContainer = styled.div`
     height: ${({ isBadge, isImage }) =>
       isBadge ? '3.2rem' : isImage && '2.8rem'};
   }
+
+  @media (min-width: 48rem) {
+    gap: ${({ isBadge, isImage }) =>
+      isBadge ? '0.8rem' : isImage ? 0 : '1.2rem'};
+
+    & div {
+      height: ${({ isBadge, isImage }) =>
+        isBadge ? '3.6rem' : isImage && '2.8rem'};
+    }
+  }
 `;
 
 const StyledH3tag = styled.h3`
@@ -32,6 +42,12 @@ const StyledH3tag = styled.h3`
   font-weight: 700;
   line-height: 2.8rem;
   letter-spacing: -0.018rem;
+
+  @media (min-width: 48rem) {
+    font-size: 2.4rem;
+    line-height: 3.6rem;
+    letter-spacing: -0.024rem;
+  }
 `;
 
 const StyledPtag = styled.p`
@@ -42,6 +58,12 @@ const StyledPtag = styled.p`
   font-weight: ${({ isNumber }) => (isNumber ? '700' : '400')};
   line-height: 2rem;
   letter-spacing: -0.007rem;
+
+  @media (min-width: 48rem) {
+    font-size: 1.6rem;
+    line-height: 2.6rem;
+    letter-spacing: -0.016rem;
+  }
 `;
 
 const StyledHrtag = styled.hr`
@@ -49,9 +71,13 @@ const StyledHrtag = styled.hr`
   background: rgba(0, 0, 0, 0.12);
   margin-top: 3.3rem;
   margin-bottom: 1.6rem;
+
+  @media (min-width: 48rem) {
+    margin-top: 4.3rem;
+  }
 `;
 
-function Card({ color = 'purple' }) {
+function Card({ color = 'blue' }) {
   const StyledCard = styled.div`
     padding: 3rem 2.2rem 2rem 2.4rem;
     width: 20.8rem;
@@ -64,6 +90,13 @@ function Card({ color = 'purple' }) {
     background-repeat: no-repeat;
     background-size: 10.74rem;
     box-shadow: 0 0.2rem 1.2rem 0 rgba(0, 0, 0, 0.08);
+
+    @media (min-width: 48rem) {
+      padding: 3rem 2.4rem 2rem;
+      width: 27.5rem;
+      height: 26rem;
+      background-size: 14.2rem;
+    }
   `;
 
   return (
@@ -82,6 +115,8 @@ function Card({ color = 'purple' }) {
       </StyledContainer>
       <StyledHrtag />
       <StyledContainer isBadge={true}>
+        <div></div>
+        <div></div>
         <div></div>
       </StyledContainer>
     </StyledCard>
