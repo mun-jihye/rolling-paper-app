@@ -5,12 +5,11 @@ import styled from 'styled-components';
  *
  * @param {object} prop
  * @param {string} prop.src 이미지 주소
- * @param {string} size 이미지 크기
  * @param {boolean} isModal 모달 사용 여부
  */
-const Profile = ({ src, size, isModal }) => {
+const Profile = ({ src, isModal }) => {
   return (
-    <ImgContainer size={size} isModal={isModal}>
+    <ImgContainer isModal={isModal}>
       <img src={`${src}`} alt="프로필 이미지" />
     </ImgContainer>
   );
@@ -23,8 +22,8 @@ const Profile = ({ src, size, isModal }) => {
 // };
 
 const ImgContainer = styled.div`
-  width: ${props => props.size || '5.6rem'};
-  height: ${props => props.size || '5.6rem'};
+  width: ${props => (props.isModal ? '5.6rem' : '2.8rem')};
+  height: ${props => (props.isModal ? '5.6rem' : '2.8rem')};
   overflow: hidden;
   display: flex;
   justify-content: center;
