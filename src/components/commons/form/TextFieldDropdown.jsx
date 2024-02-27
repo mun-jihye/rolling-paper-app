@@ -2,8 +2,8 @@ import { useState } from 'react';
 import style from 'styled-components';
 import { theme } from 'components/styles/theme';
 import { DropDownStatus } from './DropDownStatus';
-
-//이미지 변화도 넣어야 한다.
+import arrowUp from 'components/assets/images/icons/arrow_top.svg';
+import arrowDown from 'components/assets/images/icons/arrow_down.svg';
 
 const StyledDiv = style.div`
   display: flex;
@@ -28,6 +28,13 @@ const StyledDropDownButton = style.button`
   height: 5rem;
   width: 32rem;
   gap: 1rem;
+  & > img {
+    width: 1.6rem;
+    height: 1.6rem;
+    position: absolute;
+    right: 0.5rem;
+    bottom: 1.699rem;
+  }
 `;
 
 const StyledList = style.div`
@@ -50,7 +57,7 @@ const StyledList = style.div`
   overflow: scroll;
 `;
 
-const StyledListItem = style.div`
+const StyledListItem = style.button`
   width: 31.6rem;
   height: 5rem;
   padding: 1.2rem 1.6rem;
@@ -80,50 +87,69 @@ const StyledSpan = style.span`
 export default function TextFieldDropDown() {
   const [status, setStatus] = useState(DropDownStatus.inActive);
   const [isVisible, setIsVisible] = useState(false);
+  const [arrow, setArrow] = useState(arrowDown);
 
-  const handleButtonClick = () => {
-    setIsVisible(!isVisible);
-  };
-
-  const handleFocus = () => {
-    setStatus(DropDownStatus.focused);
-    console.log('focused');
+  const handleFocus = e => {
+    setIsVisible(true);
+    setStatus(DropDownStatus.active);
+    setArrow(arrowUp);
+    console.log('active');
   };
 
   const handleBlur = () => {
+    setIsVisible(false);
     setStatus(DropDownStatus.inActive);
+    setArrow(arrowDown);
     console.log('inActive');
-  };
-
-  const handleChange = e => {
-    if (e.target.value) {
-      setStatus(DropDownStatus.active);
-      console.log('active');
-    }
   };
 
   const handleMouseOver = () => {
-    setStatus(DropDownStatus.hover);
-    console.log('hover');
+    if (status === DropDownStatus.active ? 0 : 1) {
+      setStatus(DropDownStatus.hover);
+      setArrow(arrowDown);
+      console.log('hover');
+    }
   };
 
   const handleMouseOut = () => {
-    setStatus(DropDownStatus.inActive);
-    console.log('inActive');
+    if (status === DropDownStatus.active ? 0 : 1) {
+      setStatus(DropDownStatus.inActive);
+      setArrow(arrowDown);
+      console.log('inActive');
+    }
+  };
+  const handleSubmit = e => {
+    console.log('submit');
   };
 
   return (
     <StyledDiv>
-      <StyledDropDownButton $status={status} onClick={handleButtonClick}>
-        버튼
-        {isVisible && (
-          <StyledList alt="드롭다운 메뉴바">
-            <StyledListItem>TextTextText</StyledListItem>
-            <StyledListItem>TextTextText</StyledListItem>
-            <StyledListItem>TextTextText</StyledListItem>
-            <StyledListItem>TextTextText</StyledListItem>
-          </StyledList>
-        )}
+      <StyledDropDownButton
+        $status={status}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        onMouseOver={handleMouseOver}
+        onMouseOut={handleMouseOut}
+      >
+        <img src={arrow} alt="arrow" />
+        <form>
+          {isVisible && (
+            <StyledList alt="드롭다운 메뉴바">
+              <StyledListItem onClick={handleSubmit}>
+                TextTextText
+              </StyledListItem>
+              <StyledListItem onClick={handleSubmit}>
+                TextTextText
+              </StyledListItem>
+              <StyledListItem onClick={handleSubmit}>
+                TextTextText
+              </StyledListItem>
+              <StyledListItem onClick={handleSubmit}>
+                TextTextText
+              </StyledListItem>
+            </StyledList>
+          )}
+        </form>
       </StyledDropDownButton>
       <StyledSpan>Error Message</StyledSpan>
     </StyledDiv>
