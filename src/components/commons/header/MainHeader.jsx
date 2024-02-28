@@ -1,17 +1,37 @@
+import React from 'react';
 import styled from 'styled-components';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Logo from './Logo.svg';
 
 const MainHeader = () => {
-  // 롤링 페이퍼 만들기 버튼 이벤트
-  const handleClick = e => {
-    e.preventDefault();
+  let navigate = useNavigate();
+  let location = useLocation();
+
+  // 로고 클릭 path: /
+  const handleLogoClick = () => {
+    navigate('/');
   };
+
+  // 롤링 버터튼 path: /post
+  const handleCreateClick = () => {
+    navigate('/post');
+  };
+
+  // path 확인하고 추가하기
+  const shouldShowCreateButton =
+    location.pathname === '/' ||
+    location.pathname === '/main' ||
+    location.pathname === '/header';
 
   return (
     <>
       <StyledContainer>
-        <StyledLogo src={Logo} alt="로고" />
-        <StyledButton onClick={handleClick}>롤링 페이퍼 만들기</StyledButton>
+        <StyledLogo src={Logo} alt="로고" onClick={handleLogoClick} />
+        {shouldShowCreateButton && (
+          <StyledButton onClick={handleCreateClick}>
+            롤링 페이퍼 만들기
+          </StyledButton>
+        )}
       </StyledContainer>
       <StyledDivider />
     </>
