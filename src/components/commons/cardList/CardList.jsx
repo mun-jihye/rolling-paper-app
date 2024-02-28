@@ -3,10 +3,17 @@ import Card from './Card';
 import tempImg from 'components/assets/images/cardList/tempImg.jpg';
 
 const mockData = {
-  count: 30,
   name: 'Chanyong',
   color: 'green',
   imageSource: tempImg,
+  profiles: [
+    { imageSource: tempImg },
+    { imageSource: tempImg },
+    { imageSource: tempImg },
+    { imageSource: tempImg },
+    { imageSource: tempImg },
+    { imageSource: tempImg },
+  ],
 };
 
 function CardList() {
