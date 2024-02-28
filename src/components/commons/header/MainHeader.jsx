@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate, useLocation } from 'react-router-dom';
-import Logo from './Logo.svg';
+import Logo from 'components/assets/images/headers/Logo.svg';
 
 const MainHeader = () => {
   let navigate = useNavigate();
@@ -63,12 +63,19 @@ const StyledContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 24px;
+  margin: 0 auto; // 컨테이너를 중앙 정렬
+  padding: 0 2rem; // 좌우 패딩을 rem 단위로 설정
+  max-width: 1248px; // 최대 너비 설정
 
-  @media (min-width: 1248px) {
-    padding: 0;
-    margin-left: 36rem;
-    margin-right: 36rem;
+  @media (max-width: 1248px) {
+    // 화면 너비가 1248px보다 작을 때 스타일 적용
+    justify-content: space-around; // 로고와 버튼 사이 간격 조정
+    padding: 0 1rem; // 좌우 패딩 감소
+  }
+
+  @media (max-width: 768px) {
+    // 모바일 화면에서 스타일 적용
+    padding: 0 0.5rem; // 좌우 패딩 더 감소
   }
 `;
 
