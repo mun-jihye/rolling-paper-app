@@ -8,6 +8,7 @@ import purplePattern from 'components/assets/images/cardList/pattern_purple.png'
 function Card({ data }) {
   const StyledCard = styled.div`
     padding: 3rem 2.2rem 2rem 2.4rem;
+    flex-shrink: 0;
     width: 20.8rem;
     height: 23.2rem;
     border-radius: 1.6rem;
@@ -73,7 +74,7 @@ function Card({ data }) {
         <StyledContainer isImage={true}>
           {data?.profiles?.slice(0, 3).map((profile, index) => {
             return (
-              <ProfileContainer key={index} index={index}>
+              <ProfileContainer key={index + 1} index={index}>
                 <Profile src={profile?.imageSource} isModal={false} />
               </ProfileContainer>
             );
