@@ -20,18 +20,18 @@ const OutlinedBtn = ({
   );
 };
 
-const StyledButton = styled(Button)`
-  border: 1px solid ${({ theme }) => theme.gray300};
-  color: ${({ theme }) => theme.gray300};
+export const StyledButton = styled(Button)`
+  border: 0.1rem solid ${({ theme }) => theme.gray300};
+  color: ${({ theme }) => theme.gray900};
   background: ${({ theme }) => theme.white};
 
   &:hover {
     background: ${({ theme }) => theme.gray100};
-    border: 1px solid ${({ theme }) => theme.gray300};
+    border: 0.1rem solid ${({ theme }) => theme.gray300};
   }
   &:focus {
     background: ${({ theme }) => theme.white};
-    border: 1px solid ${({ theme }) => theme.gray100};
+    border: 0.1rem solid ${({ theme }) => theme.gray500};
   }
   @media (max-width: 80rem) {
     height: 3.6rem;

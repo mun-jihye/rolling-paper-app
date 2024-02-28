@@ -33,7 +33,7 @@ export const Button = styled.button`
     background: ${({ theme }) => theme.purple700};
   }
   &:focus {
-    border: 2px solid ${({ theme }) => theme.purple900};
+    border: 0.2rem solid ${({ theme }) => theme.purple900};
     background: ${({ theme }) => theme.purple600};
   }
   &:disabled {
