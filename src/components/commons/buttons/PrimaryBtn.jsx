@@ -1,21 +1,39 @@
 import styled from 'styled-components';
 
-export const PrimaryBtn = styled.button`
+const PrimaryBtn = ({
+  children,
+  onClick,
+  disabled,
+  className,
+  type = 'button',
+}) => {
+  return (
+    <Button
+      onClick={onClick}
+      disabled={disabled}
+      className={className}
+      type={type}
+    >
+      {children}
+    </Button>
+  );
+};
+
+export const Button = styled.button`
   padding: 1.4rem 2.4rem;
   width: 20rem;
   height: 5.6rem;
   border-radius: 0.8rem;
   background-color: ${({ theme }) => theme.purple600};
   border: none;
-  color: white;
+  color: ${({ theme }) => theme.white};
   font-size: 1.8rem;
   font-weight: 700;
-  cursor: pointer;
   &:hover {
     background: ${({ theme }) => theme.purple700};
   }
   &:focus {
-    border: 2px solid #5603a7;
+    border: 2px solid ${({ theme }) => theme.purple900};
     background: ${({ theme }) => theme.purple600};
   }
   &:disabled {
@@ -30,3 +48,5 @@ export const PrimaryBtn = styled.button`
     font-weight: 400;
   }
 `;
+
+export default PrimaryBtn;

@@ -1,9 +1,14 @@
 import styled from 'styled-components';
-import Plus from './icon/plus.svg';
+import Plus from 'components/assets/images/buttons/plus.png';
 
-const PlusBtn = () => {
+const PlusBtn = ({ onClick, disabled, className, type = 'button' }) => {
   return (
-    <PlusButton>
+    <PlusButton
+      onClick={onClick}
+      disabled={disabled}
+      className={className}
+      type={type}
+    >
       <img src={Plus} alt="plus" />
     </PlusButton>
   );

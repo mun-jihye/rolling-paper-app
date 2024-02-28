@@ -1,4 +1,3 @@
-// import { useState } from "react";
 import { useState } from 'react';
 import styled from 'styled-components';
 
@@ -32,10 +31,10 @@ const ToggleColor = styled.button`
   font-weight: 700;
   border: none;
   font-size: 1.6rem;
-  color: #861dee;
+  color: ${({ theme }) => theme.purple700};
   font-weight: 400;
-  border: 0.2rem solid #9935ff;
-  background: #ffffff;
+  border: 0.2rem solid ${({ theme }) => theme.purple600};
+  background: ${({ theme }) => theme.white};
 `;
 
 const ToggleButton = styled.button`
@@ -52,11 +51,3 @@ const ToggleButton = styled.button`
 `;
 
 export default ToggleBtn;
-
-// &:focus {
-//   border-radius: .6rem;
-//   border: .2rem solid #9935ff;
-//   background: #ffffff;
-//   font-weight: 700;
-//   color: #861dee;
-// }

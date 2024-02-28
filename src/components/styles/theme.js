@@ -23,7 +23,7 @@ export const theme = {
   green300: '#9BE282',
   green400: '#60CF37',
   green500: '#2BA600',
-  gray100: '#2BA600',
+  gray100: '#F6F6F6',
   gray200: '#EEEEEE',
   gray300: '#CCCCCC',
   gray400: '#999999',

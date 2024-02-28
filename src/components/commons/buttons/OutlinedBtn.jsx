@@ -1,7 +1,26 @@
 import styled from 'styled-components';
-import { PrimaryBtn } from './PrimaryBtn';
+import { Button } from './PrimaryBtn';
 
-export const OutlineBtn = styled(PrimaryBtn)`
+const OutlinedBtn = ({
+  children,
+  onClick,
+  disabled,
+  className,
+  type = 'button',
+}) => {
+  return (
+    <StyledButton
+      onClick={onClick}
+      disabled={disabled}
+      className={className}
+      type={type}
+    >
+      {children}
+    </StyledButton>
+  );
+};
+
+const StyledButton = styled(Button)`
   border: 1px solid ${({ theme }) => theme.gray300};
   color: ${({ theme }) => theme.gray300};
   background: ${({ theme }) => theme.white};
@@ -21,3 +40,4 @@ export const OutlineBtn = styled(PrimaryBtn)`
     height: 2.8rem;
   }
 `;
+export default OutlinedBtn;
