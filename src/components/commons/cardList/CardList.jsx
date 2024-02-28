@@ -1,24 +1,31 @@
 import styled from 'styled-components';
 import Card from './Card';
+import tempImg from 'components/assets/images/cardList/tempImg.jpg';
+
+const mockData = {
+  count: 30,
+  name: 'Chanyong',
+  color: 'green',
+  imageSource: tempImg,
+};
 
 function CardList() {
   return (
-    <div>
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-    </div>
+    <StyledContainer>
+      <Card data={mockData} />
+      <Card data={mockData} />
+      <Card data={mockData} />
+      <Card data={mockData} />
+      <Card data={mockData} />
+      <Card data={mockData} />
+      <Card data={mockData} />
+      <Card data={mockData} />
+    </StyledContainer>
   );
 }
 
 const StyledContainer = styled.div`
-  display: flex;
-  gap 
+  gap: 10px;
 `;
 
 export default CardList;
