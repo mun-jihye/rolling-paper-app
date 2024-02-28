@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Profile from 'components/commons/Profile';
 import bluePattern from 'components/assets/images/cardList/pattern_blue.png';
 import greenPattern from 'components/assets/images/cardList/pattern_green.png';
 import orangePattern from 'components/assets/images/cardList/pattern_orange.png';
@@ -70,13 +71,20 @@ function Card({ data }) {
       <StyledContainer isProfile={true}>
         <StyledH3tag>{`To. ${data?.name}`}</StyledH3tag>
         <StyledContainer isImage={true}>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
+          {data?.profiles?.slice(0, 3).map((profile, index) => {
+            return (
+              <ProfileContainer key={index} index={index}>
+                <Profile src={profile?.imageSource} isModal={false} />
+              </ProfileContainer>
+            );
+          })}
+          {data?.profiles?.length > 3 && (
+            <LastProfile>+{data?.profiles?.length - 3}</LastProfile>
+          )}
         </StyledContainer>
         <StyledPtag>
-          <StyledPtag isNumber={true}>{data?.count}</StyledPtag>명이 작성했어요!
+          <StyledPtag isNumber={true}>{data?.profiles?.length}</StyledPtag>명이
+          작성했어요!
         </StyledPtag>
       </StyledContainer>
       <StyledHrtag />
@@ -128,6 +136,28 @@ const StyledHrtag = styled.hr`
   @media (min-width: 48rem) {
     margin-top: 4.3rem;
   }
+`;
+
+const ProfileContainer = styled.div`
+  position: relative;
+  left: ${({ index }) => index * -1.2}rem;
+`;
+
+const LastProfile = styled.div`
+  position: relative;
+  padding: 0.5rem 0.6rem;
+  left: -3.6rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3rem;
+  background: ${({ theme }) => theme.white};
+  color: ${({ theme }) => theme.gray500};
+  font-size: 1.2rem;
+  font-weight: 400;
+  line-height: 1.8rem;
+  letter-spacing: -0.006rem;
+  min-width: 2.8rem;
 `;
 
 export default Card;
