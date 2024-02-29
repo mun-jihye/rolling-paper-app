@@ -2,9 +2,14 @@ import styled from 'styled-components';
 import { StyledButton } from './OutlinedBtn';
 import DeleteIcon from 'components/assets/images/buttons/delete.png';
 
-const DeleteBtn = () => {
+const DeleteBtn = ({ onClick, disabled, className, type = 'button' }) => {
   return (
-    <DeleteButton>
+    <DeleteButton
+      onClick={onClick}
+      disabled={disabled}
+      className={className}
+      type={type}
+    >
       <img src={DeleteIcon} alt="Delete" />
     </DeleteButton>
   );
