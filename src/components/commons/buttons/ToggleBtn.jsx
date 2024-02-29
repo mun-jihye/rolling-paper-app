@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
-const ToggleBtn = () => {
+const ToggleBtn = ({ onClick, disabled, className, type = 'button' }) => {
   const [isOn, setIsOn] = useState(true);
   const handlerIsOn = () => setIsOn(!isOn);
 
@@ -9,13 +9,27 @@ const ToggleBtn = () => {
     <div onClick={handlerIsOn}>
       {isOn ? (
         <>
-          <ToggleColor>컬러</ToggleColor>
+          <ToggleColor
+            onClick={onClick}
+            disabled={disabled}
+            className={className}
+            type={type}
+          >
+            컬러
+          </ToggleColor>
           <ToggleButton>이미지</ToggleButton>
         </>
       ) : (
         <>
           <ToggleButton>컬러</ToggleButton>
-          <ToggleColor>이미지</ToggleColor>
+          <ToggleColor
+            onClick={onClick}
+            disabled={disabled}
+            className={className}
+            type={type}
+          >
+            이미지
+          </ToggleColor>
         </>
       )}
     </div>
