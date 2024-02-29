@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { fadeIn } from './Animation';
-import icon from 'components/assets/images/toast/completed.png';
+import icon from 'assets/images/toast/completed.png';
 
 const Toast = ({ setIsAlert, toast, positionLeft }) => {
   useEffect(() => {
