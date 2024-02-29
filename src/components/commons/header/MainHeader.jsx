@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Logo from 'components/assets/images/headers/Logo.svg';
-import routes from 'components/utils/constants/routes';
+import routes from 'utils/constants/routes';
 
 const MainHeader = () => {
   let navigate = useNavigate();
