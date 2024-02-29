@@ -1,5 +1,5 @@
 import style from 'styled-components';
-import { theme } from 'components/styles/theme';
+import { theme } from 'styles/theme';
 
 const CreateListItem = ({
   selectedItem,

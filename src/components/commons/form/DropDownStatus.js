@@ -1,4 +1,4 @@
-import { theme } from 'components/styles/theme';
+import { theme } from 'styles/theme';
 export const DropDownStatus = {
   inActive: {
     color: `${theme.gray500}`,

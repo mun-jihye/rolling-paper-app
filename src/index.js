@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import GlobalStyle from 'components/styles/GlobalStyle';
+import GlobalStyle from 'styles/GlobalStyle';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { theme } from 'components/styles/theme';
+import { theme } from 'styles/theme';
 
 const queryClient = new QueryClient();
 
