@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import style from 'styled-components';
-import { theme } from 'components/styles/theme';
 import { InputStatus } from 'components/commons/form';
 
 export default function TextFieldInput() {
@@ -72,7 +71,7 @@ const StyledInput = style.input`
 `;
 
 const StyledSpan = style.span`
-  color: ${theme.error};
+  color: ${({ theme }) => theme.error};
 
   font-weight: 400;
   font-size: 1.2rem;
