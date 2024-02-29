@@ -7,29 +7,24 @@ export default function TextFieldInput() {
 
   const handleFocus = () => {
     setStatus(InputStatus.focused);
-    console.log('input-focused');
   };
 
   const handleBlur = () => {
     setStatus(InputStatus.inActive);
-    console.log('input-inActive');
   };
 
   const handleChange = e => {
     if (e.target.value) {
       setStatus(InputStatus.active);
-      console.log('input-active');
     }
   };
 
   const handleMouseOver = () => {
     setStatus(InputStatus.hover);
-    console.log('input-hover');
   };
 
   const handleMouseOut = () => {
     setStatus(InputStatus.inActive);
-    console.log('input-inActive');
   };
 
   return (
