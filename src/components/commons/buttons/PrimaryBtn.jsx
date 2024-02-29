@@ -39,7 +39,7 @@ export const Button = styled.button`
   &:disabled {
     background: ${({ theme }) => theme.gray300};
   }
-  @media (max-width: 90rem) {
+  @media (max-width: 100rem) {
     padding: 0.7rem 1.6rem;
     width: 12rem;
     height: 4rem;

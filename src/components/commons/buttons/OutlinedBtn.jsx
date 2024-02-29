@@ -36,7 +36,7 @@ export const StyledButton = styled(Button)`
   @media (max-width: 80rem) {
     height: 3.6rem;
   }
-  @media (max-width: 70rem) {
+  @media (max-width: 40rem) {
     height: 2.8rem;
   }
 `;

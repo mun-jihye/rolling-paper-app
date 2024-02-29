@@ -39,6 +39,9 @@ export const ArrowBtnL = ({
 };
 
 const ArrowButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 4rem;
   height: 4rem;
   border-radius: 50%;

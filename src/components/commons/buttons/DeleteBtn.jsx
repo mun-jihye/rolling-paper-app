@@ -14,9 +14,9 @@ const DeleteButton = styled(StyledButton)`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 36px;
-  height: 36px;
-  padding: 6px;
+  width: 3.6rem;
+  height: 3.6rem;
+  padding: 0.6rem;
 `;
 
 export default DeleteBtn;
