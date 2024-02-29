@@ -22,7 +22,6 @@ export default function TextFieldDropDown() {
     setIsVisible(true);
     setStatus(DropDownStatus.active);
     setArrow(arrowUp);
-    console.log('dropdown-active');
   };
 
   const handleBlur = event => {
@@ -31,7 +30,6 @@ export default function TextFieldDropDown() {
       setIsVisible(false);
       setStatus(DropDownStatus.inActive);
       setArrow(arrowDown);
-      console.log('dropdown-inActive');
     }
   };
 
@@ -39,7 +37,6 @@ export default function TextFieldDropDown() {
     if (status === DropDownStatus.active ? 0 : 1) {
       setStatus(DropDownStatus.hover);
       setArrow(arrowDown);
-      console.log('dropdown-hover');
     }
   };
 
@@ -47,7 +44,6 @@ export default function TextFieldDropDown() {
     if (status === DropDownStatus.active ? 0 : 1) {
       setStatus(DropDownStatus.inActive);
       setArrow(arrowDown);
-      console.log('dropdown-inActive');
     }
   };
 
