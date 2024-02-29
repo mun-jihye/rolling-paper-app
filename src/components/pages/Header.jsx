@@ -1,7 +1,10 @@
 import React from 'react';
+import  GNB  from 'components/commons/header/GNB';
 
 const Header = () => {
-  return <div>Header</div>;
+  return (
+    <GNB />
+  );
 };
 
 export default Header;

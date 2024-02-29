@@ -5,6 +5,7 @@ const routes = {
   header: '/header',
   cardList: '/cardList',
   modal: '/modal',
+  post: '/post',
 };
 
 export default routes;
