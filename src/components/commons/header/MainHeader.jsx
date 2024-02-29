@@ -2,22 +2,20 @@ import React from 'react';
 import styled from 'styled-components';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Logo from 'components/assets/images/headers/Logo.svg';
+import routes from 'components/utils/constants/routes';
 
 const MainHeader = () => {
   let navigate = useNavigate();
   let location = useLocation();
 
-  // 로고 클릭 path: /
   const handleLogoClick = () => {
-    navigate('/');
+    navigate(routes.home);
   };
 
-  // 롤링 버터튼 path: /post
   const handleCreateClick = () => {
-    navigate('/post');
+    navigate(routes.post);
   };
 
-  // path 확인하고 추가하기
   const shouldShowCreateButton =
     location.pathname === '/' ||
     location.pathname === '/main' ||

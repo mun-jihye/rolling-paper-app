@@ -7,9 +7,6 @@ import Profile1 from 'components/assets/images/profiles/profile1.png';
 import Profile2 from 'components/assets/images/profiles/profile2.png';
 import Profile3 from 'components/assets/images/profiles/profile3.png';
 
-// mockData로 옮겨야함
-// 모바일 페이지마다 다른 css 구현
-// 서브 헤더 버튼 클릭 이벤트
 const userData = {
   name: 'Ashley Kim',
   emotion: 'Happy',
@@ -36,7 +33,7 @@ const SubHeader = () => {
             <StyledEmp>{userData.people}</StyledEmp>명이 작성했어요!
           </StyledMessage>
           <StyledDivider />
-          <StyledEmojis>
+          <StyledEmojis> 
             <StyledEmoji onClick={handleClick}>👍24</StyledEmoji>
             <StyledEmoji onClick={handleClick}>😍16</StyledEmoji>
             <StyledEmoji onClick={handleClick}>🎉10</StyledEmoji>
@@ -160,7 +157,7 @@ const StyledMessage = styled.div`
 
 const StyledEmp = styled.p`
   font-weight: 900;
-  @media (max-width: 768px) {
+  @media (max-width: 76.8rem) {
     display: none;
   }
 `;
@@ -170,7 +167,7 @@ const StyledDivider = styled.div`
   width: 0.1rem;
   background-color: ${({ theme }) => theme.gray200};
   margin: 0 1rem;
-  @media (max-width: 768px) {
+  @media (max-width: 76.8rem) {
     display: none;
   }
 `;
@@ -189,7 +186,7 @@ const StyledEmoji = styled.button`
   background-color: ${({ theme }) => theme.gray400};
   margin-right: 1rem;
 
-  @media (max-width: 768px) {
+  @media (max-width: 76.8rem) {
     display: none;
   }
 `;
@@ -197,7 +194,7 @@ const StyledEmoji = styled.button`
 const StyledEmojis = styled.div`
   display: flex;
   align-items: center;
-  @media (max-width: 768px) {
+  @media (max-width: 76.8rem) {
     display: none;
   }
 `;
