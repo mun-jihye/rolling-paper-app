@@ -1,27 +1,25 @@
 import { React } from 'react';
-import { PrimaryBtn } from 'components/commons/buttons/PrimaryBtn';
-import { Secondary } from 'components/commons/buttons/SecondaryBtn';
+import PrimaryBtn from 'components/commons/buttons/PrimaryBtn';
+import SecondaryBtn from 'components/commons/buttons/SecondaryBtn';
 import ToggleBtn from 'components/commons/buttons/ToggleBtn';
-import { OutlineBtn } from 'components/commons/buttons/OutlinedBtn';
-// import { PrimaryButton } from 'components/commons/buttons/ButtonStyle';
-// import { theme } from 'components/styles/theme';
+import OutlinedBtn from 'components/commons/buttons/OutlinedBtn';
+import { ArrowBtnL, ArrowBtnR } from 'components/commons/buttons/ArrowBtns';
+import PlusBtn from 'components/commons/buttons/PlusBtn';
+import DeleteBtn from 'components/commons/buttons/DeleteBtn';
 
-const buttonPage = () => {
-  // const [status, setStatus] = useState(PrimaryButton.enabled);
+const ButtonPage = () => {
   return (
     <div>
-      <PrimaryBtn
-        width="12rem"
-        height="4rem"
-        borderRadius="0.6rem"
-        fonSize="1.4rem"
-        fontWeight="400"
-      />
-      <Secondary />
+      <PrimaryBtn>PrimaryBtn</PrimaryBtn>
+      <SecondaryBtn>Secondary</SecondaryBtn>
       <ToggleBtn />
-      <OutlineBtn />
+      <OutlinedBtn>Outline</OutlinedBtn>
+      <ArrowBtnL />
+      <ArrowBtnR />
+      <PlusBtn />
+      <DeleteBtn />
     </div>
   );
 };
 
-export default buttonPage;
+export default ButtonPage;
