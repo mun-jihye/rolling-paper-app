@@ -1,26 +1,43 @@
 import styled from 'styled-components';
-import { ButtonStyle } from './PrimaryBtn';
+import { Button } from './PrimaryBtn';
 
-const ScdButton = styled(ButtonStyle)`
-  width: 122px;
-  height: 40px;
-  padding: 7px 16px;
-  border-radius: 6px;
-  border: 1px solid #9935ff;
+const SecondaryBtn = ({
+  children,
+  onClick,
+  disabled,
+  className,
+  type = 'button',
+}) => {
+  return (
+    <Secondary
+      onClick={onClick}
+      disabled={disabled}
+      className={className}
+      type={type}
+    >
+      {children}
+    </Secondary>
+  );
+};
+
+const Secondary = styled(Button)`
+  width: 12.2rem;
+  height: 4rem;
+  padding: 0.7rem 1.6rem;
+  border-radius: 0.6rem;
+  border: 0.1rem solid ${({ theme }) => theme.purple600};
   background: ${({ theme }) => theme.white};
   color: ${({ theme }) => theme.purple700};
-  font-size: 16px;
+  font-size: 1.6rem;
   font-weight: 400;
 
   &:hover {
     background: ${({ theme }) => theme.purple100};
   }
   &:focus {
-    border: 1px solid ${({ theme }) => theme.purple800};
+    border: 0.1rem solid ${({ theme }) => theme.purple800};
     background: ${({ theme }) => theme.white};
   }
 `;
 
-export function Secondary() {
-  return <ScdButton>sdfsf</ScdButton>;
-}
+export default SecondaryBtn;
