@@ -1,4 +1,4 @@
-import React from 'react';
+/* import React from 'react';
 import styled from 'styled-components';
 import ArrowDown from 'assets/images/headers/ArrowDown.svg';
 import AddImage from 'assets/images/headers/AddImage.svg';
@@ -81,6 +81,90 @@ const SubHeader = () => {
               </ShareButtonList>
             )}
           </StyledButtons>
+        </StyledSection>
+      </StyledContainer>
+    </>
+  );
+};
+
+export default SubHeader; */
+
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import ArrowDown from 'assets/images/headers/ArrowDown.svg';
+import AddImage from 'assets/images/headers/AddImage.svg';
+import ShareImage from 'assets/images/headers/ShareImage.svg';
+import Profile1 from 'assets/images/profiles/profile1.png';
+import Profile2 from 'assets/images/profiles/profile2.png';
+import Profile3 from 'assets/images/profiles/profile3.png';
+
+const userData = {
+  name: 'Ashley Kim',
+  emotion: 'Happy',
+  people: 23,
+};
+
+const SubHeader = () => {
+  const [showShareOptions, setShowShareOptions] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const isMobile = windowWidth < 768;
+
+  const handleClickShare = () => {
+    setShowShareOptions(!showShareOptions);
+  };
+
+  const handleShareKakao = () => {
+    // 카카오톡 공유 로직
+  };
+
+  const handleShareURL = () => {
+    // URL 복사 로직
+  };
+
+  return (
+    <>
+      <StyledContainer>
+        <ToUser>To. {userData.name}</ToUser>
+        <StyledSection>
+          <StyledProfiles>
+            {[Profile1, Profile2, Profile3].map((profile, index) => (
+              <StyledProfile key={index} src={profile} alt="Profile" />
+            ))}
+            <StyledProfileNum>+6</StyledProfileNum>
+          </StyledProfiles>
+          <StyledMessage>
+            <StyledEmp>{userData.people}</StyledEmp>명이 작성했어요!
+          </StyledMessage>
+          <StyledDivider />
+          <StyledEmojis>
+            <StyledEmoji>👍24</StyledEmoji>
+            <StyledEmoji>😍16</StyledEmoji>
+            <StyledEmoji>🎉10</StyledEmoji>
+            <StyledArrow src={ArrowDown} alt="More" />
+          </StyledEmojis>
+          {!isMobile && (
+            <StyledButtons>
+              <StyledDivider2 />
+              <AddButton src={AddImage} alt="추가" text="추가" />
+              <ShareButton onClick={handleClickShare} src={ShareImage} alt="공유" />
+              {showShareOptions && (
+                <ShareButtonList>
+                  <div onClick={handleShareKakao}>카카오톡 공유</div>
+                  <div onClick={handleShareURL}>URL 복사</div>
+                </ShareButtonList>
+              )}
+            </StyledButtons>
+          )}
         </StyledSection>
       </StyledContainer>
     </>
