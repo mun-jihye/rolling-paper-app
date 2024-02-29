@@ -1,6 +1,6 @@
 import React from 'react';
 import Profile from '../Profile';
-import profile from 'components/assets/images/profiles/profile1.png';
+import profile from 'assets/images/profiles/profile1.png';
 import styled from 'styled-components';
 
 const data = {
