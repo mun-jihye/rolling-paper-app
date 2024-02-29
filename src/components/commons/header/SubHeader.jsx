@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import ArrowDown from 'components/assets/images/headers/ArrowDown.svg';
-import AddImage from 'components/assets/images/headers/AddImage.svg';
-import ShareImage from 'components/assets/images/headers/ShareImage.svg';
-import Profile1 from 'components/assets/images/profiles/profile1.png';
-import Profile2 from 'components/assets/images/profiles/profile2.png';
-import Profile3 from 'components/assets/images/profiles/profile3.png';
+import ArrowDown from 'assets/images/headers/ArrowDown.svg';
+import AddImage from 'assets/images/headers/AddImage.svg';
+import ShareImage from 'assets/images/headers/ShareImage.svg';
+import Profile1 from 'assets/images/profiles/profile1.png';
+import Profile2 from 'assets/images/profiles/profile2.png';
+import Profile3 from 'assets/images/profiles/profile3.png';
 //useRef, useState 추가
 import { useState } from 'react';
 
