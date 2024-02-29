@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Card from './Card';
-import tempImg from 'components/assets/images/cardList/tempImg.jpg';
-import arrowImg from 'components/assets/images/cardList/arrow.png';
+import tempImg from 'assets/images/cardList/tempImg.jpg';
+import arrowImg from 'assets/images/cardList/arrow.png';
 import { useEffect, useRef, useState } from 'react';
 
 const mockData = {
