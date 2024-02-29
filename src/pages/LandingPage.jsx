@@ -4,9 +4,9 @@ import styled from 'styled-components';
 import GNB from 'components/commons/header/GNB';
 import CardModal from 'components/commons/modal/CardModal';
 import PrimaryBtn from 'components/commons/buttons/PrimaryBtn';
-import headerEmojiImg from 'components/assets/images/landingPage/headerEmoji.png';
-import emoji from 'components/assets/images/landingPage/emoji.png';
-import cursorImg from 'components/assets/images/landingPage/cursor.png';
+import headerEmojiImg from 'assets/images/landingPage/headerEmoji.png';
+import emoji from 'assets/images/landingPage/emoji.png';
+import cursorImg from 'assets/images/landingPage/cursor.png';
 
 const LandingPage = () => {
   return (

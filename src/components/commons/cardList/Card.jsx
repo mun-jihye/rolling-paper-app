@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import Profile from 'components/commons/Profile';
-import bluePattern from 'components/assets/images/cardList/pattern_blue.png';
-import greenPattern from 'components/assets/images/cardList/pattern_green.png';
-import orangePattern from 'components/assets/images/cardList/pattern_orange.png';
-import purplePattern from 'components/assets/images/cardList/pattern_purple.png';
+import bluePattern from 'assets/images/cardList/pattern_blue.png';
+import greenPattern from 'assets/images/cardList/pattern_green.png';
+import orangePattern from 'assets/images/cardList/pattern_orange.png';
+import purplePattern from 'assets/images/cardList/pattern_purple.png';
 
 function Card({ data }) {
   return (
