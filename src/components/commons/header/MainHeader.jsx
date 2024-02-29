@@ -1,8 +1,8 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Logo from 'components/assets/images/headers/Logo.svg';
-import routes from 'components/utils/constants/routes';
+import routes from 'utils/constants/routes';
 
 const MainHeader = () => {
   let navigate = useNavigate();
@@ -38,6 +38,18 @@ const MainHeader = () => {
 
 export default MainHeader;
 
+const commonPadding = css`
+  padding: 0 5rem;
+
+  @media (max-width: 1248px) {
+    padding: 0 1rem;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0 0.5rem;
+  }
+`;
+
 const StyledLogo = styled.img`
   width: 10.6rem;
   height: 4.2rem;
@@ -63,16 +75,7 @@ const StyledContainer = styled.div`
   align-items: center;
   margin: 0 auto;
   max-width: 124.8rem;
-  padding: 0 5rem;
-
-  @media (max-width: 1248px) {
-    padding: 0 1rem;
-    margin: 0 auto;
-  }
-
-  @media (max-width: 768px) {
-    padding: 0 0.5rem;
-  }
+  ${commonPadding}
 `;
 
 const StyledDivider = styled.div`

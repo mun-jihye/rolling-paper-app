@@ -1,9 +1,9 @@
-import routes from 'components/utils/constants/routes';
+import routes from 'utils/constants/routes';
 import { Routes, Route } from 'react-router-dom';
-import LandingPage from 'components/pages/LandingPage';
-import ListPage from 'components/pages/ListPage';
-import EditPage from 'components/pages/EditPage';
-import PostPage from 'components/pages/PostPage';
+import LandingPage from 'pages/LandingPage';
+import ListPage from 'pages/ListPage';
+import EditPage from 'pages/EditPage';
+import PostPage from 'pages/PostPage';
 
 function App() {
   return (
