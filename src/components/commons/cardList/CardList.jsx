@@ -18,9 +18,10 @@ const mockData = {
 
 const mockDatas = Array.from({ length: 7 }, () => mockData);
 
-function CardList() {
+function CardList({ carouselMargin = 0, className }) {
   const [containerWidth, setContainerWidth] = useState();
   const [carouselLength, setCarouselLength] = useState();
+  // slidePosition 은 px 단위가 아닌 rem 단위
   const [slidePosition, setSlidePosition] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [startTouchPosition, setStartTouchPosition] = useState(0);
@@ -29,7 +30,7 @@ function CardList() {
   const slideBar = useRef();
   const card = useRef();
 
-  /***************** PC 사이즈에서 화살표 클릭으로 캐러셀 제어 *****************/
+  // PC 사이즈에서 화살표 클릭으로 캐러셀 제어
   const handleLeftClick = () => {
     const slideNode = slideBar.current;
     setSlidePosition(slidePosition + 118);
@@ -41,9 +42,8 @@ function CardList() {
     setSlidePosition(slidePosition - 118);
     slideNode.style.transform = `translate(${slidePosition - 118}rem)`;
   };
-  /********************************************************************/
 
-  /************** 태블릿, 모바일 사이즈에서 터치를 통해 캐러셀 제어 **************/
+  // 태블릿, 모바일 사이즈에서 터치를 통해 캐러셀 제어
   function handleTouchStart(event) {
     setIsDragging(true);
     setStartTouchPosition(event.changedTouches[0].clientX);
@@ -67,7 +67,7 @@ function CardList() {
 
     if (carouselLength <= containerWidth) return;
 
-    /* 캐러셀 재위치 */
+    // 캐러셀 재위치
     const slideNode = slideBar.current;
 
     if (slidePosition > 0) {
@@ -81,28 +81,26 @@ function CardList() {
       setSlidePosition((containerWidth - carouselLength) / 10);
       return;
     }
-    /*************/
   }
-  /******************************************************************/
 
   useEffect(() => {
-    setContainerWidth(container?.current?.offsetWidth);
+    setContainerWidth(container?.current?.offsetWidth - carouselMargin * 20);
     setCarouselLength(
       card?.current?.offsetWidth === 208
         ? 220 * mockDatas?.length - 12
         : 295 * mockDatas?.length - 20,
     );
-  }, []);
+  }, [carouselMargin]);
 
   return (
-    <StyledContainer $layout="outer">
+    <StyledContainer $layout="outer" className={className}>
       <StyledContainer
         ref={container}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        <StyledSlideBar ref={slideBar}>
+        <StyledSlideBar ref={slideBar} $carouselMargin={carouselMargin}>
           {mockDatas.map((mockData, index) => {
             return (
               <div key={index + 1} ref={card}>
@@ -142,6 +140,7 @@ const StyledSlideBar = styled.div`
   display: flex;
   gap: 1.2rem;
   transition: transform 0.5s;
+  margin-left: ${({ $carouselMargin }) => $carouselMargin}rem;
 
   @media (min-width: 48rem) {
     gap: 2rem;
@@ -159,7 +158,7 @@ const ArrowButton = styled.img`
   top: 42.3%;
   cursor: pointer;
 
-  @media (min-width: 64rem) {
+  @media (min-width: 75rem) {
     display: block;
   }
 `;
