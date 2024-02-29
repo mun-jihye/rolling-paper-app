@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { useNavigate, useLocation } from 'react-router-dom';
-import Logo from 'components/assets/images/headers/Logo.svg';
+import Logo from 'assets/images/headers/Logo.svg';
 import routes from 'utils/constants/routes';
 
 const MainHeader = () => {
