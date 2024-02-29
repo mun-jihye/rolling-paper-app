@@ -1,4 +1,4 @@
-import useCloseModal from 'components/hooks/useCloseModal';
+import useCloseModal from 'hooks/useCloseModal';
 import React, { useRef } from 'react';
 import Portal from './Portal';
 import styled from 'styled-components';
