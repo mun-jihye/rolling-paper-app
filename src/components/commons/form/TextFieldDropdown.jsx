@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import style from 'styled-components';
-import { theme } from 'components/styles/theme';
 import { DropDownStatus } from './DropDownStatus';
 import arrowUp from 'components/assets/images/icons/arrow_top.svg';
 import arrowDown from 'components/assets/images/icons/arrow_down.svg';
@@ -124,8 +123,8 @@ const StyledDropDownText = style.span`
 `;
 
 const StyledSpan = style.span`
-  color: ${theme.error};
-  color: ${theme.error};
+  color: ${({ theme }) => theme.error};
+  color: ${({ theme }) => theme.error};
 
   font-weight: 400;
   font-size: 1.2rem;

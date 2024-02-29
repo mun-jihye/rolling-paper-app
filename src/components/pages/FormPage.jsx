@@ -1,6 +1,4 @@
 import { React } from 'react';
-import { useTheme } from 'styled-components';
-
 import {
   TextFieldInput,
   TextFieldDropDown,

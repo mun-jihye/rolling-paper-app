@@ -1,5 +1,4 @@
 import style from 'styled-components';
-import { theme } from 'components/styles/theme';
 import bold from 'components/assets/images/icons/bold_icon.svg';
 import italic from 'components/assets/images/icons/italics.svg';
 import underScore from 'components/assets/images/icons/under_score.svg';
@@ -41,7 +40,7 @@ export default function TextFieldTextEditor() {
 
 const StyledContainer = style.div`
   border-radius: 0.8rem;
-  border: 1px solid ${theme.gray300};
+  border: 1px solid ${({ theme }) => theme.gray300};
 
   width: 72rem;
   height: 26rem;
@@ -56,7 +55,7 @@ const StyledContainer = style.div`
 const ButtonContainer = style.div`
   height: 4.9rem;
   padding: 1.4rem;
-  background-color: ${theme.gray200};
+  background-color: ${({ theme }) => theme.gray200};
   display: flex;
 `;
 
@@ -75,7 +74,7 @@ const StyledImg = style.div`
 `;
 
 const StyledTextInput = style.textarea`
-  color: ${theme.gray900};
+  color: ${({ theme }) => theme.gray900};
   width: 68.8rem;
   height: 17.8rem;
   margin: 1.6rem;
