@@ -1,19 +1,17 @@
 import routes from 'components/utils/constants/routes';
 import { Routes, Route } from 'react-router-dom';
-import ButtonPage from 'components/pages/ButtonPage';
-import FormPage from 'components/pages/FormPage';
-import Header from 'components/pages/Header';
-import Modal from 'components/pages/Modal';
-import CardListPage from 'components/pages/CardLIstPage';
+import LandingPage from 'components/pages/LandingPage';
+import ListPage from 'components/pages/ListPage';
+import EditPage from 'components/pages/EditPage';
+import PostPage from 'components/pages/PostPage';
 
 function App() {
   return (
     <Routes>
-      <Route path={routes.button} element={<ButtonPage />}></Route>
-      <Route path={routes.form} element={<FormPage />}></Route>
-      <Route path={routes.header} element={<Header />}></Route>
-      <Route path={routes.cardList} element={<CardListPage />}></Route>
-      <Route path={routes.modal} element={<Modal />}></Route>
+      <Route path={routes.home} element={<LandingPage />}></Route>
+      <Route path={routes.list} element={<ListPage />}></Route>
+      <Route path={routes.edit} element={<EditPage />}></Route>
+      <Route path={routes.post} element={<PostPage />}></Route>
     </Routes>
   );
 }

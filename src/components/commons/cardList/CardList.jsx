@@ -1,134 +1,166 @@
 import styled from 'styled-components';
-import bluePattern from 'components/assets/images/pattern_blue.png';
-import greenPattern from 'components/assets/images/pattern_green.png';
-import orangePattern from 'components/assets/images/pattern_orange.png';
-import purplePattern from 'components/assets/images/pattern_purple.png';
+import Card from './Card';
+import tempImg from 'components/assets/images/cardList/tempImg.jpg';
+import arrowImg from 'components/assets/images/cardList/arrow.png';
+import { useEffect, useRef, useState } from 'react';
 
-const BACKGROUND = {
-  purple: ['purple200', purplePattern],
-  orange: ['orange200', orangePattern],
-  blue: ['blue200', bluePattern],
-  green: ['green200', greenPattern],
+const mockData = {
+  name: 'Chanyong',
+  color: 'green',
+  imageSource: tempImg,
+  profiles: [
+    { imageSource: tempImg },
+    { imageSource: tempImg },
+    { imageSource: tempImg },
+    { imageSource: tempImg },
+  ],
 };
 
+const mockDatas = Array.from({ length: 7 }, () => mockData);
+
+function CardList({ carouselMargin = 0, className }) {
+  const [containerWidth, setContainerWidth] = useState();
+  const [carouselLength, setCarouselLength] = useState();
+  // slidePosition 은 px 단위가 아닌 rem 단위
+  const [slidePosition, setSlidePosition] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startTouchPosition, setStartTouchPosition] = useState(0);
+
+  const container = useRef();
+  const slideBar = useRef();
+  const card = useRef();
+
+  // PC 사이즈에서 화살표 클릭으로 캐러셀 제어
+  const handleLeftClick = () => {
+    const slideNode = slideBar.current;
+    setSlidePosition(slidePosition + 118);
+    slideNode.style.transform = `translate(${slidePosition + 118}rem)`;
+  };
+
+  const handleRightClick = () => {
+    const slideNode = slideBar.current;
+    setSlidePosition(slidePosition - 118);
+    slideNode.style.transform = `translate(${slidePosition - 118}rem)`;
+  };
+
+  // 태블릿, 모바일 사이즈에서 터치를 통해 캐러셀 제어
+  function handleTouchStart(event) {
+    setIsDragging(true);
+    setStartTouchPosition(event.changedTouches[0].clientX);
+  }
+
+  function handleTouchMove(event) {
+    if (!isDragging) return;
+    if (carouselLength <= containerWidth) return;
+
+    const slideNode = slideBar.current;
+    const currentTouchPosition = event.touches[0].clientX;
+    const difference = startTouchPosition - currentTouchPosition;
+
+    slideNode.style.transform = `translate(${slidePosition - difference / 10}rem)`;
+    setSlidePosition(slidePosition - difference / 10);
+    setStartTouchPosition(currentTouchPosition);
+  }
+
+  function handleTouchEnd() {
+    setIsDragging(false);
+
+    if (carouselLength <= containerWidth) return;
+
+    // 캐러셀 재위치
+    const slideNode = slideBar.current;
+
+    if (slidePosition > 0) {
+      slideNode.style.transform = `translate(0)`;
+      setSlidePosition(0);
+      return;
+    }
+
+    if (slidePosition < (containerWidth - carouselLength) / 10) {
+      slideNode.style.transform = `translate(${(containerWidth - carouselLength) / 10}rem)`;
+      setSlidePosition((containerWidth - carouselLength) / 10);
+      return;
+    }
+  }
+
+  useEffect(() => {
+    setContainerWidth(container?.current?.offsetWidth - carouselMargin * 20);
+    setCarouselLength(
+      card?.current?.offsetWidth === 208
+        ? 220 * mockDatas?.length - 12
+        : 295 * mockDatas?.length - 20,
+    );
+  }, [carouselMargin]);
+
+  return (
+    <StyledContainer $layout="outer" className={className}>
+      <StyledContainer
+        ref={container}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
+        <StyledSlideBar ref={slideBar} $carouselMargin={carouselMargin}>
+          {mockDatas.map((mockData, index) => {
+            return (
+              <div key={index + 1} ref={card}>
+                <Card data={mockData} />
+              </div>
+            );
+          })}
+        </StyledSlideBar>
+        {slidePosition < 0 && (
+          <ArrowButton
+            onClick={handleLeftClick}
+            $position="left"
+            src={arrowImg}
+            alt="previous"
+          />
+        )}
+        {slidePosition > -(29.5 * (mockDatas?.length - 4) - 2) && (
+          <ArrowButton
+            onClick={handleRightClick}
+            $position="right"
+            src={arrowImg}
+            alt="next"
+          />
+        )}
+      </StyledContainer>
+    </StyledContainer>
+  );
+}
+
 const StyledContainer = styled.div`
+  max-width: 116rem;
+  position: ${({ $layout }) => ($layout === 'outer' ? 'relative' : '')};
+  overflow: ${({ $layout }) => ($layout === 'outer' ? '' : 'hidden')};
+`;
+
+const StyledSlideBar = styled.div`
   display: flex;
-  flex-direction: ${({ isProfile }) => (isProfile ? 'column' : 'row')};
-  gap: ${({ isBadge, isImage }) =>
-    isBadge ? '0.4rem' : isImage ? 0 : '1.2rem'};
-
-  & div {
-    height: ${({ isBadge, isImage }) =>
-      isBadge ? '3.2rem' : isImage && '2.8rem'};
-  }
+  gap: 1.2rem;
+  transition: transform 0.5s;
+  margin-left: ${({ $carouselMargin }) => $carouselMargin}rem;
 
   @media (min-width: 48rem) {
-    gap: ${({ isBadge, isImage }) =>
-      isBadge ? '0.8rem' : isImage ? 0 : '1.2rem'};
-
-    & div {
-      height: ${({ isBadge, isImage }) =>
-        isBadge ? '3.6rem' : isImage && '2.8rem'};
-    }
+    gap: 2rem;
   }
 `;
 
-const StyledH3tag = styled.h3`
-  overflow: hidden;
-  color: ${({ theme }) => theme.gray900};
-  text-overflow: ellipsis;
-  font-size: 1.8rem;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 2.8rem;
-  letter-spacing: -0.018rem;
+const ArrowButton = styled.img`
+  display: none;
+  width: 4rem;
+  transform: ${({ $position }) =>
+    $position === 'left' ? 'rotate(180deg)' : ''};
+  position: absolute;
+  left: ${({ $position }) => ($position === 'left' ? -2 : '')}rem;
+  right: ${({ $position }) => ($position === 'right' ? -2 : '')}rem;
+  top: 42.3%;
+  cursor: pointer;
 
-  @media (min-width: 48rem) {
-    font-size: 2.4rem;
-    line-height: 3.6rem;
-    letter-spacing: -0.024rem;
+  @media (min-width: 75rem) {
+    display: block;
   }
 `;
-
-const StyledPtag = styled.p`
-  display: inline-block;
-  color: ${({ theme }) => theme.gray700};
-  font-size: 1.4rem;
-  font-style: normal;
-  font-weight: ${({ isNumber }) => (isNumber ? '700' : '400')};
-  line-height: 2rem;
-  letter-spacing: -0.007rem;
-
-  @media (min-width: 48rem) {
-    font-size: 1.6rem;
-    line-height: 2.6rem;
-    letter-spacing: -0.016rem;
-  }
-`;
-
-const StyledHrtag = styled.hr`
-  height: 0.1rem;
-  background: rgba(0, 0, 0, 0.12);
-  margin-top: 3.3rem;
-  margin-bottom: 1.6rem;
-
-  @media (min-width: 48rem) {
-    margin-top: 4.3rem;
-  }
-`;
-
-function Card({ color = 'blue' }) {
-  const StyledCard = styled.div`
-    padding: 3rem 2.2rem 2rem 2.4rem;
-    width: 20.8rem;
-    height: 23.2rem;
-    border-radius: 1.6rem;
-    border: 0.1rem solid rgba(0, 0, 0, 0.1);
-    background: ${({ theme }) => theme[BACKGROUND[color][0]]};
-    background-image: url(${BACKGROUND[color][1]});
-    background-position: right bottom;
-    background-repeat: no-repeat;
-    background-size: 10.74rem;
-    box-shadow: 0 0.2rem 1.2rem 0 rgba(0, 0, 0, 0.08);
-
-    @media (min-width: 48rem) {
-      padding: 3rem 2.4rem 2rem;
-      width: 27.5rem;
-      height: 26rem;
-      background-size: 14.2rem;
-    }
-  `;
-
-  return (
-    <StyledCard>
-      <StyledContainer isProfile={true}>
-        <StyledH3tag>{`To.`}</StyledH3tag>
-        <StyledContainer isImage={true}>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </StyledContainer>
-        <StyledPtag>
-          <StyledPtag isNumber={true}>{30}</StyledPtag>명이 작성했어요!
-        </StyledPtag>
-      </StyledContainer>
-      <StyledHrtag />
-      <StyledContainer isBadge={true}>
-        <div></div>
-        <div></div>
-        <div></div>
-      </StyledContainer>
-    </StyledCard>
-  );
-}
-
-function CardList({}) {
-  return (
-    <div>
-      <Card />
-    </div>
-  );
-}
 
 export default CardList;

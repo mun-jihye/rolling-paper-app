@@ -1,10 +1,8 @@
 const routes = {
   home: '/',
-  button: '/button',
-  form: '/form',
-  header: '/header',
-  cardList: '/cardList',
-  modal: '/modal',
+  list: '/list',
+  edit: '/edit',
+  post: '/post',
 };
 
 export default routes;

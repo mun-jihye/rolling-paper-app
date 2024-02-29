@@ -1,7 +1,18 @@
-import React from 'react';
+import { React } from 'react';
+import {
+  TextFieldInput,
+  TextFieldDropDown,
+  TextFieldTextEditor,
+} from 'components/commons/form';
 
-const formPage = () => {
-  return <div>formPage</div>;
+const FormPage = () => {
+  return (
+    <div>
+      <TextFieldInput />
+      <TextFieldDropDown />
+      <TextFieldTextEditor />
+    </div>
+  );
 };
 
-export default formPage;
+export default FormPage;
