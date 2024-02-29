@@ -15,7 +15,7 @@ const userData = {
   people: 23,
 };
 
-//리사이즈 이벤트, 
+//리사이즈 이벤트,
 
 const SubHeader = () => {
   //참조용
