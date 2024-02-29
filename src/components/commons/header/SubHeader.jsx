@@ -6,6 +6,8 @@ import ShareImage from 'components/assets/images/headers/ShareImage.svg';
 import Profile1 from 'components/assets/images/profiles/profile1.png';
 import Profile2 from 'components/assets/images/profiles/profile2.png';
 import Profile3 from 'components/assets/images/profiles/profile3.png';
+//useRef, useState 추가
+import { useState } from 'react';
 
 const userData = {
   name: 'Ashley Kim',
@@ -13,8 +15,28 @@ const userData = {
   people: 23,
 };
 
+//리사이즈 이벤트, 
+
 const SubHeader = () => {
+  //참조용
   const handleClick = e => {
+    e.preventDefault();
+  };
+
+  const [showShareOptions, setShowShareOptions] = useState(false);
+
+  //쉐어 버튼
+  const handleClickShare = () => {
+    setShowShareOptions(!showShareOptions);
+  };
+
+  //카카오 공유하기
+  const handleShareKakao = e => {
+    e.preventDefault();
+  };
+
+  //URL 복사하기
+  const handleShareURL = e => {
     e.preventDefault();
   };
 
@@ -33,7 +55,7 @@ const SubHeader = () => {
             <StyledEmp>{userData.people}</StyledEmp>명이 작성했어요!
           </StyledMessage>
           <StyledDivider />
-          <StyledEmojis> 
+          <StyledEmojis>
             <StyledEmoji onClick={handleClick}>👍24</StyledEmoji>
             <StyledEmoji onClick={handleClick}>😍16</StyledEmoji>
             <StyledEmoji onClick={handleClick}>🎉10</StyledEmoji>
@@ -41,13 +63,23 @@ const SubHeader = () => {
           </StyledEmojis>
           <StyledButtons>
             <StyledDivider2 />
-            <AddShreButton
+            <AddButton
               src={AddImage}
               alt="추가"
               onClick={handleClick}
               text="추가"
             />
-            <AddShreButton src={ShareImage} alt="공유" onClick={handleClick} />
+            <ShareButton
+              onClick={handleClickShare}
+              src={ShareImage}
+              alt="공유"
+            />
+            {showShareOptions && (
+              <ShareButtonList>
+                <div onClick={handleShareKakao}>카카오톡 공유</div>
+                <div onClick={handleShareURL}>URL 복사</div>
+              </ShareButtonList>
+            )}
           </StyledButtons>
         </StyledSection>
       </StyledContainer>
@@ -57,13 +89,34 @@ const SubHeader = () => {
 
 export default SubHeader;
 
-const AddShreButton = ({ src, alt, onClick, text }) => (
+const AddButton = ({ src, alt, onClick, text }) => (
+  <StyledButton onClick={onClick}>
+    <img src={src} alt={alt} />
+    {text}
+  </StyledButton>
+);
+
+const ShareButton = ({ src, alt, onClick }) => (
   <StyledButton onClick={onClick}>
     <img src={src} alt={alt} />
   </StyledButton>
 );
 
-const StyledContainer = styled.div`
+const ShareButtonList = styled.div`
+  position: absolute;
+  width: 14rem;
+  height: 12rem;
+  top: 11rem;
+  left: 130.1rem;
+  padding: 1rem 0.1rem 1rem 1rem;
+  border-radius: 0.8rem;
+  border: 0.1rem;
+
+  border: 0.1rem solid #cccccc;
+  box-shadow: 0px 2px 12px 0px #00000014;
+`;
+
+const StyledContainer = styled.ul`
   height: 3.7rem;
   display: flex;
   justify-content: space-between;
@@ -96,25 +149,26 @@ const ToUser = styled.div`
   text-align: left;
   padding: 0 1rem;
 
-  @media (max-width: 1248px) {
+  @media (max-width: 124.8rem) {
     padding: 0;
   }
 `;
 
 const StyledProfileNum = styled.div`
-  width: 28px;
-  height: 28px;
-  left: 48px;
-  border: 1px;
+  width: 2.8rem;
+  height: 2.8rem;
+  left: 4.8rem;
+  border: 0.1rem;
   background: #ffffff;
-  border: 1px solid #e3e3e3;
-  border-radius: 140px;
+  border: 0.1rem solid #e3e3e3;
+  border-radius: 14rem;
   font-family: Pretendard;
-  font-size: 12px;
-  line-height: 18px;
+  font-size: 1.2rem;
+  line-height: 1.8rem;
   text-align: left;
-  padding: 4px 4px;
-  @media (max-width: 1248px) {
+  padding: 0.4rem 0.4rem;
+
+  @media (max-width: 124.8rem) {
     display: none;
   }
 `;
@@ -122,9 +176,10 @@ const StyledProfileNum = styled.div`
 const StyledProfile = styled.img`
   width: 2.8rem;
   height: 2.8rem;
-  border-radius: 140px;
+  border-radius: 14rem;
   margin-right: -0.8rem;
   border: 1.4px solid #ffffff;
+
   @media (max-width: 1248px) {
     display: none;
   }
@@ -150,6 +205,7 @@ const StyledMessage = styled.div`
   @media (max-width: 1248px) {
     display: none;
   }
+
   @media (max-width: 768px) {
     display: none;
   }
@@ -167,6 +223,7 @@ const StyledDivider = styled.div`
   width: 0.1rem;
   background-color: ${({ theme }) => theme.gray200};
   margin: 0 1rem;
+
   @media (max-width: 76.8rem) {
     display: none;
   }
@@ -185,8 +242,9 @@ const StyledEmoji = styled.button`
   border-radius: 3.2rem;
   background-color: ${({ theme }) => theme.gray400};
   margin-right: 1rem;
+  color: white;
 
-  @media (max-width: 76.8rem) {
+  @media (max-width: 768px) {
     display: none;
   }
 `;
@@ -194,7 +252,8 @@ const StyledEmoji = styled.button`
 const StyledEmojis = styled.div`
   display: flex;
   align-items: center;
-  @media (max-width: 76.8rem) {
+
+  @media (max-width: 768px) {
     display: none;
   }
 `;

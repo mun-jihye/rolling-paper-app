@@ -1,9 +1,7 @@
+import React from 'react';
+
 const PostPage = () => {
-  const [isVisible, setVisible] = setState(false);
-  return (
-    <NGB>
-      {isVisible && <Button />}
-      <FormPage />
-    </NGB>
-  );
+  return <div>PostPage</div>;
 };
+
+export default PostPage;
