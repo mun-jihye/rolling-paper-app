@@ -6,7 +6,7 @@ import CardModal from 'components/commons/modal/CardModal';
 import PrimaryBtn from 'components/commons/buttons/PrimaryBtn';
 import headerEmojiImg from 'components/assets/images/landingPage/headerEmoji.png';
 import emoji from 'components/assets/images/landingPage/emoji.png';
-import CursorImg from 'components/assets/images/landingPage/cursor.png';
+import cursorImg from 'components/assets/images/landingPage/cursor.png';
 
 const LandingPage = () => {
   return (
@@ -42,7 +42,7 @@ const LandingPage = () => {
           <ImgBox>
             <Card>
               <HeaderEmoji src={headerEmojiImg} alt="해더 이모지 이미지" />
-              <Cursor src={CursorImg} alt="cursor 이미지" />
+              <Cursor src={cursorImg} alt="cursor 이미지" />
               <Emoji src={emoji} alt="이모지 이미지" />
             </Card>
           </ImgBox>
