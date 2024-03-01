@@ -6,7 +6,12 @@ const EditPage = () => {
   return (
     <>
       {toast && (
-        <Toast margin="2rem" setIsAlert={setToast} toast={toast}>
+        <Toast
+          margin="2rem"
+          setIsAlert={setToast}
+          toast={toast}
+          positionLeft={'2rem'}
+        >
           게시글이 등록되었습니다.
         </Toast>
       )}
