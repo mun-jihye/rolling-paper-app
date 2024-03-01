@@ -156,11 +156,20 @@ const SubHeader = () => {
             <StyledButtons>
               <StyledDivider2 />
               <AddButton src={AddImage} alt="추가" text="추가" />
-              <ShareButton onClick={handleClickShare} src={ShareImage} alt="공유" />
+              <ShareButton
+                onClick={handleClickShare}
+                src={ShareImage}
+                alt="공유"
+              />
               {showShareOptions && (
                 <ShareButtonList>
-                  <div onClick={handleShareKakao}>카카오톡 공유</div>
-                  <div onClick={handleShareURL}>URL 복사</div>
+                  <ShareButtonText onClick={handleShareKakao}>
+                    카카오톡 공유
+                  </ShareButtonText>
+
+                  <ShareButtonText onClick={handleShareURL}>
+                    URL 복사
+                  </ShareButtonText>
                 </ShareButtonList>
               )}
             </StyledButtons>
@@ -186,18 +195,38 @@ const ShareButton = ({ src, alt, onClick }) => (
   </StyledButton>
 );
 
+const ShareButtonText = styled.div`
+  width: 130px;
+  height: 50px;
+  padding: 12px 16px 12px 16px;
+  gap: 10px;
+
+  font-family: Pretendard;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 26px;
+  letter-spacing: -0.01em;
+  text-align: left;
+
+  &:hover {
+    background-color: #cccccc; // 배경색을 #CCCCCC로 변경
+  }
+`;
+
 const ShareButtonList = styled.div`
   position: absolute;
   width: 14rem;
   height: 12rem;
-  top: 11rem;
-  left: 130.1rem;
+
   padding: 1rem 0.1rem 1rem 1rem;
   border-radius: 0.8rem;
   border: 0.1rem;
-
+  background-color: white;
   border: 0.1rem solid #cccccc;
   box-shadow: 0px 2px 12px 0px #00000014;
+  top: 120%;
+  left: 15%;
+  z-index: 1;
 `;
 
 const StyledContainer = styled.ul`
@@ -252,7 +281,7 @@ const StyledProfileNum = styled.div`
   text-align: left;
   padding: 0.4rem 0.4rem;
 
-  @media (max-width: 124.8rem) {
+  @media (max-width: 1248px) {
     display: none;
   }
 `;
@@ -364,4 +393,5 @@ const StyledButtons = styled.div`
   display: flex;
   align-items: center;
   gap: 1.2rem;
+  position: relative;
 `;
