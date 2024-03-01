@@ -40,12 +40,12 @@ export default ListPage;
 const PageContainer = styled.main`
   display: flex;
   flex-direction: column;
-  gap: 7.4rem;
+  gap: 5.4rem;
   padding-top: 4rem;
   padding-bottom: 4.2rem;
 
   @media (min-width: 48rem) {
-    gap: 5rem;
+    gap: 3rem;
     padding-top: 5rem;
     padding-bottom: 13.2rem;
   }
@@ -66,7 +66,7 @@ const StyledHtag = styled.h1`
   font-size: 2rem;
   font-weight: 600;
   line-height: 3rem;
-  margin-bottom: 1.2rem;
+  margin-bottom: 0.2rem;
   margin-left: 2rem;
 
   @media (min-width: 48rem) {
@@ -74,7 +74,7 @@ const StyledHtag = styled.h1`
     font-weight: 700;
     line-height: 3.6rem;
     letter-spacing: -0.024rem;
-    margin-bottom: 1.6rem;
+    margin-bottom: 0.6rem;
     margin-left: 2.4rem;
   }
 

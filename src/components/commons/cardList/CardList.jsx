@@ -133,6 +133,7 @@ function CardList({ carouselMargin = 0, className }) {
 
 const StyledContainer = styled.div`
   max-width: 116rem;
+  padding: 0.5rem 0;
   position: ${({ $layout }) => ($layout === 'outer' ? 'relative' : '')};
   overflow: ${({ $layout }) => ($layout === 'outer' ? '' : 'hidden')};
 `;

@@ -68,6 +68,16 @@ const StyledCard = styled.div`
   box-shadow: 0 0.2rem 1.2rem 0 rgba(0, 0, 0, 0.08);
   cursor: pointer;
 
+  &:hover {
+    transform: scale(1.03);
+    transition: transform 0.5s;
+  }
+
+  &:active {
+    transform: scale(0.9);
+    transition: transform 0.5s;
+  }
+
   @media (min-width: 48rem) {
     padding: 3rem 2.4rem 2rem;
     width: 27.5rem;
