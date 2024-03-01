@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 
 const mockData = {
   name: 'Chanyong',
-  color: 'green',
+  color: 'blue',
   imageSource: tempImg,
   profiles: [
     { imageSource: tempImg },
@@ -14,9 +14,10 @@ const mockData = {
     { imageSource: tempImg },
     { imageSource: tempImg },
   ],
+  badges: [{}, {}, {}, {}],
 };
 
-const mockDatas = Array.from({ length: 7 }, () => mockData);
+const mockDatas = Array.from({ length: 13 }, () => mockData);
 
 function CardList({ carouselMargin = 0, className }) {
   const [containerWidth, setContainerWidth] = useState();
