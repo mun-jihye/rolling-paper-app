@@ -1,16 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const data = {
-  relationship: '가족',
-};
-
-const ProfileBadge = () => {
+const ProfileBadge = ({ relationship }) => {
+  console.log(relationship);
   return (
-    <StyledContainer relationship={data.relationship}>
-      <BadgeContent relationship={data.relationship}>
-        {data.relationship}
-      </BadgeContent>
+    <StyledContainer relationship={relationship}>
+      <BadgeContent relationship={relationship}>{relationship}</BadgeContent>
     </StyledContainer>
   );
 };
