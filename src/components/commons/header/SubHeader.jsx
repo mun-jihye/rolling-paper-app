@@ -1,94 +1,3 @@
-/* import React from 'react';
-import styled from 'styled-components';
-import ArrowDown from 'assets/images/headers/ArrowDown.svg';
-import AddImage from 'assets/images/headers/AddImage.svg';
-import ShareImage from 'assets/images/headers/ShareImage.svg';
-import Profile1 from 'assets/images/profiles/profile1.png';
-import Profile2 from 'assets/images/profiles/profile2.png';
-import Profile3 from 'assets/images/profiles/profile3.png';
-//useRef, useState 추가
-import { useState } from 'react';
-
-const userData = {
-  name: 'Ashley Kim',
-  emotion: 'Happy',
-  people: 23,
-};
-
-//리사이즈 이벤트,
-
-const SubHeader = () => {
-  //참조용
-  const handleClick = e => {
-    e.preventDefault();
-  };
-
-  const [showShareOptions, setShowShareOptions] = useState(false);
-
-  //쉐어 버튼
-  const handleClickShare = () => {
-    setShowShareOptions(!showShareOptions);
-  };
-
-  //카카오 공유하기
-  const handleShareKakao = e => {
-    e.preventDefault();
-  };
-
-  //URL 복사하기
-  const handleShareURL = e => {
-    e.preventDefault();
-  };
-
-  return (
-    <>
-      <StyledContainer>
-        <ToUser>To. {userData.name}</ToUser>
-        <StyledSection>
-          <StyledProfiles>
-            {[Profile1, Profile2, Profile3].map((profile, index) => (
-              <StyledProfile key={index} src={profile} alt="Profile" />
-            ))}
-            <StyledProfileNum>+6</StyledProfileNum>
-          </StyledProfiles>
-          <StyledMessage>
-            <StyledEmp>{userData.people}</StyledEmp>명이 작성했어요!
-          </StyledMessage>
-          <StyledDivider />
-          <StyledEmojis>
-            <StyledEmoji onClick={handleClick}>👍24</StyledEmoji>
-            <StyledEmoji onClick={handleClick}>😍16</StyledEmoji>
-            <StyledEmoji onClick={handleClick}>🎉10</StyledEmoji>
-            <StyledArrow src={ArrowDown} alt="More" />
-          </StyledEmojis>
-          <StyledButtons>
-            <StyledDivider2 />
-            <AddButton
-              src={AddImage}
-              alt="추가"
-              onClick={handleClick}
-              text="추가"
-            />
-            <ShareButton
-              onClick={handleClickShare}
-              src={ShareImage}
-              alt="공유"
-            />
-            {showShareOptions && (
-              <ShareButtonList>
-                <div onClick={handleShareKakao}>카카오톡 공유</div>
-                <div onClick={handleShareURL}>URL 복사</div>
-              </ShareButtonList>
-            )}
-          </StyledButtons>
-        </StyledSection>
-      </StyledContainer>
-    </>
-  );
-};
-
-export default SubHeader; */
-
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import ArrowDown from 'assets/images/headers/ArrowDown.svg';
@@ -196,29 +105,28 @@ const ShareButton = ({ src, alt, onClick }) => (
 );
 
 const ShareButtonText = styled.div`
-  width: 130px;
-  height: 50px;
-  padding: 12px 16px 12px 16px;
-  gap: 10px;
-
+  box-sizing: border-box;
+  width: 100%;
+  padding: 12px 16px;
   font-family: Pretendard;
   font-size: 15px;
   font-weight: 400;
   line-height: 26px;
   letter-spacing: -0.01em;
   text-align: left;
+  background-color: white;
+  border-radius: 8px;
+  margin: 0;
 
   &:hover {
-    background-color: #cccccc; // 배경색을 #CCCCCC로 변경
+    background-color: #cccccc;
   }
 `;
-
 const ShareButtonList = styled.div`
   position: absolute;
   width: 14rem;
-  height: 12rem;
+  height: 10rem;
 
-  padding: 1rem 0.1rem 1rem 1rem;
   border-radius: 0.8rem;
   border: 0.1rem;
   background-color: white;
