@@ -9,7 +9,7 @@ const GNB = () => {
   const { pathname } = location;
 
   const isMobile = windowWidth < 768;
-  const isPostOrEditPage = pathname === '/' || pathname === '/edit';
+  const isPostOrEditPage = pathname === '/post' || pathname === '/edit';
 
   useEffect(() => {
     const handleResize = () => {

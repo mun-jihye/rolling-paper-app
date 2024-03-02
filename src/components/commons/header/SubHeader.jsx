@@ -15,6 +15,9 @@ const userData = {
 
 const SubHeader = () => {
   const [showShareOptions, setShowShareOptions] = useState(false);
+  const [showArrowOptions, setArrowShareOptions] = useState(false);
+  const [showAddOptions, setShowAddOptions] = useState(false);
+
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
@@ -28,16 +31,51 @@ const SubHeader = () => {
 
   const isMobile = windowWidth < 768;
 
-  const handleClickShare = () => {
+  const handleShareClick = () => {
     setShowShareOptions(!showShareOptions);
+    setShowAddOptions(false);
+    setArrowShareOptions(false);
   };
 
   const handleShareKakao = () => {
-    // 카카오톡 공유 로직
+    /*
+    window.Kakao.Share.sendCustom({
+      templateId: 104815,
+      templateArgs: {
+        title: 'Rolling Paper로 마음을 전해봐요',
+        description: '평상시 고마웠던 지인에게 마음을 표현해봐요',
+      },
+    });
+    */
   };
 
   const handleShareURL = () => {
-    // URL 복사 로직
+    navigator.clipboard
+      .writeText(window.location.href)
+      .then(() => {
+        alert('URL이 클립보드에 복사되었습니다.');
+        setShowShareOptions(false);
+      })
+      .catch(err => {
+        console.error('URL 복사에 실패했습니다.', err);
+        alert('URL을 복사할 수 없습니다.');
+        setShowShareOptions(false);
+      });
+  };
+
+  const handleArrowClick = () => {
+    setArrowShareOptions(!showArrowOptions);
+    setShowAddOptions(false);
+    setShowShareOptions(false);
+  };
+  const handleEmojiClick = e => {
+    e.preventDefault();
+  };
+
+  const handleAddClick = () => {
+    setShowAddOptions(!showAddOptions);
+    setShowShareOptions(false);
+    setArrowShareOptions(false);
   };
 
   return (
@@ -56,17 +94,28 @@ const SubHeader = () => {
           </StyledMessage>
           <StyledDivider />
           <StyledEmojis>
-            <StyledEmoji>👍24</StyledEmoji>
-            <StyledEmoji>😍16</StyledEmoji>
-            <StyledEmoji>🎉10</StyledEmoji>
-            <StyledArrow src={ArrowDown} alt="More" />
+            <StyledEmoji onClick={handleEmojiClick}>👍24</StyledEmoji>
+            <StyledEmoji onClick={handleEmojiClick}>😍16</StyledEmoji>
+            <StyledEmoji onClick={handleEmojiClick}>🎉10</StyledEmoji>
+            {showArrowOptions && <ArrowOptions>{<div>이모지</div>}</ArrowOptions>}
+            <StyledArrow
+              onClick={handleArrowClick}
+              src={ArrowDown}
+              alt="Arrow"
+            />
           </StyledEmojis>
           {!isMobile && (
             <StyledButtons>
               <StyledDivider2 />
-              <AddButton src={AddImage} alt="추가" text="추가" />
+              <AddButton
+                src={AddImage}
+                alt="추가"
+                text="추가"
+                onClick={handleAddClick}
+              />
+              {showAddOptions && <AddOptions>{<div></div>}</AddOptions>}
               <ShareButton
-                onClick={handleClickShare}
+                onClick={handleShareClick}
                 src={ShareImage}
                 alt="공유"
               />
@@ -75,7 +124,6 @@ const SubHeader = () => {
                   <ShareButtonText onClick={handleShareKakao}>
                     카카오톡 공유
                   </ShareButtonText>
-
                   <ShareButtonText onClick={handleShareURL}>
                     URL 복사
                   </ShareButtonText>
@@ -98,6 +146,34 @@ const AddButton = ({ src, alt, onClick, text }) => (
   </StyledButton>
 );
 
+const ArrowOptions = styled.div`
+  position: absolute;
+  width: 14rem;
+  height: 10.1rem;
+  border-radius: 0.8rem;
+  border: 0.1rem;
+  background-color: white;
+  border: 0.1rem solid #cccccc;
+  box-shadow: 0px 2px 12px 0px #00000014;
+  top: 120%;
+  left: 1%;
+  z-index: 1;
+`;
+
+const AddOptions = styled.div`
+  position: absolute;
+  width: 14rem;
+  height: 10.1rem;
+  border-radius: 0.8rem;
+  border: 0.1rem;
+  background-color: white;
+  border: 0.1rem solid #cccccc;
+  box-shadow: 0px 2px 12px 0px #00000014;
+  top: 120%;
+  left: 1%;
+  z-index: 1;
+`;
+
 const ShareButton = ({ src, alt, onClick }) => (
   <StyledButton onClick={onClick}>
     <img src={src} alt={alt} />
@@ -108,7 +184,6 @@ const ShareButtonText = styled.div`
   box-sizing: border-box;
   width: 100%;
   padding: 12px 16px;
-  font-family: Pretendard;
   font-size: 15px;
   font-weight: 400;
   line-height: 26px;
@@ -125,8 +200,7 @@ const ShareButtonText = styled.div`
 const ShareButtonList = styled.div`
   position: absolute;
   width: 14rem;
-  height: 10rem;
-
+  height: 10.1rem;
   border-radius: 0.8rem;
   border: 0.1rem;
   background-color: white;
