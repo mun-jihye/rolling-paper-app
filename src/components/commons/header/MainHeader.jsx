@@ -32,7 +32,6 @@ const MainHeader = ({ showButton }) => {
 
 export default MainHeader;
 
-// 스타일 정의
 const commonPadding = css`
   padding: 0 5rem;
 

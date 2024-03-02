@@ -15,6 +15,7 @@ const GNB = () => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
     };
+//isMobile 상태 분기 객체
 
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
