@@ -6,6 +6,7 @@ import ShareImage from 'assets/images/headers/ShareImage.svg';
 import Profile1 from 'assets/images/profiles/profile1.png';
 import Profile2 from 'assets/images/profiles/profile2.png';
 import Profile3 from 'assets/images/profiles/profile3.png';
+import Toast from 'components/commons/toast/Toast';
 
 const userData = {
   name: 'Ashley Kim',
@@ -17,8 +18,8 @@ const SubHeader = () => {
   const [showShareOptions, setShowShareOptions] = useState(false);
   const [showArrowOptions, setArrowShareOptions] = useState(false);
   const [showAddOptions, setShowAddOptions] = useState(false);
-
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -49,17 +50,16 @@ const SubHeader = () => {
     */
   };
 
+  //toast 넣어야함
   const handleShareURL = () => {
+    setShowShareOptions(false);
     navigator.clipboard
       .writeText(window.location.href)
       .then(() => {
-        alert('URL이 클립보드에 복사되었습니다.');
-        setShowShareOptions(false);
+        setShowToast(true); // Toast 활성화
       })
       .catch(err => {
         console.error('URL 복사에 실패했습니다.', err);
-        alert('URL을 복사할 수 없습니다.');
-        setShowShareOptions(false);
       });
   };
 
@@ -97,7 +97,9 @@ const SubHeader = () => {
             <StyledEmoji onClick={handleEmojiClick}>👍24</StyledEmoji>
             <StyledEmoji onClick={handleEmojiClick}>😍16</StyledEmoji>
             <StyledEmoji onClick={handleEmojiClick}>🎉10</StyledEmoji>
-            {showArrowOptions && <ArrowOptions>{<div>이모지</div>}</ArrowOptions>}
+            {showArrowOptions && (
+              <ArrowOptions>{<div>이모지</div>}</ArrowOptions>
+            )}
             <StyledArrow
               onClick={handleArrowClick}
               src={ArrowDown}
@@ -133,6 +135,7 @@ const SubHeader = () => {
           )}
         </StyledSection>
       </StyledContainer>
+      {showToast && <Toast setIsAlert={setShowToast} toast={showToast} />}
     </>
   );
 };
@@ -154,7 +157,7 @@ const ArrowOptions = styled.div`
   border: 0.1rem;
   background-color: white;
   border: 0.1rem solid #cccccc;
-  box-shadow: 0px 2px 12px 0px #00000014;
+  box-shadow: 0 0.2rem 1.2rem 0 #00000014;
   top: 120%;
   left: 1%;
   z-index: 1;
@@ -168,7 +171,7 @@ const AddOptions = styled.div`
   border: 0.1rem;
   background-color: white;
   border: 0.1rem solid #cccccc;
-  box-shadow: 0px 2px 12px 0px #00000014;
+  box-shadow: 0 0.2rem 1.2rem 0 #00000014;
   top: 120%;
   left: 1%;
   z-index: 1;
@@ -183,14 +186,14 @@ const ShareButton = ({ src, alt, onClick }) => (
 const ShareButtonText = styled.div`
   box-sizing: border-box;
   width: 100%;
-  padding: 12px 16px;
-  font-size: 15px;
+  padding: 1.2rem 1.6rem;
+  font-size: 1.5rem;
   font-weight: 400;
-  line-height: 26px;
+  line-height: 2.6rem;
   letter-spacing: -0.01em;
   text-align: left;
   background-color: white;
-  border-radius: 8px;
+  border-radius: 0.8rem;
   margin: 0;
 
   &:hover {
@@ -205,7 +208,7 @@ const ShareButtonList = styled.div`
   border: 0.1rem;
   background-color: white;
   border: 0.1rem solid #cccccc;
-  box-shadow: 0px 2px 12px 0px #00000014;
+  box-shadow: 0 0.2rem 1.2rem 0 #00000014;
   top: 120%;
   left: 15%;
   z-index: 1;
@@ -220,11 +223,11 @@ const StyledContainer = styled.ul`
   max-width: 120rem;
   padding: 0 2rem;
 
-  @media (max-width: 124.8rem) {
+  @media (min-width: 768px) {
     padding: 0 1.5rem;
   }
 
-  @media (max-width: 76.8rem) {
+  @media (min-width: 375px) and (max-width: 767px) {
     padding: 0 1rem;
   }
 `;
@@ -263,7 +266,7 @@ const StyledProfileNum = styled.div`
   text-align: left;
   padding: 0.4rem 0.4rem;
 
-  @media (max-width: 1248px) {
+  @media (max-width: 767px) {
     display: none;
   }
 `;
@@ -273,7 +276,7 @@ const StyledProfile = styled.img`
   height: 2.8rem;
   border-radius: 14rem;
   margin-right: -0.8rem;
-  border: 1.4px solid #ffffff;
+  border: 0.14rem solid #ffffff;
 
   @media (max-width: 1248px) {
     display: none;
@@ -283,10 +286,7 @@ const StyledProfile = styled.img`
 const StyledProfiles = styled.div`
   display: flex;
   margin-right: 1.5rem;
-  @media (max-width: 1248px) {
-    display: none;
-  }
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     display: none;
   }
 `;
@@ -308,7 +308,7 @@ const StyledMessage = styled.div`
 
 const StyledEmp = styled.p`
   font-weight: 900;
-  @media (max-width: 76.8rem) {
+  @media (max-width: 768px) {
     display: none;
   }
 `;

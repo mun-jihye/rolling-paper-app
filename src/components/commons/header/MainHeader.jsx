@@ -35,11 +35,11 @@ export default MainHeader;
 const commonPadding = css`
   padding: 0 5rem;
 
-  @media (max-width: 1248px) {
+  @media (min-width: 768px) {
     padding: 0 1rem;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 767px) { 
     padding: 0 0.5rem;
   }
 `;
@@ -49,7 +49,7 @@ const StyledContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   margin: 0 auto;
-  max-width: 124.8rem;
+  max-width: 1248px; 
   ${commonPadding}
 `;
 
