@@ -2,7 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import GNB from 'components/commons/header/GNB';
-import CardModal from 'components/commons/modal/CardModal';
+import cardImg from 'assets/images/landingPage/cardImg.png';
 import PrimaryBtn from 'components/commons/buttons/PrimaryBtn';
 import headerEmojiImg from 'assets/images/landingPage/headerEmoji.png';
 import emoji from 'assets/images/landingPage/emoji.png';
@@ -24,9 +24,7 @@ const LandingPage = () => {
             </div>
           </TextBox>
           <ImgBox>
-            <CardList>
-              <CardModal />
-            </CardList>
+            <img src={cardImg} alt="카드 이미지" />
           </ImgBox>
         </BlueBox>
         <BlueBoxReverse>

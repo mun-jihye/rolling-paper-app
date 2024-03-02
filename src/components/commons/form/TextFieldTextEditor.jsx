@@ -1,14 +1,14 @@
 import style from 'styled-components';
-import bold from 'components/assets/images/icons/bold_icon.svg';
-import italic from 'components/assets/images/icons/italics.svg';
-import underScore from 'components/assets/images/icons/under_score.svg';
-import centerAligned from 'components/assets/images/icons/center_aligned.svg';
-import rightAligned from 'components/assets/images/icons/right_aligned.svg';
-import justify from 'components/assets/images/icons/justify.svg';
-import numbering from 'components/assets/images/icons/numbering.svg';
-import bullet from 'components/assets/images/icons/bullet.svg';
-import fill from 'components/assets/images/icons/fill.svg';
-import fontSize from 'components/assets/images/icons/font_size.svg';
+import bold from 'assets/images/forms/bold_icon.svg';
+import italic from 'assets/images/forms/italics.svg';
+import underScore from 'assets/images/forms/under_score.svg';
+import centerAligned from 'assets/images/forms/center_aligned.svg';
+import rightAligned from 'assets/images/forms/right_aligned.svg';
+import justify from 'assets/images/forms/justify.svg';
+import numbering from 'assets/images/forms/numbering.svg';
+import bullet from 'assets/images/forms/bullet.svg';
+import fill from 'assets/images/forms/fill.svg';
+import fontSize from 'assets/images/forms/font_size.svg';
 
 export default function TextFieldTextEditor() {
   return (
