@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from 'react';
 const mockData = {
   name: 'Chanyong',
   color: 'blue',
-  imageSource: tempImg,
+  imageSource: '',
   profiles: [
     { imageSource: tempImg },
     { imageSource: tempImg },
@@ -28,20 +28,17 @@ function CardList({ carouselMargin = 0, className }) {
   const [startTouchPosition, setStartTouchPosition] = useState(0);
 
   const container = useRef();
-  const slideBar = useRef();
   const card = useRef();
 
   // PC 사이즈에서 화살표 클릭으로 캐러셀 제어
   const handleLeftClick = () => {
-    const slideNode = slideBar.current;
-    setSlidePosition(slidePosition + 118);
-    slideNode.style.transform = `translate(${slidePosition + 118}rem)`;
+    const carouselDistanceAtPC = 118;
+    setSlidePosition(slidePosition + carouselDistanceAtPC);
   };
 
   const handleRightClick = () => {
-    const slideNode = slideBar.current;
-    setSlidePosition(slidePosition - 118);
-    slideNode.style.transform = `translate(${slidePosition - 118}rem)`;
+    const carouselDistanceAtPC = 118;
+    setSlidePosition(slidePosition - carouselDistanceAtPC);
   };
 
   // 태블릿, 모바일 사이즈에서 터치를 통해 캐러셀 제어
@@ -54,11 +51,9 @@ function CardList({ carouselMargin = 0, className }) {
     if (!isDragging) return;
     if (carouselLength <= containerWidth) return;
 
-    const slideNode = slideBar.current;
     const currentTouchPosition = event.touches[0].clientX;
     const difference = startTouchPosition - currentTouchPosition;
 
-    slideNode.style.transform = `translate(${slidePosition - difference / 10}rem)`;
     setSlidePosition(slidePosition - difference / 10);
     setStartTouchPosition(currentTouchPosition);
   }
@@ -69,17 +64,14 @@ function CardList({ carouselMargin = 0, className }) {
     if (carouselLength <= containerWidth) return;
 
     // 캐러셀 재위치
-    const slideNode = slideBar.current;
-
     if (slidePosition > 0) {
-      slideNode.style.transform = `translate(0)`;
       setSlidePosition(0);
       return;
     }
 
     if (slidePosition < (containerWidth - carouselLength) / 10) {
-      slideNode.style.transform = `translate(${(containerWidth - carouselLength) / 10}rem)`;
       setSlidePosition((containerWidth - carouselLength) / 10);
+      console.log(containerWidth, carouselLength);
       return;
     }
   }
@@ -91,6 +83,7 @@ function CardList({ carouselMargin = 0, className }) {
         ? 220 * mockDatas?.length - 12
         : 295 * mockDatas?.length - 20,
     );
+    setSlidePosition(0);
   }, [carouselMargin]);
 
   return (
@@ -101,7 +94,10 @@ function CardList({ carouselMargin = 0, className }) {
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        <StyledSlideBar ref={slideBar} $carouselMargin={carouselMargin}>
+        <StyledSlideBar
+          $carouselMargin={carouselMargin}
+          style={{ transform: `translate(${slidePosition}rem)` }}
+        >
           {mockDatas.map((mockData, index) => {
             return (
               <div key={index + 1} ref={card}>

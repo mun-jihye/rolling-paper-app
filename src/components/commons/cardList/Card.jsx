@@ -56,8 +56,10 @@ const StyledCard = styled.div`
   border: 0.1rem solid rgba(0, 0, 0, 0.1);
   background: ${({ theme, $data }) =>
     $data?.imageSource
-      ? `linear-gradient(180deg, rgba(0, 0, 0, 0.54) 0%, rgba(0, 0, 0, 0.54) 100%), url(${$data?.imageSource})`
-      : theme[BACK_GROUND[$data?.color][0]]};
+      ? // 배경 이미지가 존재할 경우, 배경을 이미지로 설정
+        `linear-gradient(180deg, rgba(0, 0, 0, 0.54) 0%, rgba(0, 0, 0, 0.54) 100%), url(${$data?.imageSource})`
+      : // 배경 이미지 없으면 원하는 색의 default 배경 설정
+        theme[BACK_GROUND[$data?.color][0]]};
   background-image: ${({ $data }) =>
     $data?.imageSource ? '' : `url(${BACK_GROUND[$data?.color][1]})`};
   background-position: ${({ $data }) =>
