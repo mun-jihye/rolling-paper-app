@@ -4,13 +4,20 @@ import GNB from 'components/commons/header/GNB';
 import { TextFieldInput } from 'components/commons/form';
 
 const PostPage = () => {
+  const disabled = false;
+  const error = {};
+
   return (
     <>
       <GNB />
       <AddPostForm className="post-container">
         <InputContainer>
           <h2>To</h2>
-          <TextFieldInput text={'받는 사람 이름을 입력해주세요'} />
+          <TextFieldInput
+            placeholder={'받는 사람 이름을 입력해주세요'}
+            disabled={disabled}
+            error={error}
+          />
         </InputContainer>
         <SelectContainer>
           <Description>
@@ -37,7 +44,7 @@ const AddPostForm = styled.div`
   padding: 5.7rem 0 35rem;
 
   background-color: gray;
-  z-index: -1;
+  z-index: 1;
 `;
 
 const InputContainer = styled.div`
@@ -55,23 +62,14 @@ const InputContainer = styled.div`
     text-align: left;
   }
 `;
-const NameInput = styled.input`
-  position: relative;
-  width: 72rem;
-  height: 5rem;
-  padding: 12px 16px;
-  border-radius: 0.8rem;
-  border: 1px solid ${({ theme }) => theme.gray300};
-  gap: 10px;
-  color: ${({ theme }) => theme.gray500};
-`;
+
 const SelectContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-self: flex-start;
+  align-items: flex-end;
 
   position: relative;
-  padding: 5rem 0 0;
+  padding-top: 5rem;
 `;
 const Description = styled.div`
   & > h2 {
@@ -79,7 +77,6 @@ const Description = styled.div`
     font-weight: 700;
     line-height: 4.2rem;
     letter-spacing: -0.01em;
-    text-align: left;
   }
 `;
 const SelectButton = styled.div``;
