@@ -1,6 +1,7 @@
 import { React } from 'react';
 import styled from 'styled-components';
 import GNB from 'components/commons/header/GNB';
+import { TextFieldInput } from 'components/commons/form';
 
 const PostPage = () => {
   return (
@@ -9,7 +10,7 @@ const PostPage = () => {
       <AddPostForm className="post-container">
         <InputContainer>
           <h2>To</h2>
-          <NameInput />
+          <TextFieldInput text={'받는 사람 이름을 입력해주세요'} />
         </InputContainer>
         <SelectContainer>
           <Description>
@@ -27,15 +28,22 @@ const PostPage = () => {
 
 const AddPostForm = styled.div`
   display: flex;
-  position: relative;
-  top: 122px;
-  padding: 100px 0;
   flex-direction: column;
-  background-color: yellow;
+  justify-content: space-between;
+  align-items: center;
+
+  position: relative;
+  inset: 0;
+  padding: 5.7rem 0 35rem;
+
+  background-color: gray;
+  z-index: -1;
 `;
 
 const InputContainer = styled.div`
   display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   background-color: green;
   height: 100px;
 
@@ -49,11 +57,21 @@ const InputContainer = styled.div`
 `;
 const NameInput = styled.input`
   position: relative;
+  width: 72rem;
+  height: 5rem;
+  padding: 12px 16px;
+  border-radius: 0.8rem;
+  border: 1px solid ${({ theme }) => theme.gray300};
+  gap: 10px;
+  color: ${({ theme }) => theme.gray500};
 `;
 const SelectContainer = styled.div`
-  position: relative;
   display: flex;
   flex-direction: column;
+  align-self: flex-start;
+
+  position: relative;
+  padding: 5rem 0 0;
 `;
 const Description = styled.div`
   & > h2 {
