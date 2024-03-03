@@ -10,7 +10,7 @@ const ListPage = () => {
   return (
     <div>
       <MainHeader />
-      <PageContainer>
+      <MainContainer>
         <SectionConainer>
           <StyledHtag>인기 롤링 페이퍼 🔥</StyledHtag>
           <CardList
@@ -20,24 +20,24 @@ const ListPage = () => {
           />
         </SectionConainer>
         <SectionConainer>
-          <StyledHtag>최근에 만든 롤링 페이퍼⭐️</StyledHtag>
+          <StyledHtag>최근에 만든 롤링 페이퍼 ⭐️</StyledHtag>
           <CardList
             carouselMargin={
               deviceType === 'PC' ? 0 : deviceType === 'Tablet' ? 2.4 : 2
             }
           />
         </SectionConainer>
-        <StyledFooter>
-          <ListPagePrimaryBtn>나도 만들어보기</ListPagePrimaryBtn>
-        </StyledFooter>
-      </PageContainer>
+      </MainContainer>
+      <StyledFooter>
+        <ListPagePrimaryBtn>나도 만들어보기</ListPagePrimaryBtn>
+      </StyledFooter>
     </div>
   );
 };
 
 export default ListPage;
 
-const PageContainer = styled.main`
+const MainContainer = styled.main`
   display: flex;
   flex-direction: column;
   gap: 5.4rem;
@@ -99,7 +99,6 @@ const StyledFooter = styled.footer`
 const ListPagePrimaryBtn = styled(PrimaryBtn)`
   width: 100%;
   max-widht: 116rem;
-  transition: transform 0.5s;
 
   @media (min-width: 75rem) {
     width: 28rem;

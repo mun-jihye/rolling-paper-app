@@ -12,28 +12,28 @@ function Card({ data }) {
       <StyledContainer $isProfile={true}>
         <StyledH3tag $data={data}>{`To. ${data?.name}`}</StyledH3tag>
         <StyledContainer $isImage={true}>
-          {data?.profiles?.slice(0, 3).map((profile, index) => {
+          {data?.recentMessages?.slice(0, 3).map((message, index) => {
             return (
               <ProfileContainer key={index + 1} $index={index}>
-                <Profile src={profile?.imageSource} $isModal={false} />
+                <Profile src={message?.profileImageURL} $isModal={false} />
               </ProfileContainer>
             );
           })}
-          {data?.profiles?.length > 3 && (
-            <LastProfile>+{data?.profiles?.length - 3}</LastProfile>
+          {data?.messageCount > 3 && (
+            <LastProfile>+{data?.messageCount - 3}</LastProfile>
           )}
         </StyledContainer>
         <StyledText $data={data}>
           <StyledText $data={data} $isNumber={true}>
-            {data?.profiles?.length}
+            {data?.messageCount}
           </StyledText>
           명이 작성했어요!
         </StyledText>
       </StyledContainer>
       <StyledHrtag />
       <StyledContainer $isBadge={true}>
-        {data?.badges?.slice(0, 3).map((badge, index) => {
-          return <CardEmojiBadge key={index + 1} data={badge} />;
+        {data?.topReactions?.slice(0, 3).map((reaction, index) => {
+          return <CardEmojiBadge key={index + 1} data={reaction} />;
         })}
       </StyledContainer>
     </StyledCard>
@@ -42,7 +42,7 @@ function Card({ data }) {
 
 const BACK_GROUND = {
   purple: ['purple200', purplePattern],
-  orange: ['orange200', orangePattern],
+  beige: ['orange200', orangePattern],
   blue: ['blue200', bluePattern],
   green: ['green200', greenPattern],
 };
@@ -55,18 +55,20 @@ const StyledCard = styled.div`
   border-radius: 1.6rem;
   border: 0.1rem solid rgba(0, 0, 0, 0.1);
   background: ${({ theme, $data }) =>
-    $data?.imageSource
+    $data?.backgroundImageURL
       ? // 배경 이미지가 존재할 경우, 배경을 이미지로 설정
-        `linear-gradient(180deg, rgba(0, 0, 0, 0.54) 0%, rgba(0, 0, 0, 0.54) 100%), url(${$data?.imageSource})`
+        `linear-gradient(180deg, rgba(0, 0, 0, 0.54) 0%, rgba(0, 0, 0, 0.54) 100%), url(${$data?.backgroundImageURL})`
       : // 배경 이미지 없으면 원하는 색의 default 배경 설정
-        theme[BACK_GROUND[$data?.color][0]]};
+        theme[BACK_GROUND[$data?.backgroundColor][0]]};
   background-image: ${({ $data }) =>
-    $data?.imageSource ? '' : `url(${BACK_GROUND[$data?.color][1]})`};
+    $data?.backgroundImageURL
+      ? ''
+      : `url(${BACK_GROUND[$data?.backgroundColor][1]})`};
   background-position: ${({ $data }) =>
-    $data?.imageSource ? 'center' : 'right bottom'};
+    $data?.backgroundImageURL ? 'center' : 'right bottom'};
   background-repeat: no-repeat;
   background-size: ${({ $data }) =>
-    $data?.imageSource ? 'cover' : '10.74rem'};
+    $data?.backgroundImageURL ? 'cover' : '10.74rem'};
   box-shadow: 0 0.2rem 1.2rem 0 rgba(0, 0, 0, 0.08);
   cursor: pointer;
 
@@ -85,14 +87,14 @@ const StyledCard = styled.div`
     width: 27.5rem;
     height: 26rem;
     background-size: ${({ $data }) =>
-      $data?.imageSource ? 'cover' : '14.2rem'};
+      $data?.backgroundImageURL ? 'cover' : '14.2rem'};
   }
 `;
 
 const StyledH3tag = styled.h3`
   overflow: hidden;
   color: ${({ theme, $data }) =>
-    $data?.imageSource ? theme.white : theme.gray900};
+    $data?.backgroundImageURL ? theme.white : theme.gray900};
   text-overflow: ellipsis;
   font-size: 1.8rem;
   font-style: normal;
@@ -110,7 +112,7 @@ const StyledH3tag = styled.h3`
 const StyledText = styled.div`
   display: inline-block;
   color: ${({ theme, $data }) =>
-    $data?.imageSource ? theme.white : theme.gray700};
+    $data?.backgroundImageURL ? theme.white : theme.gray700};
   font-size: 1.4rem;
   font-style: normal;
   font-weight: ${({ $isNumber }) => ($isNumber ? '700' : '400')};

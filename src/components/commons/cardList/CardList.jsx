@@ -6,15 +6,16 @@ import { useEffect, useRef, useState } from 'react';
 
 const mockData = {
   name: 'Chanyong',
-  color: 'blue',
-  imageSource: '',
-  profiles: [
-    { imageSource: tempImg },
-    { imageSource: tempImg },
-    { imageSource: tempImg },
-    { imageSource: tempImg },
+  backgroundColor: 'beige',
+  backgroundImageURL: null,
+  messageCount: 4,
+  recentMessages: [
+    { profileImageURL: tempImg },
+    { profileImageURL: tempImg },
+    { profileImageURL: tempImg },
+    { profileImageURL: tempImg },
   ],
-  badges: [{}, {}, {}, {}],
+  topReactions: [{}, {}, {}, {}],
 };
 
 const mockDatas = Array.from({ length: 13 }, () => mockData);
