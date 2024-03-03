@@ -2,6 +2,9 @@ import React from 'react';
 import Profile from '../Profile';
 import profile from 'assets/images/profiles/profile1.png';
 import styled from 'styled-components';
+import Date from '../cards/Date';
+import FromTitle from '../cards/FromTitle';
+import CardMessage from '../cards/CardMessage';
 
 const data = {
   date: '2023.07.08',
@@ -14,18 +17,12 @@ const CardModal = () => {
       <Header>
         <FlexContainer>
           <Profile src={profile} isModal={true} />
-          <Title>
-            <div>
-              {`From. `}
-              <strong>김동훈</strong>
-            </div>
-            <div>벳지</div>
-          </Title>
+          <FromTitle />
         </FlexContainer>
-        <Date>{data.date}</Date>
+        <Date date={data.date} />
       </Header>
       <Hr />
-      <Message>{data.message}</Message>
+      <CardMessage message={data.message} />
     </>
   );
 };
@@ -42,32 +39,9 @@ const FlexContainer = styled.div`
   align-items: center;
   gap: 1rem;
 `;
-const Title = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  font-size: 2rem;
-  line-height: 2.4rem;
-`;
-const Date = styled.div`
-  font-size: 1.4rem;
-  line-height: 2rem;
-  letter-spacing: -0.5%;
-  color: ${({ theme }) => theme.gray400};
-`;
 const Hr = styled.hr`
   height: 1px;
   border: none;
   background-color: ${({ theme }) => theme.gray200};
-`;
-const Message = styled.div`
-  padding: 2rem 0;
-  font-size: 1.8rem;
-  line-height: 2.8rem;
-  letter-spacing: -0.01%;
-  color: #5a5a5a;
-  max-height: 24rem;
-  overflow: scroll;
 `;
 export default CardModal;
