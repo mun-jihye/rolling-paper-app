@@ -13,7 +13,7 @@ const Message = styled.div`
   max-height: 11rem;
   overflow: scroll;
 
-  @media (min-width: 375px) and (max-width: 767px) {
+  @media ${({ theme }) => theme.breakpoint.mobile} {
     font-size: 1.5rem;
     line-height: 2.2rem;
     max-height: 5.6rem;

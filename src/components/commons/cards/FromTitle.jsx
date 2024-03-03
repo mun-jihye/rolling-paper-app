@@ -30,7 +30,7 @@ const StyledTitle = styled.div`
   span {
     font-weight: ${({ theme }) => theme.fontWeights.bold};
   }
-  @media (min-width: 375px) and (max-width: 767px) {
+  @media ${({ theme }) => theme.breakpoint.mobile} {
     font-size: 1.8rem;
     line-height: 2.8rem;
     span {
