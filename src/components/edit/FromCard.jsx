@@ -52,6 +52,7 @@ const Content = styled.div`
   flex-direction: column;
   position: relative;
   height: 13.6rem;
+
   @media ${({ theme }) => theme.breakpoint.mobile} {
     height: 9.6rem;
   }

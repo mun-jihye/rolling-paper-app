@@ -11,12 +11,12 @@ export const CardContainer = styled.div`
   padding: 3.5rem;
   box-shadow: 0px 2px 12px 0px #00000014;
 
-  @media (max-width: 1248px) {
+  @media ${({ theme }) => theme.breakpoint.tablet} {
     width: 35.2rem;
     height: 28.4rem;
   }
 
-  @media (max-width: 768px) {
+  @media ${({ theme }) => theme.breakpoint.mobile} {
     width: 32rem;
     height: 23rem;
     padding: 3rem 2rem;
