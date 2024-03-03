@@ -44,5 +44,6 @@ const Hr = styled.hr`
   height: 1px;
   border: none;
   background-color: ${({ theme }) => theme.gray200};
+  margin-bottom: 2rem;
 `;
 export default CardModal;

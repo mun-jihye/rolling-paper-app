@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Date = ({ date, isModal }) => {
-  return <StyledDate>{date}</StyledDate>;
+  return <StyledDate isModal={isModal}>{date}</StyledDate>;
 };
 
 const StyledDate = styled.div`
