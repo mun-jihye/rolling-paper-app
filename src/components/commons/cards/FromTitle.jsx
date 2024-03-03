@@ -28,7 +28,7 @@ const StyledTitle = styled.div`
   line-height: 2.4rem;
   gap: 0.6rem;
   span {
-    font-weight: 700;
+    font-weight: ${({ theme }) => theme.fontWeights.bold};
   }
   @media (min-width: 375px) and (max-width: 767px) {
     font-size: 1.8rem;
