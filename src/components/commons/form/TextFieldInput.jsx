@@ -2,21 +2,33 @@ import { useState } from 'react';
 import style from 'styled-components';
 import { InputStatus } from 'components/commons/form';
 
-export default function TextFieldInput() {
+export default function TextFieldInput({
+  placeholder,
+  disabled,
+  error,
+  handleChange,
+  ...props
+}) {
   const [status, setStatus] = useState(InputStatus.inActive);
 
   const handleFocus = () => {
     setStatus(InputStatus.focused);
   };
 
-  const handleBlur = () => {
-    setStatus(InputStatus.inActive);
+  const handleBlur = e => {
+    if (!e.target.value) {
+      error.message = '값을 입력해 주세요.';
+      setStatus(InputStatus.error);
+    } else {
+      setStatus(InputStatus.inActive);
+    }
   };
 
-  const handleChange = e => {
+  const handleInputChange = e => {
     if (e.target.value) {
       setStatus(InputStatus.active);
     }
+    handleChange(e);
   };
 
   const handleMouseOver = () => {
@@ -30,16 +42,18 @@ export default function TextFieldInput() {
   return (
     <StyledDiv className="input-container">
       <StyledInput
-        placeholder="input-Placeholder"
+        {...props}
+        placeholder={placeholder}
         type="text"
         $status={status}
         onFocus={handleFocus}
         onBlur={handleBlur}
-        onChange={handleChange}
+        onChange={handleInputChange}
         onMouseOver={handleMouseOver}
         onMouseOut={handleMouseOut}
+        disabled={disabled}
       />
-      <StyledSpan>Error Message</StyledSpan>
+      <StyledSpan>{error.message}</StyledSpan>
     </StyledDiv>
   );
 }
