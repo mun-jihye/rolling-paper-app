@@ -8,8 +8,11 @@ const Date = ({ date }) => {
 const StyledDate = styled.div`
   font-size: 1.4rem;
   line-height: 2rem;
-  letter-spacing: -0.5%;
+  letter-spacing: -0.005rem;
   color: ${({ theme }) => theme.gray400};
+  position: absolute;
+  bottom: 0;
+  left: 0;
 `;
 
 export default Date;
