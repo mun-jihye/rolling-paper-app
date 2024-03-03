@@ -1,24 +1,8 @@
 import styled from 'styled-components';
 import Card from './Card';
-import tempImg from 'assets/images/cardList/tempImg.jpg';
 import arrowImg from 'assets/images/cardList/arrow.png';
 import { useEffect, useRef, useState } from 'react';
-
-const mockData = {
-  name: 'Chanyong',
-  backgroundColor: 'beige',
-  backgroundImageURL: null,
-  messageCount: 4,
-  recentMessages: [
-    { profileImageURL: tempImg },
-    { profileImageURL: tempImg },
-    { profileImageURL: tempImg },
-    { profileImageURL: tempImg },
-  ],
-  topReactions: [{}, {}, {}, {}],
-};
-
-const mockDatas = Array.from({ length: 13 }, () => mockData);
+import mockDatas from 'data/listPage';
 
 function CardList({ carouselMargin = 0, className }) {
   const [containerWidth, setContainerWidth] = useState();
