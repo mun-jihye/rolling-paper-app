@@ -4,6 +4,9 @@ import FromTitle from 'components/commons/cards/FromTitle';
 import CardMessage from 'components/commons/cards/CardMessage';
 import Date from 'components/commons/cards/Date';
 import styled from 'styled-components';
+import { useState } from 'react';
+import { Modal } from 'components/commons/modal/modal';
+import CardModal from 'components/commons/modal/CardModal';
 
 const FromCard = ({
   profileImageURL,
@@ -12,20 +15,40 @@ const FromCard = ({
   content,
   formattedDate,
 }) => {
+  const [showModal, setShowModal] = useState(false);
+  const handleClick = () => {
+    setShowModal(true);
+  };
+  const handleClose = () => {
+    setShowModal(false);
+  };
   return (
-    <CardContainer>
-      <Header>
-        <FlexContainer>
-          <Profile src={profileImageURL} isModal={true} />
-          <FromTitle sender={sender} relationship={relationship} />
-        </FlexContainer>
-      </Header>
-      <Hr />
-      <Content>
-        <CardMessage message={content} isModal={false} />
-        <Date date={formattedDate} />
-      </Content>
-    </CardContainer>
+    <>
+      <CardContainer onClick={handleClick}>
+        <Header>
+          <FlexContainer>
+            <Profile src={profileImageURL} isCard={true} />
+            <FromTitle sender={sender} relationship={relationship} />
+          </FlexContainer>
+        </Header>
+        <Hr />
+        <Content>
+          <CardMessage message={content} isModal={false} />
+          <Date date={formattedDate} isModal={false} />
+        </Content>
+      </CardContainer>
+      {showModal && (
+        <Modal showModal={showModal} handleClose={handleClose}>
+          <CardModal
+            profileImageURL={profileImageURL}
+            sender={sender}
+            relationship={relationship}
+            content={content}
+            formattedDate={formattedDate}
+          />
+        </Modal>
+      )}
+    </>
   );
 };
 

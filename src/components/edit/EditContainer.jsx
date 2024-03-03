@@ -4,7 +4,8 @@ export const EditContainer = styled.div`
   width: 100%;
   margin: 0 auto;
   padding: 10rem 2.4rem;
-  background-color: ${({ backgroundColor }) => backgroundColor};
+  background-color: ${({ backgroundColor, theme }) =>
+    theme[backgroundColor + '200']};
   background-image: ${({ backgroundImageURL }) => backgroundImageURL};
 
   @media ${({ theme }) => theme.breakpoint.tablet} {

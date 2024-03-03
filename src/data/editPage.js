@@ -1,7 +1,7 @@
 export const editData = {
   id: 2,
   name: '강영훈',
-  backgroundColor: '#FFE2AD',
+  backgroundColor: 'purple',
   backgroundImageURL: null,
   createdAt: '2023-10-26T13:19:31.401765Z',
   messageCount: 3,

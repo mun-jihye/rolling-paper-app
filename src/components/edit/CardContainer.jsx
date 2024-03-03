@@ -10,6 +10,7 @@ export const CardContainer = styled.div`
   border-radius: 1.6rem;
   padding: 3.5rem;
   box-shadow: 0px 2px 12px 0px #00000014;
+  cursor: pointer;
 
   @media ${({ theme }) => theme.breakpoint.tablet} {
     width: 35.2rem;
