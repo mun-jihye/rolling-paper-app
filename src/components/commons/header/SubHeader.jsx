@@ -21,6 +21,8 @@ const SubHeader = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [showToast, setShowToast] = useState(false);
 
+  const isMobile = windowWidth < 768;
+
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
@@ -30,8 +32,6 @@ const SubHeader = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const isMobile = windowWidth < 768;
-
   const handleShareClick = () => {
     setShowShareOptions(!showShareOptions);
     setShowAddOptions(false);
@@ -39,24 +39,29 @@ const SubHeader = () => {
   };
 
   const handleShareKakao = () => {
-    /*
-    window.Kakao.Share.sendCustom({
-      templateId: 104815,
-      templateArgs: {
-        title: 'Rolling Paper로 마음을 전해봐요',
-        description: '평상시 고마웠던 지인에게 마음을 표현해봐요',
-      },
-    });
-    */
+    try {
+      if (!window.Kakao.isInitialized()) {
+        window.Kakao.init('5bfc0942d20d49f4c09a2f23ef6026d1');
+      }
+
+      window.Kakao.Link.sendCustom({
+        templateId: 104962,
+        templateArgs: {
+          title: 'Rolling Paper로 마음을 전해봐요',
+          description: '평상시 고마웠던 지인에게 마음을 표현해봐요',
+        },
+      });
+    } catch (error) {
+      console.error('카카오 공유 기능 에러:', error);
+    }
   };
 
-  //toast 넣어야함
   const handleShareURL = () => {
     setShowShareOptions(false);
     navigator.clipboard
       .writeText(window.location.href)
       .then(() => {
-        setShowToast(true); // Toast 활성화
+        setShowToast(true);
       })
       .catch(err => {
         console.error('URL 복사에 실패했습니다.', err);
@@ -103,7 +108,7 @@ const SubHeader = () => {
             <StyledArrow
               onClick={handleArrowClick}
               src={ArrowDown}
-              alt="Arrow"
+              alt="화살표"
             />
           </StyledEmojis>
           {!isMobile && (
@@ -154,13 +159,13 @@ const ArrowOptions = styled.div`
   width: 14rem;
   height: 10.1rem;
   border-radius: 0.8rem;
-  border: 0.1rem;
   background-color: white;
   border: 0.1rem solid #cccccc;
   box-shadow: 0 0.2rem 1.2rem 0 #00000014;
-  top: 120%;
-  left: 1%;
-  z-index: 1;
+  top: 100%;
+  left: 30%;
+  transform: translateX(-50%);
+  z-index: -1;
 `;
 
 const AddOptions = styled.div`
@@ -220,7 +225,7 @@ const StyledContainer = styled.ul`
   justify-content: space-between;
   align-items: center;
   margin: 0 auto;
-  max-width: 120rem;
+  max-width: 126rem;
   padding: 0 2rem;
 
   @media (min-width: 768px) {
@@ -247,8 +252,8 @@ const ToUser = styled.div`
   text-align: left;
   padding: 0 1rem;
 
-  @media (max-width: 124.8rem) {
-    padding: 0;
+  @media (max-width: 1248px) {
+    padding: 0rem;
   }
 `;
 
@@ -266,7 +271,7 @@ const StyledProfileNum = styled.div`
   text-align: left;
   padding: 0.4rem 0.4rem;
 
-  @media (max-width: 767px) {
+  @media (max-width: 1248px) {
     display: none;
   }
 `;
@@ -319,7 +324,7 @@ const StyledDivider = styled.div`
   background-color: ${({ theme }) => theme.gray200};
   margin: 0 1rem;
 
-  @media (max-width: 76.8rem) {
+  @media (max-width: 768px) {
     display: none;
   }
 `;
