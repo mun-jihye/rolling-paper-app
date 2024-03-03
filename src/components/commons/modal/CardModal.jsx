@@ -12,7 +12,6 @@ const CardModal = ({
   content,
   formattedDate,
 }) => {
-  console.log(formattedDate);
   return (
     <>
       <Header>
