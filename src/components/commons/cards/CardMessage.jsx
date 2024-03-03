@@ -12,5 +12,11 @@ const Message = styled.div`
   color: #5a5a5a;
   max-height: 11rem;
   overflow: scroll;
+
+  @media (min-width: 375px) and (max-width: 767px) {
+    font-size: 1.5rem;
+    line-height: 2.2rem;
+    max-height: 5.6rem;
+  }
 `;
 export default CardMessage;
