@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import ArrowDown from 'assets/images/headers/ArrowDown.svg';
 import AddImage from 'assets/images/headers/AddImage.svg';
@@ -7,6 +7,7 @@ import Profile1 from 'assets/images/profiles/profile1.png';
 import Profile2 from 'assets/images/profiles/profile2.png';
 import Profile3 from 'assets/images/profiles/profile3.png';
 import Toast from 'components/commons/toast/Toast';
+import useCloseModal from 'hooks/useCloseModal';
 
 const userData = {
   name: 'Ashley Kim',
@@ -21,16 +22,29 @@ const SubHeader = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [showToast, setShowToast] = useState(false);
 
-  const isMobile = windowWidth < 768;
+  const shareOptionsRef = useRef();
+  const arrowOptionsRef = useRef();
+  const addOptionsRef = useRef();
+
+  useCloseModal(
+    showShareOptions,
+    () => setShowShareOptions(false),
+    shareOptionsRef,
+  );
+  useCloseModal(
+    showArrowOptions,
+    () => setArrowShareOptions(false),
+    arrowOptionsRef,
+  );
+  useCloseModal(showAddOptions, () => setShowAddOptions(false), addOptionsRef);
 
   useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
+    const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  const isMobile = windowWidth < 768;
 
   const handleShareClick = () => {
     setShowShareOptions(!showShareOptions);
@@ -73,9 +87,6 @@ const SubHeader = () => {
     setShowAddOptions(false);
     setShowShareOptions(false);
   };
-  const handleEmojiClick = e => {
-    e.preventDefault();
-  };
 
   const handleAddClick = () => {
     setShowAddOptions(!showAddOptions);
@@ -84,64 +95,62 @@ const SubHeader = () => {
   };
 
   return (
-    <>
-      <StyledContainer>
-        <ToUser>To. {userData.name}</ToUser>
-        <StyledSection>
-          <StyledProfiles>
-            {[Profile1, Profile2, Profile3].map((profile, index) => (
-              <StyledProfile key={index} src={profile} alt="Profile" />
-            ))}
-            <StyledProfileNum>+6</StyledProfileNum>
-          </StyledProfiles>
-          <StyledMessage>
-            <StyledEmp>{userData.people}</StyledEmp>명이 작성했어요!
-          </StyledMessage>
-          <StyledDivider />
-          <StyledEmojis>
-            <StyledEmoji onClick={handleEmojiClick}>👍24</StyledEmoji>
-            <StyledEmoji onClick={handleEmojiClick}>😍16</StyledEmoji>
-            <StyledEmoji onClick={handleEmojiClick}>🎉10</StyledEmoji>
-            {showArrowOptions && (
-              <ArrowOptions>{<div>이모지</div>}</ArrowOptions>
-            )}
-            <StyledArrow
-              onClick={handleArrowClick}
-              src={ArrowDown}
-              alt="화살표"
-            />
-          </StyledEmojis>
-          {!isMobile && (
-            <StyledButtons>
-              <StyledDivider2 />
-              <AddButton
-                src={AddImage}
-                alt="추가"
-                text="추가"
-                onClick={handleAddClick}
-              />
-              {showAddOptions && <AddOptions>{<div></div>}</AddOptions>}
-              <ShareButton
-                onClick={handleShareClick}
-                src={ShareImage}
-                alt="공유"
-              />
-              {showShareOptions && (
-                <ShareButtonList>
-                  <ShareButtonText onClick={handleShareKakao}>
-                    카카오톡 공유
-                  </ShareButtonText>
-                  <ShareButtonText onClick={handleShareURL}>
-                    URL 복사
-                  </ShareButtonText>
-                </ShareButtonList>
-              )}
-            </StyledButtons>
+    <StyledContainer>
+      <ToUser>To. {userData.name}</ToUser>
+      <StyledSection>
+        <StyledProfiles>
+          {/* 프로필 이미지들 */}
+          <StyledProfile src={Profile1} alt="Profile" />
+          <StyledProfile src={Profile2} alt="Profile" />
+          <StyledProfile src={Profile3} alt="Profile" />
+          <StyledProfileNum>+6</StyledProfileNum>
+        </StyledProfiles>
+        <StyledMessage>
+          <StyledEmp>{userData.people}</StyledEmp>명이 작성했어요!
+        </StyledMessage>
+        <StyledDivider />
+        <StyledEmojis>
+          {/* 이모지 버튼들 */}
+          <StyledEmoji>👍24</StyledEmoji>
+          <StyledEmoji>😍16</StyledEmoji>
+          <StyledEmoji>🎉10</StyledEmoji>
+          <StyledArrow onClick={handleArrowClick} src={ArrowDown} alt="Arrow" />
+          {showArrowOptions && (
+            <ArrowOptions ref={arrowOptionsRef}>이모지 옵션</ArrowOptions>
           )}
-        </StyledSection>
-      </StyledContainer>
+        </StyledEmojis>
+        {!isMobile && (
+          <StyledButtons>
+            <StyledDivider2 />
+            <AddButton
+              src={AddImage}
+              alt="Add"
+              text="추가"
+              onClick={handleAddClick}
+            />
+            {showAddOptions && (
+              <AddOptions ref={addOptionsRef}>추가 옵션</AddOptions>
+            )}
+            <ShareButton
+              src={ShareImage}
+              alt="Share"
+              onClick={handleShareClick}
+            />
+            {showShareOptions && (
+              <ShareButtonList ref={shareOptionsRef}>
+                <ShareButtonText onClick={handleShareKakao}>
+                  카카오톡 공유
+                </ShareButtonText>
+                <ShareButtonText onClick={handleShareURL}>
+                  URL 복사
+                </ShareButtonText>
+              </ShareButtonList>
+            )}
+          </StyledButtons>
+        )}
+      </StyledSection>
       {showToast && <Toast setIsAlert={setShowToast} toast={showToast} />}
-    </>
+    </StyledContainer>
   );
 };
 
