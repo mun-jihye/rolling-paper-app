@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import style from 'styled-components';
 import { DropDownStatus } from './DropDownStatus';
-import arrowUp from 'components/assets/images/icons/arrow_top.svg';
-import arrowDown from 'components/assets/images/icons/arrow_down.svg';
+import arrowUp from 'assets/images/forms/arrow_top.svg';
+import arrowDown from 'assets/images/forms/arrow_down.svg';
 import CreateListItem from './CreateListItem.jsx';
 
 export default function TextFieldDropDown() {

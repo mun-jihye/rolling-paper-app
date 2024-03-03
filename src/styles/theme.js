@@ -36,4 +36,12 @@ export const theme = {
   black: '#000000',
   error: '#DC3A3A',
   surface: '#F6F8FF',
+  fontWeights: {
+    regular: 400,
+    bold: 700,
+  },
+  breakpoint: {
+    tablet: `(min-width: 768px) and (max-width: 1199px) `,
+    mobile: `(min-width: 375px) and (max-width: 767px)`,
+  },
 };
