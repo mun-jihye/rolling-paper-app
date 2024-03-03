@@ -40,4 +40,8 @@ export const theme = {
     regular: 400,
     bold: 700,
   },
+  breakpoint: {
+    tablet: `(min-width: 768px)`,
+    mobile: `(min-width: 375px) and (max-width: 767px)`,
+  },
 };
