@@ -1,28 +1,29 @@
 import React from 'react';
 import Profile from '../Profile';
-import profile from 'assets/images/profiles/profile1.png';
 import styled from 'styled-components';
 import Date from '../cards/Date';
 import FromTitle from '../cards/FromTitle';
 import CardMessage from '../cards/CardMessage';
 
-const data = {
-  date: '2023.07.08',
-  message:
-    '코로나가 또다시 기승을 부리는 요즘이네요. 건강, 체력 모두 조심 또 하세요! 코로나가 또다시 기승을 부리는 요즘이네요. 건강, 체력 모두 조심 또 하세요!코로나가 또다시 기승을 부리는 요즘이네요. 건강, 체력 모두 조심 또 하세요!코로나가 또다시 기승을 부리는 요즘이네요. 건강, 체력 모두 조심 또 하세요!코로나가 또다시 기승을 부리는 요즘이네요. 건강, 체력 모두 조심 또 하세요!코로나가 또다시 기승을 부리는 요즘이네요. 건강, 체력 모두 조심 또 하세요!코로나가 또다시 기승을 부리는 요즘이네요. 건강, 체력 모두 조심 또 하세요코로나가 또다시 기승을 부리는 요즘이네요. 건강, 체력 모두 조심 또 하세요코로나가 또다시 기승을 부리는 요즘이네요. 코로나가 또다시 기승을 부리는 요즘이네요. 건강, 체력 모두 조심 또 하세요코로나가 또다시 기승을 부리는 요즘이네요. 건강, 체력 모두 조심 또 하세요코로나가 또다시 기승을 부리는 요즘이네요. 건강, 체력 모두 조심 또 하세요코로나가 또다시 기승을 부리는 요즘이네요. 건강, 체력 모두 조심 또 하세요코로나가 또다시 기승을 부리는 요즘이네요. 건강, 체력 모두 조심 또 하세요코로나가 또다시 기승을 부리는 요즘이네요. 건강, 체력 모두 조심 또 하세요코로나가 또다시 기승을 부리는 요즘이네요. 건강, 체력 모두 조심 또 하세요건강, 체력 모두 조심 또 하세요',
-};
-const CardModal = () => {
+const CardModal = ({
+  profileImageURL,
+  sender,
+  relationship,
+  content,
+  formattedDate,
+}) => {
   return (
     <>
       <Header>
         <FlexContainer>
-          <Profile src={profile} isModal={true} />
-          <FromTitle />
+          <Profile src={profileImageURL} isCard={true} />
+          <FromTitle sender={sender} relationship={relationship} />
         </FlexContainer>
-        <Date date={data.date} />
+        <Date date={formattedDate} isModal={true} />
       </Header>
       <Hr />
-      <CardMessage message={data.message} />
+      <CardMessage message={content} isModal={true} />
+
     </>
   );
 };
@@ -43,5 +44,6 @@ const Hr = styled.hr`
   height: 1px;
   border: none;
   background-color: ${({ theme }) => theme.gray200};
+  margin-bottom: 2rem;
 `;
 export default CardModal;

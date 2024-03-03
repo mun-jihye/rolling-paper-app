@@ -10,7 +10,7 @@ const Message = styled.div`
   line-height: 2.8rem;
   letter-spacing: -0.01rem;
   color: #5a5a5a;
-  max-height: ${({ isModal }) => (isModal ? '24rem' : '10.6rem')};
+  height: ${({ isModal }) => (isModal ? '24rem' : '10.6rem')};
   overflow: ${({ isModal }) => (isModal ? 'scroll' : 'hidden')};
   text-overflow: ${({ isModal }) => (isModal ? 'initial' : 'ellipsis')};
 
