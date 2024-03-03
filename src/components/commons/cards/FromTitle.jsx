@@ -2,19 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import ProfileBadge from '../badges/ProfileBadge';
 
-const data = {
-  name: '김동훈',
-  relationship: '가족',
-};
-
-const FromTitle = () => {
+const FromTitle = ({ sender, relationship }) => {
   return (
     <StyledTitle>
       <div>
         {`From. `}
-        <span>{data.name}</span>
+        <span>{sender}</span>
       </div>
-      <ProfileBadge relationship={data.relationship} />
+      <ProfileBadge relationship={relationship} />
     </StyledTitle>
   );
 };
