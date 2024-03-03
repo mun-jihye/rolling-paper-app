@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-// import PropTypes from 'prop-types';
 
 /**
  *
@@ -14,12 +13,6 @@ const Profile = ({ src, isModal }) => {
     </ImgContainer>
   );
 };
-
-// Profile.propTypes = {
-//   src: PropTypes.string.isRequired,
-//   size: PropTypes.string,
-//   server: PropTypes.bool,
-// };
 
 const ImgContainer = styled.div`
   width: ${props => (props.isModal ? '5.6rem' : '2.8rem')};

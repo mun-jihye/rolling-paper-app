@@ -12,7 +12,7 @@ const FromTitle = () => {
     <StyledTitle>
       <div>
         {`From. `}
-        <strong>{data.name}</strong>
+        <span>{data.name}</span>
       </div>
       <ProfileBadge relationship={data.relationship} />
     </StyledTitle>
@@ -27,6 +27,17 @@ const StyledTitle = styled.div`
   font-size: 2rem;
   line-height: 2.4rem;
   gap: 0.6rem;
+  span {
+    font-weight: 700;
+  }
+  @media (min-width: 375px) and (max-width: 767px) {
+    font-size: 1.8rem;
+    line-height: 2.8rem;
+    span {
+      font-size: 1.6rem;
+      line-height: 2.6rem;
+    }
+  }
 `;
 
 export default FromTitle;
