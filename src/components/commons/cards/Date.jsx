@@ -17,6 +17,5 @@ const StyledDate = styled.div`
   bottom: 0;
   left: 0;
   `}
-`;
 
 export default Date;

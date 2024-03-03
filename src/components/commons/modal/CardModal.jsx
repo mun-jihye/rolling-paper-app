@@ -23,6 +23,7 @@ const CardModal = ({
       </Header>
       <Hr />
       <CardMessage message={content} isModal={true} />
+
     </>
   );
 };
