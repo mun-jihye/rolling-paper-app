@@ -188,7 +188,6 @@ const CardEmojiBadge = styled(EmojiBadge)`
   align-items: start;
 
   @media (max-width: 48rem) {
-    align-items: start;
     width: 5.5rem;
     height: 3.2rem;
 
