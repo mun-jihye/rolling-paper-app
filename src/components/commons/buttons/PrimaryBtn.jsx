@@ -6,6 +6,7 @@ const PrimaryBtn = ({
   disabled,
   className,
   type = 'button',
+  style,
 }) => {
   return (
     <Button
@@ -13,6 +14,7 @@ const PrimaryBtn = ({
       disabled={disabled}
       className={className}
       type={type}
+      style={style}
     >
       {children}
     </Button>
@@ -21,7 +23,7 @@ const PrimaryBtn = ({
 
 export const Button = styled.button`
   padding: 1.4rem 2.4rem;
-  width: 20rem;
+  width: ${style => (style.boxColor ? style.width : '20rem')};
   height: 5.6rem;
   border-radius: 0.8rem;
   background-color: ${({ theme }) => theme.purple600};
