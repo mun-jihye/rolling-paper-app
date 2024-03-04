@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import React from 'react';
 import FromCard from './FromCard';
 import { formatDate } from 'utils/date';
+import AddCard from './AddCard';
 
 const FromCardList = ({ datas }) => {
   return (
@@ -17,7 +18,9 @@ const FromCardList = ({ datas }) => {
         } = data;
 
         const formattedDate = formatDate(createdAt);
-        return (
+        return id === 'add' ? (
+          <AddCard />
+        ) : (
           <FromCard
             key={id}
             profileImageURL={profileImageURL}

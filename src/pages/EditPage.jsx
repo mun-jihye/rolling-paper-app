@@ -15,8 +15,11 @@ const EditPage = () => {
     queryFn: ({ id = 4126 }) => getRecipientList(id),
   });
   const editData = data?.data;
-  const messageData = message?.data.results;
-
+  const messageData = message?.data.results && [
+    { id: 'add' },
+    ...message?.data.results,
+  ];
+  console.log(messageData);
   return (
     <>
       {isLoading ? (
