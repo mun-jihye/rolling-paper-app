@@ -8,7 +8,9 @@ import Profile2 from 'assets/images/profiles/profile2.png';
 import Profile3 from 'assets/images/profiles/profile3.png';
 import Toast from 'components/commons/toast/Toast';
 import useCloseModal from 'hooks/useCloseModal';
+import EmojiPicker from 'emoji-picker-react';
 
+//사용자 데이터: 나중에 불러와야함
 const userData = {
   name: 'Ashley Kim',
   emotion: 'Happy',
@@ -16,16 +18,20 @@ const userData = {
 };
 
 const SubHeader = () => {
+  //상태 관리 함수
   const [showShareOptions, setShowShareOptions] = useState(false);
   const [showArrowOptions, setArrowShareOptions] = useState(false);
-  const [showAddOptions, setShowAddOptions] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [showToast, setShowToast] = useState(false);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [selectedEmoji, setSelectedEmoji] = useState(null);
 
+  //Ref사용해서 Dom요소 참조하기
   const shareOptionsRef = useRef();
   const arrowOptionsRef = useRef();
-  const addOptionsRef = useRef();
+  const emojiPickerRef = useRef();
 
+  //Modal 닫기 훅 사용
   useCloseModal(
     showShareOptions,
     () => setShowShareOptions(false),
@@ -36,7 +42,15 @@ const SubHeader = () => {
     () => setArrowShareOptions(false),
     arrowOptionsRef,
   );
-  useCloseModal(showAddOptions, () => setShowAddOptions(false), addOptionsRef);
+
+  useCloseModal(
+    showEmojiPicker,
+    () => setShowEmojiPicker(false),
+    emojiPickerRef,
+  );
+
+  //모바일 환경 감지
+  const isMobile = windowWidth < 768;
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
@@ -44,18 +58,19 @@ const SubHeader = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const isMobile = windowWidth < 768;
-
+  //핸들러 함수들
   const handleShareClick = () => {
     setShowShareOptions(!showShareOptions);
-    setShowAddOptions(false);
     setArrowShareOptions(false);
+    setShowEmojiPicker(false);
   };
+
+  const kakaoKey = process.env.REACT_APP_KAKAO_KEY;
 
   const handleShareKakao = () => {
     try {
       if (!window.Kakao.isInitialized()) {
-        window.Kakao.init('5bfc0942d20d49f4c09a2f23ef6026d1');
+        window.Kakao.init(kakaoKey);
       }
 
       window.Kakao.Link.sendCustom({
@@ -84,14 +99,19 @@ const SubHeader = () => {
 
   const handleArrowClick = () => {
     setArrowShareOptions(!showArrowOptions);
-    setShowAddOptions(false);
+    setShowEmojiPicker(false);
     setShowShareOptions(false);
   };
 
   const handleAddClick = () => {
-    setShowAddOptions(!showAddOptions);
+    setShowEmojiPicker(!showEmojiPicker);
     setShowShareOptions(false);
     setArrowShareOptions(false);
+  };
+
+  const onEmojiClick = emojiObject => {
+    setSelectedEmoji(emojiObject.emoji);
+    setShowEmojiPicker(false);
   };
 
   return (
@@ -128,9 +148,12 @@ const SubHeader = () => {
               text="추가"
               onClick={handleAddClick}
             />
-            {showAddOptions && (
-              <AddOptions ref={addOptionsRef}>추가 옵션</AddOptions>
+            {showEmojiPicker && (
+              <StyledEmojiPicker ref={emojiPickerRef}>
+                <EmojiPicker onEmojiClick={onEmojiClick} />{' '}
+              </StyledEmojiPicker>
             )}
+
             <ShareButton
               src={ShareImage}
               alt="Share"
@@ -156,6 +179,15 @@ const SubHeader = () => {
 
 export default SubHeader;
 
+const StyledEmojiPicker = styled.div`
+  position: absolute;
+  width: 14rem;
+  height: 10.1rem;
+  top: 120%;
+  right: 127%;
+  z-index: 1;
+`;
+
 const AddButton = ({ src, alt, onClick, text }) => (
   <StyledButton onClick={onClick}>
     <img src={src} alt={alt} />
@@ -176,21 +208,6 @@ const ArrowOptions = styled.div`
   transform: translateX(-50%);
   z-index: -1;
 `;
-
-const AddOptions = styled.div`
-  position: absolute;
-  width: 14rem;
-  height: 10.1rem;
-  border-radius: 0.8rem;
-  border: 0.1rem;
-  background-color: white;
-  border: 0.1rem solid #cccccc;
-  box-shadow: 0 0.2rem 1.2rem 0 #00000014;
-  top: 120%;
-  left: 1%;
-  z-index: 1;
-`;
-
 const ShareButton = ({ src, alt, onClick }) => (
   <StyledButton onClick={onClick}>
     <img src={src} alt={alt} />
