@@ -21,7 +21,7 @@ function Card({ data, isLoading }) {
             {data?.recentMessages?.map((message, index) => {
               return (
                 <ProfileContainer key={message?.id} $index={index}>
-                  <Profile src={message?.profileImageURL} $isModal={false} />
+                  <Profile src={message?.profileImageURL} />
                 </ProfileContainer>
               );
             })}

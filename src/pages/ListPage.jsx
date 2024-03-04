@@ -119,16 +119,19 @@ const StyledFooter = styled.footer`
 
 const ListPagePrimaryBtn = styled(PrimaryBtn)`
   width: 100%;
-  max-widht: 116rem;
+  height: 5.6rem;
+  font-size: 1.8rem;
+  font-weight: 400;
+  letter-spacing: -0.018rem;
+  line-height: 2.8rem;
+
+  @media (min-width: 48rem) {
+    font-weight: 700;
+  }
 
   @media (min-width: 75rem) {
     width: 28rem;
-    height: 5.6rem;
     display: block;
     margin: 0 auto;
-    font-size: 1.8rem;
-    font-weight: 700;
-    line-height: 2.8rem;
-    letter-spacing: -0.018rem;
   }
 `;
