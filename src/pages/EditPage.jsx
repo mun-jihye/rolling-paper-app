@@ -1,27 +1,35 @@
 import React from 'react';
 import { EditContainer } from 'components/edit/EditContainer';
 import FromCardList from 'components/edit/FromCardList';
-import { editData } from 'data/editPage';
 import { useQuery } from 'react-query';
-import { getRecipientList } from 'api/recipient';
+import { getRecipientList, getRecipient } from 'api/recipient';
+import Loader from 'components/commons/Loader';
 
-// const datas = editData.recentMessages;
 const EditPage = () => {
-  const { data, error } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['editPage'],
-    queryFn: ({ id = 4080 }) => getRecipientList(id),
+    queryFn: ({ id = 4126 }) => getRecipient(id),
   });
-  const editData = data?.data.results[0];
-  console.log(data);
-  console.log(error);
+  const { data: message } = useQuery({
+    queryKey: ['messageList'],
+    queryFn: ({ id = 4126 }) => getRecipientList(id),
+  });
+  const editData = data?.data;
+  const messageData = message?.data.results;
 
   return (
-    <EditContainer
-    // $backgroundcolor={editData.backgroundColor}
-    // $backgroundimageurl={editData.backgroundImageURL}
-    >
-      {/* <FromCardList datas={datas} /> */}
-    </EditContainer>
+    <>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <EditContainer
+          $backgroundcolor={editData.backgroundColor}
+          $backgroundimageurl={editData.backgroundImageURL}
+        >
+          <FromCardList datas={messageData} />
+        </EditContainer>
+      )}
+    </>
   );
 };
 
