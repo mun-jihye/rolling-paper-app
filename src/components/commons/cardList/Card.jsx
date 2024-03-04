@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 import Profile from 'components/commons/Profile';
-import bluePattern from 'components/assets/images/cardList/pattern_blue.png';
-import greenPattern from 'components/assets/images/cardList/pattern_green.png';
-import orangePattern from 'components/assets/images/cardList/pattern_orange.png';
-import purplePattern from 'components/assets/images/cardList/pattern_purple.png';
+import bluePattern from 'assets/images/cardList/pattern_blue.png';
+import greenPattern from 'assets/images/cardList/pattern_green.png';
+import orangePattern from 'assets/images/cardList/pattern_orange.png';
+import purplePattern from 'assets/images/cardList/pattern_purple.png';
+import EmojiBadge from '../badges/EmojiBadge';
 
 function Card({ data }) {
   return (
@@ -31,9 +32,9 @@ function Card({ data }) {
       </StyledContainer>
       <StyledHrtag />
       <StyledContainer $isBadge={true}>
-        <div>1</div>
-        <div>2</div>
-        <div>3</div>
+        {data?.badges?.slice(0, 3).map((badge, index) => {
+          return <CardEmojiBadge key={index + 1} data={badge} />;
+        })}
       </StyledContainer>
     </StyledCard>
   );
@@ -165,6 +166,22 @@ const LastProfile = styled.div`
   line-height: 1.8rem;
   letter-spacing: -0.006rem;
   min-width: 2.8rem;
+`;
+
+const CardEmojiBadge = styled(EmojiBadge)`
+  align-items: start;
+
+  @media (max-width: 48rem) {
+    align-items: start;
+    width: 5.5rem;
+    height: 3.2rem;
+
+    & div {
+      font-size: 1.4rem;
+      line-height: 1.6rem;
+      letter-spacing: -0.007rem;
+    }
+  }
 `;
 
 export default Card;

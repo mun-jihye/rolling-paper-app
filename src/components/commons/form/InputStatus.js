@@ -28,6 +28,6 @@ export const InputStatus = {
   error: {
     color: `${theme.error}`,
     border: `1px solid ${theme.error}`,
-    backgroundColor: `${theme.gray100}`,
+    backgroundColor: `#fff`,
   },
 };

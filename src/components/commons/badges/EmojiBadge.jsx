@@ -5,9 +5,9 @@ const data = {
   count: 24,
   emoji: '😍',
 };
-const EmojiBadge = () => {
+const EmojiBadge = ({ className }) => {
   return (
-    <StyledContainer>
+    <StyledContainer className={className}>
       <Emoji>{data.emoji}</Emoji>
       <Count>{data.count}</Count>
     </StyledContainer>

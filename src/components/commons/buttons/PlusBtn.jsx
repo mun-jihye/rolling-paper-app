@@ -18,12 +18,12 @@ const PlusButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 5.6rem;
-  height: 5.6rem;
-  padding: 1.6rem;
+  width: 56px;
+  height: 56px;
+  padding: 16px;
   border-radius: 50%;
   background: #555555;
-  font-size: 2.4rem;
+  font-size: 24px;
   color: white;
   cursor: pointer;
 
@@ -32,7 +32,7 @@ const PlusButton = styled.button`
   }
   &:focus {
     background: #3a3a3a;
-    border: 0.1rem solid #2b2b2b;
+    border: 1px solid #2b2b2b;
   }
 `;
 

@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import Card from './Card';
-import tempImg from 'components/assets/images/cardList/tempImg.jpg';
-import arrowImg from 'components/assets/images/cardList/arrow.png';
+import tempImg from 'assets/images/cardList/tempImg.jpg';
+import arrowImg from 'assets/images/cardList/arrow.png';
 import { useEffect, useRef, useState } from 'react';
 
 const mockData = {
   name: 'Chanyong',
-  color: 'green',
+  color: 'blue',
   imageSource: tempImg,
   profiles: [
     { imageSource: tempImg },
@@ -14,9 +14,10 @@ const mockData = {
     { imageSource: tempImg },
     { imageSource: tempImg },
   ],
+  badges: [{}, {}, {}, {}],
 };
 
-const mockDatas = Array.from({ length: 7 }, () => mockData);
+const mockDatas = Array.from({ length: 13 }, () => mockData);
 
 function CardList({ carouselMargin = 0, className }) {
   const [containerWidth, setContainerWidth] = useState();
