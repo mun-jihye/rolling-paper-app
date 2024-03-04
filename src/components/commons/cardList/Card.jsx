@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import Profile from 'components/commons/Profile';
 import bluePattern from 'assets/images/cardList/pattern_blue.png';
 import greenPattern from 'assets/images/cardList/pattern_green.png';
@@ -6,8 +6,10 @@ import orangePattern from 'assets/images/cardList/pattern_orange.png';
 import purplePattern from 'assets/images/cardList/pattern_purple.png';
 import EmojiBadge from '../badges/EmojiBadge';
 
-function Card({ data }) {
-  return (
+function Card({ data, isLoading }) {
+  return isLoading ? (
+    <LoadingCard />
+  ) : (
     <StyledCard $data={data}>
       <StyledContainer $isProfile={true}>
         <StyledH3tag $data={data}>{`To. ${data?.name}`}</StyledH3tag>
@@ -32,8 +34,8 @@ function Card({ data }) {
       </StyledContainer>
       <StyledHrtag />
       <StyledContainer $isBadge={true}>
-        {data?.topReactions?.map((reaction, index) => {
-          return <CardEmojiBadge key={index + 1} data={reaction} />;
+        {data?.topReactions?.map(reaction => {
+          return <CardEmojiBadge key={reaction?.id} data={reaction} />;
         })}
       </StyledContainer>
     </StyledCard>
@@ -59,11 +61,11 @@ const StyledCard = styled.div`
       ? // 배경 이미지가 존재할 경우, 배경을 이미지로 설정
         `linear-gradient(180deg, rgba(0, 0, 0, 0.54) 0%, rgba(0, 0, 0, 0.54) 100%), url(${$data?.backgroundImageURL})`
       : // 배경 이미지 없으면 원하는 색의 default 배경 설정
-        theme[BACK_GROUND[$data?.backgroundColor][0]]};
+        theme[BACK_GROUND[$data ? $data?.backgroundColor : 'beige'][0]]};
   background-image: ${({ $data }) =>
     $data?.backgroundImageURL
       ? ''
-      : `url(${BACK_GROUND[$data?.backgroundColor][1]})`};
+      : `url(${BACK_GROUND[$data ? $data?.backgroundColor : 'beige'][1]})`};
   background-position: ${({ $data }) =>
     $data?.backgroundImageURL ? 'center' : 'right bottom'};
   background-repeat: no-repeat;
@@ -196,6 +198,17 @@ const CardEmojiBadge = styled(EmojiBadge)`
       letter-spacing: -0.007rem;
     }
   }
+`;
+
+const placeholderAnimation = keyframes`
+  50% {
+    opacity: 0.4;
+  }
+`;
+
+const LoadingCard = styled(StyledCard)`
+  background: ${({ theme }) => theme.gray200};
+  animation: ${placeholderAnimation} 2s ease-in-out infinite;
 `;
 
 export default Card;

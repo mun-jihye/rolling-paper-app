@@ -82,13 +82,17 @@ function CardList({ carouselMargin = 0, className, data: cards, isLoading }) {
           $carouselMargin={carouselMargin}
           style={{ transform: `translate(${slidePosition}rem)` }}
         >
-          {cards?.map(card => {
-            return (
-              <div key={card?.id} ref={cardRef}>
-                <Card data={card} />
-              </div>
-            );
-          })}
+          {isLoading
+            ? [0, 1, 2, 3].map(index => (
+                <Card key={index + 1} isLoading={isLoading} />
+              ))
+            : cards?.map(card => {
+                return (
+                  <div key={card?.id} ref={cardRef}>
+                    <Card data={card} />
+                  </div>
+                );
+              })}
         </StyledSlideBar>
         {slidePosition < 0 && (
           <ArrowButton
@@ -96,6 +100,7 @@ function CardList({ carouselMargin = 0, className, data: cards, isLoading }) {
             $position="left"
             src={arrowImg}
             alt="previous"
+            disabled={!!isLoading}
           />
         )}
         {slidePosition > -(29.5 * (cards?.length - 4) - 2) && (
@@ -104,6 +109,7 @@ function CardList({ carouselMargin = 0, className, data: cards, isLoading }) {
             $position="right"
             src={arrowImg}
             alt="next"
+            disabled={!!isLoading}
           />
         )}
       </StyledContainer>
