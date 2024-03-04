@@ -32,7 +32,7 @@ function Card({ data }) {
       </StyledContainer>
       <StyledHrtag />
       <StyledContainer $isBadge={true}>
-        {data?.topReactions?.slice(0, 3).map((reaction, index) => {
+        {data?.topReactions?.map((reaction, index) => {
           return <CardEmojiBadge key={index + 1} data={reaction} />;
         })}
       </StyledContainer>

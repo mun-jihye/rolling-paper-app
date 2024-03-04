@@ -2,9 +2,8 @@ import styled from 'styled-components';
 import Card from './Card';
 import arrowImg from 'assets/images/cardList/arrow.png';
 import { useEffect, useRef, useState } from 'react';
-import mockDatas from 'data/listPage';
 
-function CardList({ carouselMargin = 0, className }) {
+function CardList({ carouselMargin = 0, className, data: cards, isLoading }) {
   const [containerWidth, setContainerWidth] = useState();
   const [carouselLength, setCarouselLength] = useState();
   // slidePosition 은 px 단위가 아닌 rem 단위
@@ -12,8 +11,8 @@ function CardList({ carouselMargin = 0, className }) {
   const [isDragging, setIsDragging] = useState(false);
   const [startTouchPosition, setStartTouchPosition] = useState(0);
 
-  const container = useRef();
-  const card = useRef();
+  const containerRef = useRef();
+  const cardRef = useRef();
 
   // PC 사이즈에서 화살표 클릭으로 캐러셀 제어
   const handleLeftClick = () => {
@@ -62,19 +61,19 @@ function CardList({ carouselMargin = 0, className }) {
   }
 
   useEffect(() => {
-    setContainerWidth(container?.current?.offsetWidth - carouselMargin * 20);
+    setContainerWidth(containerRef?.current?.offsetWidth - carouselMargin * 20);
     setCarouselLength(
-      card?.current?.offsetWidth === 208
-        ? 220 * mockDatas?.length - 12
-        : 295 * mockDatas?.length - 20,
+      cardRef?.current?.offsetWidth === 208
+        ? 220 * cards?.length - 12
+        : 295 * cards?.length - 20,
     );
     setSlidePosition(0);
-  }, [carouselMargin]);
+  }, [carouselMargin, cards]);
 
   return (
     <StyledContainer $layout="outer" className={className}>
       <StyledContainer
-        ref={container}
+        ref={containerRef}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
@@ -83,10 +82,10 @@ function CardList({ carouselMargin = 0, className }) {
           $carouselMargin={carouselMargin}
           style={{ transform: `translate(${slidePosition}rem)` }}
         >
-          {mockDatas.map((mockData, index) => {
+          {cards?.map(card => {
             return (
-              <div key={index + 1} ref={card}>
-                <Card data={mockData} />
+              <div key={card?.id} ref={cardRef}>
+                <Card data={card} />
               </div>
             );
           })}
@@ -99,7 +98,7 @@ function CardList({ carouselMargin = 0, className }) {
             alt="previous"
           />
         )}
-        {slidePosition > -(29.5 * (mockDatas?.length - 4) - 2) && (
+        {slidePosition > -(29.5 * (cards?.length - 4) - 2) && (
           <ArrowButton
             onClick={handleRightClick}
             $position="right"

@@ -4,9 +4,22 @@ import CardList from 'components/commons/cardList/CardList';
 import styled from 'styled-components';
 import PrimaryBtn from 'components/commons/buttons/PrimaryBtn';
 import useDeviceType from 'hooks/useDeviceType';
+import { useQuery } from 'react-query';
+import { getRecipients } from 'api/recipient';
 
 const ListPage = () => {
   const deviceType = useDeviceType();
+
+  const { data: lastestList, isLoading: isLastestListLoading } = useQuery({
+    queryKey: ['recipients', 'sortedLastest'],
+    queryFn: () => getRecipients(),
+  });
+
+  const { data: topRatedList, isLoading: isTopRatedListLoading } = useQuery({
+    queryKey: ['recipients', 'sortedTopRated'],
+    queryFn: () => getRecipients(undefined, undefined, 'like'),
+  });
+
   return (
     <div>
       <MainHeader />
@@ -17,6 +30,8 @@ const ListPage = () => {
             carouselMargin={
               deviceType === 'PC' ? 0 : deviceType === 'Tablet' ? 2.4 : 2
             }
+            data={topRatedList?.data?.results}
+            isLoading={isTopRatedListLoading}
           />
         </SectionConainer>
         <SectionConainer>
@@ -25,6 +40,8 @@ const ListPage = () => {
             carouselMargin={
               deviceType === 'PC' ? 0 : deviceType === 'Tablet' ? 2.4 : 2
             }
+            data={lastestList?.data?.results}
+            isLoading={isLastestListLoading}
           />
         </SectionConainer>
       </MainContainer>
