@@ -12,10 +12,10 @@ const MessagePage = () => {
           <SelectedImage />
           <SampleImage />
         </ProfileSelect>
-        <RelationshipContainer>
+        <relationshipContainer>
           <Description>상대와의 관계</Description>
-          <RelationshipDropDown />
-        </RelationshipContainer>
+          <relationshipDropDown />
+        </relationshipContainer>
         <TextEditorContainer>
           <Description>내용을 입력해주세요</Description>
           <TextEditor />
