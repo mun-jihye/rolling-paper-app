@@ -20,10 +20,10 @@ export const createRecipients = data => {
  * @returns
  */
 export const getRecipient = id => {
-  return instance.get(`${AUTH.recipients}${id}`);
+  return instance.get(`${AUTH.recipients}${id}/`);
 };
 export const deleteRecipients = id => {
-  return instance.delete(`${AUTH.recipients}${id}`);
+  return instance.delete(`${AUTH.recipients}${id}/`);
 };
 
 /**

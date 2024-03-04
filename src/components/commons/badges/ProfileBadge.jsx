@@ -25,7 +25,7 @@ const StyledContainer = styled.div`
       return theme.blue100;
     }
     if (relationship === '지인') {
-      return theme.orange100;
+      return theme.beige100;
     }
     if (relationship === '동료') {
       return theme.purple100;
@@ -44,7 +44,7 @@ const BadgeContent = styled.div`
       return theme.blue500;
     }
     if (relationship === '지인') {
-      return theme.orange500;
+      return theme.beige500;
     }
     if (relationship === '동료') {
       return theme.purple500;
