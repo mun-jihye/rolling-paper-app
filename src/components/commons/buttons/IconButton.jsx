@@ -1,5 +1,5 @@
-import React from "react";
-import styled, { css } from "styled-components";
+import React from 'react';
+import styled, { css } from 'styled-components';
 
 function IconButton({
   children,
@@ -7,7 +7,7 @@ function IconButton({
   onClick,
   disabled,
   className,
-  type = "button",
+  type = 'button',
   ...props
 }) {
   return (
@@ -35,7 +35,7 @@ const StyledButton = styled.button`
   background: ${({ theme }) => theme.white};
   box-shadow: 0 0.4rem 0.8rem 0 #00000014;
 
-  ${(props) =>
+  ${props =>
     props.Delete &&
     css`
       border: 0.1rem solid ${({ theme }) => theme.gray300};

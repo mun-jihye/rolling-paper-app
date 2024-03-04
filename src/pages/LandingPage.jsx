@@ -4,7 +4,8 @@ import styled from 'styled-components';
 import GNB from 'components/commons/header/GNB';
 import cardImg from 'assets/images/landingPage/cardImg.png';
 import emojiImg from 'assets/images/landingPage/emojiImg.png';
-import Button from 'components/commons/buttons/ButtonStyeled';
+import Button from 'components/commons/buttons/Button';
+import IconButton from 'components/commons/buttons/IconButton';
 
 const LandingPage = () => {
   return (
@@ -39,7 +40,10 @@ const LandingPage = () => {
             <EmojiImg src={emojiImg} alt="이모지 이미지" />
           </ImgBox>
         </BlueBoxReverse>
-        <Button style={{ width: '80%' }}>구경해보기</Button>
+        <Button outline style={{ width: '90%', height: '50px' }}>
+          구경해보기
+        </Button>
+        <IconButton Delete></IconButton>
       </Main>
     </>
   );

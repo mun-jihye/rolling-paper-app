@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 
 function Button({
   children,
-  style,
+  styled,
   onClick,
   disabled,
   className,
@@ -12,7 +12,7 @@ function Button({
 }) {
   return (
     <StyledButton
-      style={style}
+      styled={styled}
       onClick={onClick}
       disabled={disabled}
       className={className}
@@ -29,14 +29,14 @@ const StyledButton = styled.button`
   justify-content: center;
   align-items: center;
   padding: 1.4rem 2.4rem;
-  width: ${style => (style.width ? style.width : '20rem')};
-  height: ${style => (style.height ? style.height : '5.6rem')};
+  width: ${styled => (styled.width ? styled.width : '20rem')};
+  height: ${styled => (styled.height ? styled.height : '5.6rem')};
   border-radius: 0.8rem;
   background-color: ${({ theme }) => theme.purple600};
   border: none;
   color: ${({ theme }) => theme.white};
-  font-size: ${style => (style.fontSize ? style.fontSize : '1.8rem')};
-  font-weight: ${style => (style.fontWeight ? style.fontWeight : '700')};
+  font-size: ${styled => (styled.fontSize ? styled.fontSize : '1.8rem')};
+  font-weight: ${styled => (styled.fontWeight ? styled.fontWeight : '700')};
 
   &:hover {
     background: ${({ theme }) => theme.purple700};
@@ -49,7 +49,7 @@ const StyledButton = styled.button`
     background: ${({ theme }) => theme.gray300};
   }
   ${props =>
-    props.Outline &&
+    props.outline &&
     css`
       border: 0.1rem solid ${({ theme }) => theme.gray300};
       color: ${({ theme }) => theme.gray900};
@@ -73,7 +73,7 @@ const StyledButton = styled.button`
       }
     `}
   ${props =>
-    props.Secondary &&
+    props.secondary &&
     css`
       width: ${style => (style.width ? style.width : '12.2rem')};
       height: ${style => (style.height ? style.height : '4rem')};
@@ -92,16 +92,6 @@ const StyledButton = styled.button`
         border: 0.1rem solid ${({ theme }) => theme.purple800};
         background: ${({ theme }) => theme.white};
       }
-    `}
-    ${props =>
-    props.Delete &&
-    css`
-      border: 0.1rem solid ${({ theme }) => theme.gray300};
-      color: ${({ theme }) => theme.gray900};
-      background: ${({ theme }) => theme.white};
-      width: 3.6rem;
-      height: 3.6rem;
-      padding: 0.6rem;
     `}
 `;
 
