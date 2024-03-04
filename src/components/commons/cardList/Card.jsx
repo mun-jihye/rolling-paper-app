@@ -7,6 +7,7 @@ import purplePattern from 'assets/images/cardList/pattern_purple.png';
 import EmojiBadge from '../badges/EmojiBadge';
 import { Link } from 'react-router-dom';
 import routes from 'utils/constants/routes';
+import React from 'react';
 
 function Card({ data, isLoading }) {
   return isLoading ? (
@@ -214,4 +215,4 @@ const LoadingCard = styled(StyledCard)`
   animation: ${placeholderAnimation} 2s ease-in-out infinite;
 `;
 
-export default Card;
+export default React.memo(Card);
