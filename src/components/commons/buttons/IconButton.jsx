@@ -1,8 +1,11 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import ArrowR from 'assets/images/buttons/arrowRight.png';
+import ArrowL from 'assets/images/buttons/arrowLeft.png';
+import Delete from 'assets/images/buttons/delete.png';
 
 function IconButton({
-  children,
+  icon,
   style,
   onClick,
   disabled,
@@ -10,6 +13,17 @@ function IconButton({
   type = 'button',
   ...props
 }) {
+  const Icon = ({ icon }) => {
+    if (icon === 'arrowR') {
+      return <img src={ArrowR} alt="오른쪽" />;
+    }
+    if (icon === 'arrowL') {
+      return <img src={ArrowL} alt="왼쪽" />;
+    }
+    if (icon === 'delete') {
+      return <img src={Delete} alt="삭제" />;
+    }
+  };
   return (
     <StyledButton
       style={style}
@@ -19,7 +33,7 @@ function IconButton({
       type={type}
       {...props}
     >
-      {children}
+      <Icon icon={icon} />
     </StyledButton>
   );
 }

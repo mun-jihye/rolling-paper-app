@@ -2,8 +2,11 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 
 function Button({
+  width,
+  height,
+  fontSize,
+  fontWeight,
   children,
-  styled,
   onClick,
   disabled,
   className,
@@ -12,7 +15,10 @@ function Button({
 }) {
   return (
     <StyledButton
-      styled={styled}
+      width={width}
+      height={height}
+      fontSize={fontSize}
+      fontWeight={fontWeight}
       onClick={onClick}
       disabled={disabled}
       className={className}
@@ -29,14 +35,14 @@ const StyledButton = styled.button`
   justify-content: center;
   align-items: center;
   padding: 1.4rem 2.4rem;
-  width: ${styled => (styled.width ? styled.width : '20rem')};
-  height: ${styled => (styled.height ? styled.height : '5.6rem')};
+  width: ${width => (width ? width.width : '20rem')};
+  height: ${height => (height ? height.height : '5.6rem')};
   border-radius: 0.8rem;
   background-color: ${({ theme }) => theme.purple600};
   border: none;
   color: ${({ theme }) => theme.white};
-  font-size: ${styled => (styled.fontSize ? styled.fontSize : '1.8rem')};
-  font-weight: ${styled => (styled.fontWeight ? styled.fontWeight : '700')};
+  font-size: ${fontSize => (fontSize ? fontSize.fontSize : '1.8rem')};
+  font-weight: ${fontWeight => (fontWeight ? fontWeight.fontWeight : '700')};
 
   &:hover {
     background: ${({ theme }) => theme.purple700};
@@ -75,15 +81,16 @@ const StyledButton = styled.button`
   ${props =>
     props.secondary &&
     css`
-      width: ${style => (style.width ? style.width : '12.2rem')};
-      height: ${style => (style.height ? style.height : '4rem')};
+      width: ${width => (width ? width.width : '12.2rem')};
+      height: ${height => (height ? height.height : '4rem')};
       padding: 0.7rem 1.6rem;
       border-radius: 0.6rem;
       border: 0.1rem solid ${({ theme }) => theme.purple600};
       background: ${({ theme }) => theme.white};
       color: ${({ theme }) => theme.purple700};
-      font-size: ${style => (style.fontSize ? style.fontSize : '1.6rem')};
-      font-weight: ${style => (style.fontWeight ? style.fontWeight : '400')};
+      font-size: ${fontSize => (fontSize ? fontSize.fontSize : '1.6rem')};
+      font-weight: ${fontWeight =>
+        fontWeight ? fontWeight.fontWeight : '400'};
 
       &:hover {
         background: ${({ theme }) => theme.purple100};

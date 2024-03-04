@@ -40,10 +40,10 @@ const LandingPage = () => {
             <EmojiImg src={emojiImg} alt="이모지 이미지" />
           </ImgBox>
         </BlueBoxReverse>
-        <Button outline style={{ width: '90%', height: '50px' }}>
+        <Button width={'50%'} height={'90px'}>
           구경해보기
         </Button>
-        <IconButton Delete></IconButton>
+        <IconButton Delete icon={'delete'} />
       </Main>
     </>
   );
