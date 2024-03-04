@@ -43,7 +43,6 @@ const StyledButton = styled.button`
   color: ${({ theme }) => theme.white};
   font-size: ${fontSize => (fontSize ? fontSize.fontSize : '1.8rem')};
   font-weight: ${fontWeight => (fontWeight ? fontWeight.fontWeight : '700')};
-
   &:hover {
     background: ${({ theme }) => theme.purple700};
   }
@@ -53,6 +52,12 @@ const StyledButton = styled.button`
   }
   &:disabled {
     background: ${({ theme }) => theme.gray300};
+  }
+  @media ${({ theme }) => theme.breakpoint.tablet} {
+    width: 72rem;
+  }
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    width: 32rem;
   }
   ${props =>
     props.outline &&

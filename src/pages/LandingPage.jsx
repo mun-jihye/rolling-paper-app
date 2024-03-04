@@ -5,7 +5,8 @@ import GNB from 'components/commons/header/GNB';
 import cardImg from 'assets/images/landingPage/cardImg.png';
 import emojiImg from 'assets/images/landingPage/emojiImg.png';
 import Button from 'components/commons/buttons/Button';
-import IconButton from 'components/commons/buttons/IconButton';
+import { Link } from 'react-router-dom';
+import routes from 'utils/constants/routes';
 
 const LandingPage = () => {
   return (
@@ -40,10 +41,9 @@ const LandingPage = () => {
             <EmojiImg src={emojiImg} alt="이모지 이미지" />
           </ImgBox>
         </BlueBoxReverse>
-        <Button width={'50%'} height={'90px'}>
-          구경해보기
-        </Button>
-        <IconButton Delete icon={'delete'} />
+        <Link to={routes.list}>
+          <Button width={'28rem'}>구경해보기</Button>
+        </Link>
       </Main>
     </>
   );
@@ -62,12 +62,18 @@ const BlueBox = styled.div`
   justify-content: space-around;
   background-color: #f6f8ff;
   margin: 3rem;
-  width: 80%;
+  width: 120rem;
   border-radius: 1.6rem;
-  @media (min-width: 768px) and (max-width: 1023px) {
+  @media (min-width: '1248px') {
+    width: 100%;
+    margin: 0 2.4rem;
+  }
+  @media ${({ theme }) => theme.breakpoint.tablet} {
+    width: 100%;
+    margin: 2.4rem;
     flex-direction: column;
   }
-  @media (min-width: 375px) and (max-width: 767px) {
+  @media ${({ theme }) => theme.breakpoint.mobile} {
     flex-direction: column;
     width: 100%;
     margin: 2.4rem;
@@ -75,12 +81,11 @@ const BlueBox = styled.div`
 `;
 const BlueBoxReverse = styled(BlueBox)`
   flex-direction: row-reverse;
-  @media (min-width: 768px) and (max-width: 1023px) {
+  @media ${({ theme }) => theme.breakpoint.tablet} {
     flex-direction: column;
   }
-  @media (min-width: 375px) and (max-width: 767px) {
+  @media ${({ theme }) => theme.breakpoint.mobile} {
     flex-direction: column;
-    margin: 2.4rem;
   }
 `;
 
@@ -100,7 +105,7 @@ const TextBox = styled.div`
   justify-content: center;
   margin: 4rem;
   gap: 3rem;
-  @media (min-width: 375px) and (max-width: 767px) {
+  @media ${({ theme }) => theme.breakpoint.mobile} {
     margin: 4rem 2rem 0;
   }
 `;
@@ -110,10 +115,10 @@ const MainText = styled.div`
   font-size: 2.4rem;
   font-weight: 700;
   color: ${({ theme }) => theme.gray900};
-  @media (min-width: 768px) and (max-width: 1023px) {
+  @media ${({ theme }) => theme.breakpoint.tablet} {
     gap: 0.6rem;
   }
-  @media (min-width: 375px) and (max-width: 767px) {
+  @media ${({ theme }) => theme.breakpoint.mobile} {
     font-size: 1.8rem;
   }
 `;
@@ -122,7 +127,7 @@ const SubText = styled.div`
   font-size: 1.8rem;
   font-weight: 400;
   color: ${({ theme }) => theme.gray500};
-  @media (min-width: 375px) and (max-width: 767px) {
+  @media ${({ theme }) => theme.breakpoint.mobile} {
     font-size: 15px;
     font-weight: 400;
   }
@@ -132,7 +137,7 @@ const ImgBox = styled.div`
   display: flex;
   justify-content: center;
   margin: 9rem 0;
-  @media (min-width: 375px) and (max-width: 767px) {
+  @media ${({ theme }) => theme.breakpoint.mobile} {
     width: 100%;
     height: 9rem;
     margin: 4rem 0;
