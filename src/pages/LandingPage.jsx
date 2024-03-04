@@ -54,7 +54,6 @@ const Main = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 0 2.4rem 4rem;
-  width: 100%;
 `;
 
 const BlueBox = styled.div`
