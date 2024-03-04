@@ -1,4 +1,4 @@
-import { React } from 'react';
+import { React, useState } from 'react';
 import styled from 'styled-components';
 import {
   TextFieldInput,
@@ -12,7 +12,16 @@ import profile1 from 'assets/images/profiles/profile1.svg';
 import profile2 from 'assets/images/profiles/profile2.svg';
 
 const MessagePage = () => {
+  const [inputValue, setInputValue] = useState('');
+  const [editorValue, setEditorValue] = useState('');
+  const [isBtnDisabled, setIsBtnDisabled] = useState(
+    !(inputValue && editorValue),
+  );
+
   const inputDisabled = false;
+  const dropDownDisabled = false;
+  const error = { message: '' };
+
   const images = [
     profile1,
     profile2,
@@ -26,8 +35,19 @@ const MessagePage = () => {
     profile2,
   ];
 
-  const error = { message: '' };
-  const handleChange = e => {};
+  const listItems = ['친구', '지인', '동료', '가족'];
+  const listFontFamily = ['Noto Sans', 'Pretendard'];
+
+  const handleInputChange = e => {
+    setInputValue(e.target.value);
+    setIsBtnDisabled(!(inputValue && editorValue));
+  };
+
+  const handleEditorChange = e => {
+    setEditorValue(e.target.value);
+    setIsBtnDisabled(!(inputValue && editorValue));
+  };
+
   return (
     <>
       <GNB />
@@ -35,10 +55,10 @@ const MessagePage = () => {
         <InputContainer>
           <Description>From</Description>
           <StyledTextFieldInput
-            placeholder={'받는 사람 이름을 입력해주세요'}
+            placeholder={'이름을 입력해주세요.'}
             disabled={inputDisabled}
             error={error}
-            handleChange={handleChange}
+            handleChange={handleInputChange}
           />
           <ProfileSelect className="profile-container">
             <Description>프로필 이미지</Description>
@@ -58,17 +78,27 @@ const MessagePage = () => {
           </ProfileSelect>
           <RelationshipContainer>
             <Description>상대와의 관계</Description>
-            <StyledTextFieldDropDown1 />
+            <StyledTextFieldDropDown1
+              disabled={dropDownDisabled}
+              error={error}
+              // handleChange={handleChange}
+              listItems={listItems}
+            />
           </RelationshipContainer>
           <TextEditorContainer>
             <Description>내용을 입력해주세요</Description>
-            <StyledTextFieldTextEditor />
+            <StyledTextFieldTextEditor handleChange={handleEditorChange} />
           </TextEditorContainer>
           <FontSelectContainer>
             <Description>폰트 선택</Description>
-            <StyledTextFieldDropDown2 />
+            <StyledTextFieldDropDown2
+              disabled={dropDownDisabled}
+              error={error}
+              // handleChange={handleChange}
+              listItems={listFontFamily}
+            />
           </FontSelectContainer>
-          <StyledPrimary>생성하기</StyledPrimary>
+          <StyledPrimary disabled={isBtnDisabled}>생성하기</StyledPrimary>
         </InputContainer>
       </AddMessageForm>
     </>
@@ -108,7 +138,6 @@ const Description = styled.div`
 const StyledTextFieldInput = styled(TextFieldInput)`
   width: 72rem;
   margin-top: 1.2rem;
-  margin-bottom: 5rem;
 `;
 
 const ProfileSelect = styled.div`
@@ -117,6 +146,7 @@ const ProfileSelect = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   gap: 1.2rem;
+  margin-top: 5rem;
   margin-bottom: 5rem;
 
   position: relative;

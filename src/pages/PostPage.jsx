@@ -38,7 +38,6 @@ const PostPage = () => {
   };
 
   const handleToggle = e => {
-    console.log('toggle');
     setToggleState(e.target.innerText.toLowerCase());
     setSelectedItem(items[0]);
     setFormValues(prevState => ({

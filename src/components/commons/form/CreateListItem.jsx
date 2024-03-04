@@ -5,11 +5,11 @@ const CreateListItem = ({
   selectedItem,
   setSelectedItem,
   handleClickAndBlur,
-  Lists,
+  listItems,
 }) => {
   return (
     <StyledList alt="드롭다운 메뉴바" className="dropdown-list">
-      {Lists.map((element, index) => {
+      {listItems.map((element, index) => {
         return (
           <StyledListItem
             key={index}
