@@ -54,6 +54,7 @@ const Main = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 0 2.4rem 4rem;
+  width: 100%;
 `;
 
 const BlueBox = styled.div`
@@ -137,9 +138,13 @@ const ImgBox = styled.div`
   display: flex;
   justify-content: center;
   margin: 9rem 0;
+  @media ${({ theme }) => theme.breakpoint.tablet} {
+    margin: 0;
+    margin-bottom: 4rem;
+  }
   @media ${({ theme }) => theme.breakpoint.mobile} {
     width: 100%;
-    height: 9rem;
+    height: 11rem;
     margin: 4rem 0;
     overflow: hidden;
   }
@@ -152,6 +157,9 @@ const CardImg = styled.img`
 
 const EmojiImg = styled(CardImg)`
   width: 47rem;
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    width: 100%;
+  }
 `;
 
 export default LandingPage;

@@ -54,10 +54,10 @@ const StyledButton = styled.button`
     background: ${({ theme }) => theme.gray300};
   }
   @media ${({ theme }) => theme.breakpoint.tablet} {
-    width: 72rem;
+    width: 93vw;
   }
   @media ${({ theme }) => theme.breakpoint.mobile} {
-    width: 32rem;
+    width: 90vw;
   }
   ${props =>
     props.outline &&
