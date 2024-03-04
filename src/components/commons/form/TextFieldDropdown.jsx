@@ -8,14 +8,14 @@ import CreateListItem from './CreateListItem.jsx';
 export default function TextFieldDropDown({
   disabled,
   error,
-  handleChange,
+  initialSelectedItem,
   listItems,
   ...props
 }) {
   const [status, setStatus] = useState(DropDownStatus.inActive);
   const [isVisible, setIsVisible] = useState(false);
   const [arrow, setArrow] = useState(arrowDown);
-  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedItem, setSelectedItem] = useState(initialSelectedItem);
   const handleFocus = e => {
     setIsVisible(true);
     setStatus(DropDownStatus.active);

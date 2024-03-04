@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import {
   TextFieldInput,
@@ -12,11 +12,13 @@ import profile1 from 'assets/images/profiles/profile1.svg';
 import profile2 from 'assets/images/profiles/profile2.svg';
 
 const MessagePage = () => {
-  const [inputValue, setInputValue] = useState('');
-  const [editorValue, setEditorValue] = useState('');
+  const initialSelectedItem = ['지인', 'Noto Sans'];
+  const [inputValue, setInputValue] = useState(initialSelectedItem[0]);
+  const [editorValue, setEditorValue] = useState(initialSelectedItem[1]);
   const [isBtnDisabled, setIsBtnDisabled] = useState(
     !(inputValue && editorValue),
   );
+  const [selectedImage, setSelectedImage] = useState(person);
 
   const inputDisabled = false;
   const dropDownDisabled = false;
@@ -38,15 +40,21 @@ const MessagePage = () => {
   const listItems = ['친구', '지인', '동료', '가족'];
   const listFontFamily = ['Noto Sans', 'Pretendard'];
 
+  const handleImageChange = image => {
+    setSelectedImage(image);
+  };
+
   const handleInputChange = e => {
     setInputValue(e.target.value);
-    setIsBtnDisabled(!(inputValue && editorValue));
   };
 
   const handleEditorChange = e => {
     setEditorValue(e.target.value);
-    setIsBtnDisabled(!(inputValue && editorValue));
   };
+
+  useEffect(() => {
+    setIsBtnDisabled(!(inputValue.trim() && editorValue.trim()));
+  }, [inputValue, editorValue]);
 
   return (
     <>
@@ -64,13 +72,18 @@ const MessagePage = () => {
             <Description>프로필 이미지</Description>
             <div className="container">
               <SelectedImg>
-                <img src={person} alt="기본 이미지" />
+                <img src={person} alt="선택된 이미지" />
               </SelectedImg>
               <div>
                 <h3>프로필 이미지를 선택해주세요!</h3>
                 <SampleImages>
                   {images.map((image, index) => (
-                    <img key={index} src={image} alt="샘플 이미지" />
+                    <img
+                      key={index}
+                      src={image}
+                      alt="샘플 이미지"
+                      onClick={() => handleImageChange(image[])}
+                    />
                   ))}
                 </SampleImages>
               </div>
@@ -81,7 +94,7 @@ const MessagePage = () => {
             <StyledTextFieldDropDown1
               disabled={dropDownDisabled}
               error={error}
-              // handleChange={handleChange}
+              initialSelectedItem={initialSelectedItem[0]}
               listItems={listItems}
             />
           </RelationshipContainer>
@@ -94,7 +107,7 @@ const MessagePage = () => {
             <StyledTextFieldDropDown2
               disabled={dropDownDisabled}
               error={error}
-              // handleChange={handleChange}
+              initialSelectedItem={initialSelectedItem[1]}
               listItems={listFontFamily}
             />
           </FontSelectContainer>
@@ -145,7 +158,9 @@ const ProfileSelect = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 1.2rem;
+
+  width: 72rem;
+  gap: 3.2rem;
   margin-top: 5rem;
   margin-bottom: 5rem;
 
@@ -155,7 +170,7 @@ const ProfileSelect = styled.div`
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-start;
-    gap: 3.2rem;
+    gap: 1.2rem;
   }
   h3 {
     font-size: 1.6rem;
@@ -175,8 +190,11 @@ const SelectedImg = styled.div`
   background-color: ${({ theme }) => theme.gray300};
 `;
 const SampleImages = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 60.5rem;
   img {
-    margin-right: 1.2rem;
     width: 5.6rem;
     height: 5.6rem;
     border-radius: 10rem;
