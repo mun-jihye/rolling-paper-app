@@ -41,6 +41,8 @@ const GridContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
+  justify-items: center;
+  align-items: center;
   @media ${({ theme }) => theme.breakpoint.tablet} {
     grid-template-columns: repeat(2, 1fr);
   }
