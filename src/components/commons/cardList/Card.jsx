@@ -5,40 +5,44 @@ import greenPattern from 'assets/images/cardList/pattern_green.png';
 import beigePattern from 'assets/images/cardList/pattern_beige.png';
 import purplePattern from 'assets/images/cardList/pattern_purple.png';
 import EmojiBadge from '../badges/EmojiBadge';
+import { Link } from 'react-router-dom';
+import routes from 'utils/constants/routes';
 
 function Card({ data, isLoading }) {
   return isLoading ? (
     <LoadingCard />
   ) : (
-    <StyledCard $data={data}>
-      <StyledContainer $isProfile={true}>
-        <StyledH3tag $data={data}>{`To. ${data?.name}`}</StyledH3tag>
-        <StyledContainer $isImage={true}>
-          {data?.recentMessages?.map((message, index) => {
-            return (
-              <ProfileContainer key={message?.id} $index={index}>
-                <Profile src={message?.profileImageURL} $isModal={false} />
-              </ProfileContainer>
-            );
-          })}
-          {data?.messageCount > 3 && (
-            <LastProfile>+{data?.messageCount - 3}</LastProfile>
-          )}
-        </StyledContainer>
-        <StyledText $data={data}>
-          <StyledText $data={data} $isNumber={true}>
-            {data?.messageCount}
+    <Link to={`${routes.post}/${data?.id}`}>
+      <StyledCard $data={data}>
+        <StyledContainer $isProfile={true}>
+          <StyledH3tag $data={data}>{`To. ${data?.name}`}</StyledH3tag>
+          <StyledContainer $isImage={true}>
+            {data?.recentMessages?.map((message, index) => {
+              return (
+                <ProfileContainer key={message?.id} $index={index}>
+                  <Profile src={message?.profileImageURL} $isModal={false} />
+                </ProfileContainer>
+              );
+            })}
+            {data?.messageCount > 3 && (
+              <LastProfile>+{data?.messageCount - 3}</LastProfile>
+            )}
+          </StyledContainer>
+          <StyledText $data={data}>
+            <StyledText $data={data} $isNumber={true}>
+              {data?.messageCount}
+            </StyledText>
+            명이 작성했어요!
           </StyledText>
-          명이 작성했어요!
-        </StyledText>
-      </StyledContainer>
-      <StyledHrtag />
-      <StyledContainer $isBadge={true}>
-        {data?.topReactions?.map(reaction => {
-          return <CardEmojiBadge key={reaction?.id} data={reaction} />;
-        })}
-      </StyledContainer>
-    </StyledCard>
+        </StyledContainer>
+        <StyledHrtag />
+        <StyledContainer $isBadge={true}>
+          {data?.topReactions?.map(reaction => {
+            return <CardEmojiBadge key={reaction?.id} data={reaction} />;
+          })}
+        </StyledContainer>
+      </StyledCard>
+    </Link>
   );
 }
 

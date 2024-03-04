@@ -6,6 +6,8 @@ import PrimaryBtn from 'components/commons/buttons/PrimaryBtn';
 import useDeviceType from 'hooks/useDeviceType';
 import { useQuery } from 'react-query';
 import { getRecipients } from 'api/recipient';
+import { Link } from 'react-router-dom';
+import routes from 'utils/constants/routes';
 
 const ListPage = () => {
   const deviceType = useDeviceType();
@@ -46,7 +48,9 @@ const ListPage = () => {
         </SectionConainer>
       </MainContainer>
       <StyledFooter>
-        <ListPagePrimaryBtn>나도 만들어보기</ListPagePrimaryBtn>
+        <Link to={routes.post}>
+          <ListPagePrimaryBtn>나도 만들어보기</ListPagePrimaryBtn>
+        </Link>
       </StyledFooter>
     </div>
   );
