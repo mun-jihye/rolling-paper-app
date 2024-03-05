@@ -5,7 +5,6 @@ import CardMessage from 'components/commons/cards/CardMessage';
 import Date from 'components/commons/cards/Date';
 import styled from 'styled-components';
 import { useState } from 'react';
-import { Modal } from 'components/commons/modal/modal';
 import CardModal from 'components/commons/modal/CardModal';
 import IconButton from 'components/commons/buttons/IconButton';
 import { useDeleteMessageQuery } from 'hooks/queries/useEditQuery';
