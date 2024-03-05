@@ -4,8 +4,12 @@ import FromCardList from 'components/edit/FromCardList';
 import { useQuery } from 'react-query';
 import { getRecipientList, getRecipient } from 'api/recipient';
 import Loader from 'components/commons/Loader';
+import MainHeader from 'components/commons/header/MainHeader';
+import SubHeader from 'components/commons/header/SubHeader';
+import { useParams } from 'react-router-dom';
 
 const EditPage = () => {
+  const postId = useParams();
   const { data, isLoading } = useQuery({
     queryKey: ['editPage'],
     queryFn: ({ id = 4126 }) => getRecipient(id),
@@ -22,6 +26,8 @@ const EditPage = () => {
   console.log(messageData);
   return (
     <>
+      <MainHeader />
+      <SubHeader />
       {isLoading ? (
         <Loader />
       ) : (
