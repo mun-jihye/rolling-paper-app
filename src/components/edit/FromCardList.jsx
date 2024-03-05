@@ -4,9 +4,10 @@ import FromCard from './FromCard';
 import { formatDate } from 'utils/date';
 import AddCard from './AddCard';
 
-const FromCardList = ({ datas }) => {
+const FromCardList = ({ datas, isDelete }) => {
   return (
     <GridContainer>
+      <AddCard isDelete={isDelete} />
       {datas?.map(data => {
         const {
           id,
@@ -16,18 +17,17 @@ const FromCardList = ({ datas }) => {
           content,
           createdAt,
         } = data;
-
         const formattedDate = formatDate(createdAt);
-        return id === 'add' ? (
-          <AddCard />
-        ) : (
+        return (
           <FromCard
             key={id}
+            messageId={id}
             profileImageURL={profileImageURL}
             sender={sender}
             relationship={relationship}
             content={content}
             formattedDate={formattedDate}
+            isDelete={isDelete}
           />
         );
       })}
