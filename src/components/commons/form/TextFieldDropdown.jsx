@@ -5,19 +5,18 @@ import arrowUp from 'assets/images/forms/arrow_top.svg';
 import arrowDown from 'assets/images/forms/arrow_down.svg';
 import CreateListItem from './CreateListItem.jsx';
 
-export default function TextFieldDropDown() {
+export default function TextFieldDropDown({
+  disabled,
+  error,
+  initialSelectedItem,
+  listItems,
+  handleChange,
+  ...props
+}) {
   const [status, setStatus] = useState(DropDownStatus.inActive);
   const [isVisible, setIsVisible] = useState(false);
   const [arrow, setArrow] = useState(arrowDown);
-  const [selectedItem, setSelectedItem] = useState(null);
-  const Lists = [
-    'TextTextText1',
-    'TextTextText2',
-    'TextTextText3',
-    'TextTextText4',
-    'TextTextText5',
-    'TextTextText6',
-  ];
+  const [selectedItem, setSelectedItem] = useState(initialSelectedItem);
   const handleFocus = e => {
     setIsVisible(true);
     setStatus(DropDownStatus.active);
@@ -49,12 +48,12 @@ export default function TextFieldDropDown() {
 
   const handleClickAndBlur = (event, index) => {
     event.preventDefault();
-    setSelectedItem(Lists[index]);
+    setSelectedItem(listItems[index]);
     handleBlur(event);
   };
 
   return (
-    <StyledDiv className="dropdown-container">
+    <StyledDiv className="dropdown-container" {...props}>
       <StyledDropDownButton
         $status={status}
         onFocus={handleFocus}
@@ -69,10 +68,11 @@ export default function TextFieldDropDown() {
           selectedItem={selectedItem}
           setSelectedItem={setSelectedItem}
           handleClickAndBlur={handleClickAndBlur}
-          Lists={Lists}
+          listItems={listItems}
+          handleChange={handleChange}
         />
       )}
-      <StyledSpan>Error Message</StyledSpan>
+      <StyledSpan>{error.message}</StyledSpan>
     </StyledDiv>
   );
 }

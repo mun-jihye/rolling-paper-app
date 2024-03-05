@@ -4,6 +4,7 @@ const routes = {
   edit: '/edit',
   post: '/post',
   error: '/error',
+  message: '/message',
 };
 
 export default routes;
