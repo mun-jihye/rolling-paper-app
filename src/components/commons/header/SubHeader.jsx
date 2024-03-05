@@ -10,15 +10,20 @@ import Toast from 'components/commons/toast/Toast';
 import useCloseModal from 'hooks/useCloseModal';
 import EmojiPicker from 'emoji-picker-react';
 
-//사용자 데이터: 나중에 불러와야함
-const userData = {
-  name: 'Ashley Kim',
-  emotion: 'Happy',
-  people: 23,
-};
+import { useQuery } from 'react-query';
+import { getRecipient } from 'api/recipient';
 
 const SubHeader = () => {
-  //상태 관리 함수
+  const recipientId = 4114;
+
+  const {
+    data: response,
+    isLoading,
+    error,
+  } = useQuery(['recipient', recipientId], () => getRecipient(recipientId));
+
+  const recipientName = response ? response.data.name : 'Unknown';
+
   const [showShareOptions, setShowShareOptions] = useState(false);
   const [showArrowOptions, setArrowShareOptions] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -42,7 +47,6 @@ const SubHeader = () => {
     () => setArrowShareOptions(false),
     arrowOptionsRef,
   );
-
   useCloseModal(
     showEmojiPicker,
     () => setShowEmojiPicker(false),
@@ -57,6 +61,15 @@ const SubHeader = () => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  //주소에서 id값 가져오기
+  /* useEffect(() => {
+    const regex = /post\/([^\/]+)(\/|$)/;
+    const match = window.location.pathname.match(regex);
+    if (match && match[1]) {
+      const postId = match[1];
+    }
+  }, []); */
 
   //핸들러 함수들
   const handleShareClick = () => {
@@ -114,9 +127,13 @@ const SubHeader = () => {
     setShowEmojiPicker(false);
   };
 
+  if (isLoading) return <div>데이터를 불러오는 중...</div>;
+  if (error)
+    return <div>데이터를 불러오는데 실패했습니다: {console.log(error)}</div>;
+
   return (
     <StyledContainer>
-      <ToUser>To. {userData.name}</ToUser>
+      <ToUser>To. {recipientName}</ToUser>
       <StyledSection>
         <StyledProfiles>
           {/* 프로필 이미지들 */}
@@ -126,7 +143,7 @@ const SubHeader = () => {
           <StyledProfileNum>+6</StyledProfileNum>
         </StyledProfiles>
         <StyledMessage>
-          <StyledEmp>{userData.people}</StyledEmp>명이 작성했어요!
+          <StyledEmp>{23}</StyledEmp>명이 작성했어요!
         </StyledMessage>
         <StyledDivider />
         <StyledEmojis>
@@ -135,12 +152,12 @@ const SubHeader = () => {
           <StyledEmoji>😍16</StyledEmoji>
           <StyledEmoji>🎉10</StyledEmoji>
           <StyledArrow onClick={handleArrowClick} src={ArrowDown} alt="Arrow" />
-          {showArrowOptions && (
-            <ArrowOptions ref={arrowOptionsRef}>이모지 옵션</ArrowOptions>
-          )}
         </StyledEmojis>
         {!isMobile && (
           <StyledButtons>
+            {showArrowOptions && (
+              <ArrowOptions ref={arrowOptionsRef}>이모지 옵션</ArrowOptions>
+            )}
             <StyledDivider2 />
             <AddButton
               src={AddImage}
@@ -184,8 +201,8 @@ const StyledEmojiPicker = styled.div`
   width: 14rem;
   height: 10.1rem;
   top: 120%;
-  right: 127%;
-  z-index: 1;
+  right: 114%;
+  z-index: 10;
 `;
 
 const AddButton = ({ src, alt, onClick, text }) => (
@@ -200,14 +217,15 @@ const ArrowOptions = styled.div`
   width: 14rem;
   height: 10.1rem;
   border-radius: 0.8rem;
-  background-color: white;
-  border: 0.1rem solid #cccccc;
-  box-shadow: 0 0.2rem 1.2rem 0 #00000014;
-  top: 100%;
-  left: 30%;
-  transform: translateX(-50%);
-  z-index: -1;
+  border: 0.1rem;
+  background-color: ${({ theme }) => theme.white};
+  border: 0.1rem solid ${({ theme }) => theme.gray300};
+  box-shadow: 0 0.2rem 1.2rem 0 ${({ theme }) => theme.gray200};
+  top: 120%;
+  right: 105%;
+  z-index: 10;
 `;
+
 const ShareButton = ({ src, alt, onClick }) => (
   <StyledButton onClick={onClick}>
     <img src={src} alt={alt} />
@@ -223,26 +241,27 @@ const ShareButtonText = styled.div`
   line-height: 2.6rem;
   letter-spacing: -0.01em;
   text-align: left;
-  background-color: white;
+  background-color: ${({ theme }) => theme.white};
   border-radius: 0.8rem;
   margin: 0;
 
   &:hover {
-    background-color: #cccccc;
+    background-color: ${({ theme }) => theme.gray200};
   }
 `;
+
 const ShareButtonList = styled.div`
   position: absolute;
   width: 14rem;
   height: 10.1rem;
   border-radius: 0.8rem;
   border: 0.1rem;
-  background-color: white;
-  border: 0.1rem solid #cccccc;
-  box-shadow: 0 0.2rem 1.2rem 0 #00000014;
+  background-color: ${({ theme }) => theme.white};
+  border: 0.1rem solid ${({ theme }) => theme.gray300};
+  box-shadow: 0 0.2rem 1.2rem 0 ${({ theme }) => theme.gray200};
   top: 120%;
-  left: 15%;
-  z-index: 1;
+  left: 24%;
+  z-index: 10;
 `;
 
 const StyledContainer = styled.ul`
@@ -276,7 +295,7 @@ const ToUser = styled.div`
   font-weight: 900;
   line-height: auto;
   text-align: left;
-  padding: 0 1rem;
+  padding: 0 0.2rem;
 
   @media (max-width: 1248px) {
     padding: 0rem;
@@ -288,8 +307,8 @@ const StyledProfileNum = styled.div`
   height: 2.8rem;
   left: 4.8rem;
   border: 0.1rem;
-  background: #ffffff;
-  border: 0.1rem solid #e3e3e3;
+  background: ${({ theme }) => theme.white};
+  border: 0.1rem solid ${({ theme }) => theme.gray200};
   border-radius: 14rem;
   font-family: Pretendard;
   font-size: 1.2rem;
@@ -307,7 +326,7 @@ const StyledProfile = styled.img`
   height: 2.8rem;
   border-radius: 14rem;
   margin-right: -0.8rem;
-  border: 0.14rem solid #ffffff;
+  border: 0.14rem solid ${({ theme }) => theme.white};
 
   @media (max-width: 1248px) {
     display: none;
@@ -368,7 +387,7 @@ const StyledEmoji = styled.button`
   border-radius: 3.2rem;
   background-color: ${({ theme }) => theme.gray400};
   margin-right: 1rem;
-  color: white;
+  color: ${({ theme }) => theme.white};
 
   @media (max-width: 768px) {
     display: none;
@@ -396,8 +415,8 @@ const StyledButton = styled.button`
   height: 3.6rem;
   padding: 0.6rem 1.6rem;
   border-radius: 0.6rem;
-  background: #ffffff;
-  border: 1px solid #cccccc;
+  background: ${({ theme }) => theme.white};
+  border: 1px solid ${({ theme }) => theme.gray400};
   text-align: center;
   gap: 1rem;
 `;
@@ -405,6 +424,6 @@ const StyledButton = styled.button`
 const StyledButtons = styled.div`
   display: flex;
   align-items: center;
-  gap: 1.2rem;
+  gap: 2.15rem;
   position: relative;
 `;

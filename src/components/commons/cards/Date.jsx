@@ -14,8 +14,9 @@ const StyledDate = styled.div`
     !props.isModal &&
     `
     position: absolute;
-  bottom: 0;
-  left: 0;
+    bottom: 0;
+    left: 0;
   `}
+`;
 
 export default Date;

@@ -39,7 +39,7 @@ const commonPadding = css`
     padding: 0 1rem;
   }
 
-  @media (max-width: 767px) { 
+  @media (max-width: 767px) {
     padding: 0 0.5rem;
   }
 `;
@@ -49,7 +49,7 @@ const StyledContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   margin: 0 auto;
-  max-width: 1248px; 
+  max-width: 1248px;
   ${commonPadding}
 `;
 
@@ -63,7 +63,7 @@ const StyledLogo = styled.img`
 const StyledButton = styled.button`
   width: 16rem;
   height: 4rem;
-  border: 0.1rem solid black;
+  border: 0.1rem solid ${({ theme }) => theme.gray400};
   border-radius: 1rem;
   font-family: Pretendard;
   font-size: 1.3rem;
