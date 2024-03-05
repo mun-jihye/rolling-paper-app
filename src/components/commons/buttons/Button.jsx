@@ -55,9 +55,15 @@ const StyledButton = styled.button`
   }
   @media ${({ theme }) => theme.breakpoint.tablet} {
     width: 93vw;
+    position: fixed;
+    bottom: 2.4rem;
+    left: 2.8rem;
   }
   @media ${({ theme }) => theme.breakpoint.mobile} {
-    width: 90vw;
+    width: 88vw;
+    position: fixed;
+    bottom: 2.4rem;
+    left: 2.4rem;
   }
   ${props =>
     props.outline &&
