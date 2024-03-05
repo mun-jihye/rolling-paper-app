@@ -2,22 +2,20 @@ import React, { useState } from 'react';
 import { EditContainer } from 'components/edit/EditContainer';
 import FromCardList from 'components/edit/FromCardList';
 import { useQuery } from 'react-query';
-import { getRecipientList, getRecipient } from 'api/recipient';
+import { getRecipientList } from 'api/recipient';
 import Loader from 'components/commons/Loader';
 import MainHeader from 'components/commons/header/MainHeader';
 import SubHeader from 'components/commons/header/SubHeader';
 import { useParams } from 'react-router-dom';
 import Button from 'components/commons/buttons/Button';
 import styled from 'styled-components';
+import { useGetRecipientQuery } from 'hooks/queries/useGetEditQuery';
 
 const EditPage = () => {
   const { postId } = useParams();
   const [isDelete, setIsDelete] = useState(false);
 
-  const { data, isLoading } = useQuery({
-    queryKey: ['editPage', postId],
-    queryFn: () => getRecipient(postId),
-  });
+  const { data, isLoading } = useGetRecipientQuery(postId);
   const { data: message } = useQuery({
     queryKey: ['messageList', postId],
     queryFn: () => getRecipientList(postId),
