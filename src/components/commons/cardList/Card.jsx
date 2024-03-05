@@ -2,49 +2,54 @@ import styled, { keyframes } from 'styled-components';
 import Profile from 'components/commons/Profile';
 import bluePattern from 'assets/images/cardList/pattern_blue.png';
 import greenPattern from 'assets/images/cardList/pattern_green.png';
-import orangePattern from 'assets/images/cardList/pattern_orange.png';
+import beigePattern from 'assets/images/cardList/pattern_beige.png';
 import purplePattern from 'assets/images/cardList/pattern_purple.png';
 import EmojiBadge from '../badges/EmojiBadge';
+import { Link } from 'react-router-dom';
+import routes from 'utils/constants/routes';
+import React from 'react';
 
 function Card({ data, isLoading }) {
   return isLoading ? (
     <LoadingCard />
   ) : (
-    <StyledCard $data={data}>
-      <StyledContainer $isProfile={true}>
-        <StyledH3tag $data={data}>{`To. ${data?.name}`}</StyledH3tag>
-        <StyledContainer $isImage={true}>
-          {data?.recentMessages?.slice(0, 3).map((message, index) => {
-            return (
-              <ProfileContainer key={index + 1} $index={index}>
-                <Profile src={message?.profileImageURL} $isModal={false} />
-              </ProfileContainer>
-            );
-          })}
-          {data?.messageCount > 3 && (
-            <LastProfile>+{data?.messageCount - 3}</LastProfile>
-          )}
-        </StyledContainer>
-        <StyledText $data={data}>
-          <StyledText $data={data} $isNumber={true}>
-            {data?.messageCount}
+    <Link to={`${routes.post}/${data?.id}`}>
+      <StyledCard $data={data}>
+        <StyledContainer $isProfile={true}>
+          <StyledH3tag $data={data}>{`To. ${data?.name}`}</StyledH3tag>
+          <StyledContainer $isImage={true}>
+            {data?.recentMessages?.map((message, index) => {
+              return (
+                <ProfileContainer key={message?.id} $index={index}>
+                  <Profile src={message?.profileImageURL} />
+                </ProfileContainer>
+              );
+            })}
+            {data?.messageCount > 3 && (
+              <LastProfile>+{data?.messageCount - 3}</LastProfile>
+            )}
+          </StyledContainer>
+          <StyledText $data={data}>
+            <StyledText $data={data} $isNumber={true}>
+              {data?.messageCount}
+            </StyledText>
+            명이 작성했어요!
           </StyledText>
-          명이 작성했어요!
-        </StyledText>
-      </StyledContainer>
-      <StyledHrtag />
-      <StyledContainer $isBadge={true}>
-        {data?.topReactions?.map(reaction => {
-          return <CardEmojiBadge key={reaction?.id} data={reaction} />;
-        })}
-      </StyledContainer>
-    </StyledCard>
+        </StyledContainer>
+        <StyledHrtag />
+        <StyledContainer $isBadge={true}>
+          {data?.topReactions?.map(reaction => {
+            return <CardEmojiBadge key={reaction?.id} data={reaction} />;
+          })}
+        </StyledContainer>
+      </StyledCard>
+    </Link>
   );
 }
 
 const BACK_GROUND = {
   purple: ['purple200', purplePattern],
-  beige: ['orange200', orangePattern],
+  beige: ['beige200', beigePattern],
   blue: ['blue200', bluePattern],
   green: ['green200', greenPattern],
 };
@@ -210,4 +215,4 @@ const LoadingCard = styled(StyledCard)`
   animation: ${placeholderAnimation} 2s ease-in-out infinite;
 `;
 
-export default Card;
+export default React.memo(Card);

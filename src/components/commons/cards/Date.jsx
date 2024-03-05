@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Date = ({ date, isModal }) => {
-  return <StyledDate isModal={isModal}>{date}</StyledDate>;
+const Date = ({ date, ismodal }) => {
+  return <StyledDate ismodal={ismodal}>{date}</StyledDate>;
 };
 
 const StyledDate = styled.div`
@@ -11,11 +11,11 @@ const StyledDate = styled.div`
   letter-spacing: -0.005rem;
   color: ${({ theme }) => theme.gray400};
   ${props =>
-    !props.isModal &&
+    !props.ismodal &&
     `
     position: absolute;
-  bottom: 0;
-  left: 0;
+    bottom: 0;
+    left: 0;
   `}
 `;
 

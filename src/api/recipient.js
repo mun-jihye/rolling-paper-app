@@ -22,15 +22,15 @@ export const createRecipients = data => {
 export const getRecipient = id => {
   return instance.get(`${AUTH.recipients}${id}/`);
 };
+export const deleteRecipients = id => {
+  return instance.delete(`${AUTH.recipients}${id}/`);
+};
 
 /**
- * 롤링페이퍼 대상에게 보낸 메세지 조회
+ * 대상에게 보낸 메세지 목록 조회
  * @param {*} id 대상 아이디
  * @returns
  */
 export const getRecipientList = id => {
   return instance.get(`${AUTH.recipients}${id}/messages/`);
-};
-export const deleteRecipients = id => {
-  return instance.delete(`${AUTH.recipients}${id}/`);
 };
