@@ -1,4 +1,5 @@
-import { deleteRecipients, getRecipient } from 'api/recipient';
+import { deleteMessage } from 'api/message';
+import { deleteRecipient, getRecipient } from 'api/recipient';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 
 export const useGetRecipientQuery = postId => {
@@ -8,13 +9,27 @@ export const useGetRecipientQuery = postId => {
   });
 };
 
-export const useDeleteRecipient = postId => {
+export const useDeleteRecipientQuery = postId => {
   const queryClient = useQueryClient();
-  const deleteRecipient = useMutation({
-    mutationFn: () => deleteRecipients(postId),
+  const deleteData = useMutation({
+    mutationFn: () => deleteRecipient(postId),
     onSuccess: () => {
-      queryClient.invalidateQueries(['comments', postId]);
+      queryClient.invalidateQueries(['recipient', postId]);
     },
   });
-  return deleteRecipient;
+  return deleteData;
+};
+
+export const useDeleteMessageQuery = messageId => {
+  const queryClient = useQueryClient();
+  const deleteData = useMutation({
+    mutationFn: () => deleteMessage(messageId),
+    onSuccess: () => {
+      queryClient.invalidateQueries(['message', messageId]);
+    },
+    onError: error => {
+      console.log(error);
+    },
+  });
+  return deleteData;
 };

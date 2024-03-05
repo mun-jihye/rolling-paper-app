@@ -15,6 +15,6 @@ export const updateMessages = id => {
  * @param {*} id
  * @returns
  */
-export const deleteMessages = id => {
+export const deleteMessage = id => {
   return instance.delete(`${AUTH.messages}${id}/`);
 };

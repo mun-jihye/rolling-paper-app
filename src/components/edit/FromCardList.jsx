@@ -17,11 +17,11 @@ const FromCardList = ({ datas, isDelete }) => {
           content,
           createdAt,
         } = data;
-
         const formattedDate = formatDate(createdAt);
         return (
           <FromCard
             key={id}
+            messageId={id}
             profileImageURL={profileImageURL}
             sender={sender}
             relationship={relationship}

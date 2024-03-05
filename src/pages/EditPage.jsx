@@ -10,7 +10,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Button from 'components/commons/buttons/Button';
 import styled from 'styled-components';
 import {
-  useDeleteRecipient,
+  useDeleteRecipientQuery,
   useGetRecipientQuery,
 } from 'hooks/queries/useGetEditQuery';
 import { deleteAlert } from 'utils/deleteAlert';
@@ -25,7 +25,7 @@ const EditPage = () => {
     queryKey: ['messageList', postId],
     queryFn: () => getRecipientList(postId),
   });
-  const deleteRecipient = useDeleteRecipient(postId);
+  const deleteRecipient = useDeleteRecipientQuery(postId);
 
   const editData = data?.data;
   const messageData = message?.data.results;
@@ -33,9 +33,8 @@ const EditPage = () => {
   const handleDelete = () => {
     deleteAlert({
       title: '롤링페이퍼 대상을 삭제하시겠습니까?',
-      subTitle: '삭제하면 되돌릴 수 없습니다 😥',
       deleteMutaion: deleteRecipient,
-      postId: postId,
+      Id: postId,
       onSuccess: () => {
         navigate(routes.list);
       },

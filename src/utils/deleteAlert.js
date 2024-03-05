@@ -1,15 +1,9 @@
 import Swal from 'sweetalert2';
 
-export const deleteAlert = ({
-  title,
-  subTitle,
-  deleteMutaion,
-  postId,
-  onSuccess,
-}) => {
+export const deleteAlert = ({ title, deleteMutaion, Id, onSuccess }) => {
   Swal.fire({
     title: title,
-    text: subTitle,
+    text: '삭제하면 되돌릴 수 없습니다 😥',
     icon: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
@@ -19,7 +13,7 @@ export const deleteAlert = ({
     width: '40rem',
   }).then(result => {
     if (result.isConfirmed) {
-      deleteMutaion.mutate(postId, {
+      deleteMutaion.mutate(Id, {
         onSuccess: () => {
           Swal.fire({
             title: '삭제 완료',
