@@ -11,6 +11,10 @@ export const CardContainer = styled.div`
   padding: 3.5rem;
   box-shadow: 0px 2px 12px 0px #00000014;
   cursor: pointer;
+  &:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s;
+  }
 
   @media ${({ theme }) => theme.breakpoint.tablet} {
     width: 35.2rem;
