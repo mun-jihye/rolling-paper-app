@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import { Modal } from 'components/commons/modal/modal';
 import CardModal from 'components/commons/modal/CardModal';
+import IconButton from 'components/commons/buttons/IconButton';
 
 const FromCard = ({
   profileImageURL,
@@ -14,13 +15,18 @@ const FromCard = ({
   relationship,
   content,
   formattedDate,
+  isDelete,
 }) => {
   const [showModal, setShowModal] = useState(false);
   const handleClick = () => {
     setShowModal(true);
   };
+  const handleDelete = () => {
+    alert('선택한 메세지가 삭제됩니다.');
+  };
   const handleClose = () => {
     setShowModal(false);
+    isDelete && handleDelete();
   };
   return (
     <>
@@ -30,6 +36,9 @@ const FromCard = ({
             <Profile src={profileImageURL} $iscard="true" />
             <FromTitle sender={sender} relationship={relationship} />
           </FlexContainer>
+          {isDelete && (
+            <IconButton icon={'delete'} Delete onClick={handleDelete} />
+          )}
         </Header>
         <Hr />
         <Content>
@@ -38,7 +47,11 @@ const FromCard = ({
         </Content>
       </CardContainer>
       {showModal && (
-        <Modal showModal={showModal} handleClose={handleClose}>
+        <Modal
+          showModal={showModal}
+          handleClose={handleClose}
+          isDelete={isDelete}
+        >
           <CardModal
             profileImageURL={profileImageURL}
             sender={sender}

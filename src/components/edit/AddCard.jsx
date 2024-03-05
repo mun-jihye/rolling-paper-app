@@ -5,16 +5,18 @@ import { useNavigate, useParams } from 'react-router-dom';
 import routes from 'utils/constants/routes';
 import styled from 'styled-components';
 
-const AddCard = () => {
+const AddCard = ({ isDelete }) => {
   const { postId } = useParams();
   const navigate = useNavigate();
   const handleClick = () => {
     navigate(`${routes.post}/${postId}/message`);
   };
   return (
-    <FlexContainer>
-      <PlusBtn onClick={handleClick} />
-    </FlexContainer>
+    !isDelete && (
+      <FlexContainer>
+        <PlusBtn onClick={handleClick} />
+      </FlexContainer>
+    )
   );
 };
 

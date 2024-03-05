@@ -12,7 +12,7 @@ import styled from 'styled-components';
 
 const EditPage = () => {
   const { postId } = useParams();
-  const [isEdit, setIsEdit] = useState(true);
+  const [isDelete, setIsDelete] = useState(false);
 
   const { data, isLoading } = useQuery({
     queryKey: ['editPage', postId],
@@ -28,6 +28,10 @@ const EditPage = () => {
     { id: 'add' },
     ...message?.data.results,
   ];
+
+  const handleDelete = () => {
+    alert('전체 메세지가 삭제됩니다.');
+  };
   return (
     <>
       <MainHeader />
@@ -40,13 +44,15 @@ const EditPage = () => {
           $backgroundimageurl={editData.backgroundImageURL}
         >
           <FlexContainer>
-            {isEdit ? (
-              <StyledButton>편집하기</StyledButton>
+            {isDelete ? (
+              <StyledButton onClick={handleDelete}>삭제하기</StyledButton>
             ) : (
-              <StyledButton>삭제하기</StyledButton>
+              <StyledButton onClick={() => setIsDelete(!isDelete)}>
+                편집하기
+              </StyledButton>
             )}
           </FlexContainer>
-          <FromCardList datas={messageData} />
+          <FromCardList datas={messageData} isDelete={isDelete} />
         </EditContainer>
       )}
     </>
