@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Plus from 'components/assets/images/buttons/plus.png';
+import Plus from 'assets/images/buttons/plus.png';
 
 const PlusBtn = ({ onClick, disabled, className, type = 'button' }) => {
   return (
