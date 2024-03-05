@@ -74,7 +74,7 @@ const PostPage = () => {
       <AddPostForm className="post-container">
         <InputContainer>
           <h2>To</h2>
-          <StyledTextFieldInput
+          <NameInput
             placeholder={'받는 사람 이름을 입력해주세요'}
             disabled={inputDisabled}
             error={error}
@@ -134,7 +134,7 @@ const InputContainer = styled.div`
   }
 `;
 
-const StyledTextFieldInput = styled(TextFieldInput)`
+const NameInput = styled(TextFieldInput)`
   width: 72rem;
 `;
 

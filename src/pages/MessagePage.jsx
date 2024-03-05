@@ -13,12 +13,13 @@ import profile2 from 'assets/images/profiles/profile2.svg';
 
 const MessagePage = () => {
   const initialSelectedItem = ['지인', 'Noto Sans'];
-  const [inputValue, setInputValue] = useState(initialSelectedItem[0]);
-  const [editorValue, setEditorValue] = useState(initialSelectedItem[1]);
+
+  const [inputValue, setInputValue] = useState('');
+  const [editorValue, setEditorValue] = useState('');
   const [isBtnDisabled, setIsBtnDisabled] = useState(
     !(inputValue && editorValue),
   );
-  const [selectedImage, setSelectedImage] = useState(person);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const inputDisabled = false;
   const dropDownDisabled = false;
@@ -60,20 +61,20 @@ const MessagePage = () => {
     <>
       <GNB />
       <AddMessageForm className="message-container">
-        <InputContainer>
+        <NameContainer>
           <Description>From</Description>
-          <StyledTextFieldInput
+          <NameInput
             placeholder={'이름을 입력해주세요.'}
             disabled={inputDisabled}
             error={error}
             handleChange={handleInputChange}
           />
-          <ProfileSelect className="profile-container">
+          <ProfileContainer>
             <Description>프로필 이미지</Description>
             <div className="container">
-              <SelectedImg>
-                <img src={person} alt="선택된 이미지" />
-              </SelectedImg>
+              <ProfileImg $selectedImage={selectedImage}>
+                {!selectedImage && <img src={person} alt="기본 이미지" />}
+              </ProfileImg>
               <div>
                 <h3>프로필 이미지를 선택해주세요!</h3>
                 <SampleImages>
@@ -82,16 +83,16 @@ const MessagePage = () => {
                       key={index}
                       src={image}
                       alt="샘플 이미지"
-                      onClick={() => handleImageChange(image[])}
+                      onClick={() => handleImageChange(image, index)}
                     />
                   ))}
                 </SampleImages>
               </div>
             </div>
-          </ProfileSelect>
+          </ProfileContainer>
           <RelationshipContainer>
             <Description>상대와의 관계</Description>
-            <StyledTextFieldDropDown1
+            <RelationshipDropDown
               disabled={dropDownDisabled}
               error={error}
               initialSelectedItem={initialSelectedItem[0]}
@@ -100,11 +101,11 @@ const MessagePage = () => {
           </RelationshipContainer>
           <TextEditorContainer>
             <Description>내용을 입력해주세요</Description>
-            <StyledTextFieldTextEditor handleChange={handleEditorChange} />
+            <TextEditor handleChange={handleEditorChange} />
           </TextEditorContainer>
           <FontSelectContainer>
             <Description>폰트 선택</Description>
-            <StyledTextFieldDropDown2
+            <FontFamilyDropDown
               disabled={dropDownDisabled}
               error={error}
               initialSelectedItem={initialSelectedItem[1]}
@@ -112,7 +113,7 @@ const MessagePage = () => {
             />
           </FontSelectContainer>
           <StyledPrimary disabled={isBtnDisabled}>생성하기</StyledPrimary>
-        </InputContainer>
+        </NameContainer>
       </AddMessageForm>
     </>
   );
@@ -131,7 +132,7 @@ const AddMessageForm = styled.div`
   z-index: 1;
 `;
 
-const InputContainer = styled.div`
+const NameContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -148,12 +149,12 @@ const Description = styled.div`
   text-align: left;
 `;
 
-const StyledTextFieldInput = styled(TextFieldInput)`
+const NameInput = styled(TextFieldInput)`
   width: 72rem;
   margin-top: 1.2rem;
 `;
 
-const ProfileSelect = styled.div`
+const ProfileContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -181,13 +182,15 @@ const ProfileSelect = styled.div`
     color: ${({ theme }) => theme.gray500};
   }
 `;
-const SelectedImg = styled.div`
+const ProfileImg = styled.div`
   width: 8rem;
   height: 8rem;
   padding: 2.4rem;
   border-radius: 10rem;
   gap: 1rem;
   background-color: ${({ theme }) => theme.gray300};
+  background-image: url(${props => props.$selectedImage});
+  background-size: cover;
 `;
 const SampleImages = styled.div`
   display: flex;
@@ -211,7 +214,7 @@ const RelationshipContainer = styled.div`
 
   position: relative;
 `;
-const StyledTextFieldDropDown1 = styled(TextFieldDropDown)``;
+const RelationshipDropDown = styled(TextFieldDropDown)``;
 const TextEditorContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -220,7 +223,7 @@ const TextEditorContainer = styled.div`
   gap: 1.2rem;
   margin-bottom: 5rem;
 `;
-const StyledTextFieldTextEditor = styled(TextFieldTextEditor)``;
+const TextEditor = styled(TextFieldTextEditor)``;
 const FontSelectContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -229,7 +232,7 @@ const FontSelectContainer = styled.div`
   gap: 1.2rem;
   margin-bottom: 3.8rem;
 `;
-const StyledTextFieldDropDown2 = styled(TextFieldDropDown)``;
+const FontFamilyDropDown = styled(TextFieldDropDown)``;
 const StyledPrimary = styled(Primary)`
   width: 72rem;
 `;
