@@ -16,14 +16,13 @@ const CardModal = ({
     <>
       <Header>
         <FlexContainer>
-          <Profile src={profileImageURL} isCard={true} />
+          <Profile src={profileImageURL} $iscard="true" />
           <FromTitle sender={sender} relationship={relationship} />
         </FlexContainer>
-        <Date date={formattedDate} isModal={true} />
+        <Date date={formattedDate} ismodal="true" />
       </Header>
       <Hr />
-      <CardMessage message={content} isModal={true} />
-
+      <CardMessage message={content} ismodal="true" />
     </>
   );
 };
