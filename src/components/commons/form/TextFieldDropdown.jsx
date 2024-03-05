@@ -10,6 +10,7 @@ export default function TextFieldDropDown({
   error,
   initialSelectedItem,
   listItems,
+  handleChange,
   ...props
 }) {
   const [status, setStatus] = useState(DropDownStatus.inActive);
@@ -68,6 +69,7 @@ export default function TextFieldDropDown({
           setSelectedItem={setSelectedItem}
           handleClickAndBlur={handleClickAndBlur}
           listItems={listItems}
+          handleChange={handleChange}
         />
       )}
       <StyledSpan>{error.message}</StyledSpan>
