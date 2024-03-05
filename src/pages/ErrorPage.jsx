@@ -14,12 +14,21 @@ const ErrorPage = () => {
         <TextBox>
           <NumberText>404</NumberText>
           <Text>WHOOPS!!</Text>
+          <SubText>is not found</SubText>
+          <SubText>something went wrong go back to Home</SubText>
         </TextBox>
-        <Link to={'/'}>
-          <Button secondary width={'30rem'} height={'5rem'} fontSize={'1.5rem'}>
-            홈으로 가기
-          </Button>
-        </Link>
+        <ButtonBox>
+          <Link to={'/'}>
+            <Button
+              secondary
+              width={'30rem'}
+              height={'5rem'}
+              fontSize={'1.5rem'}
+            >
+              홈으로 가기
+            </Button>
+          </Link>
+        </ButtonBox>
       </Box>
     </Main>
   );
@@ -33,9 +42,9 @@ const Main = styled.div`
 
 const Box = styled.div`
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   align-items: center;
-  height: 100vh;
+  height: 90vh;
 `;
 
 const TextBox = styled.div`
@@ -56,7 +65,6 @@ const TextBox = styled.div`
 const Text = styled.div`
   display: flex;
   justify-content: left;
-  align-items: center;
   margin-left: 10rem;
   font-size: 15rem;
   color: ${({ theme }) => theme.purple700};
@@ -80,6 +88,19 @@ const NumberText = styled(Text)`
     justify-content: center;
     margin: 0;
   }
+`;
+
+const SubText = styled(Text)`
+  font-size: 3rem;
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    font-size: 1.5rem;
+  }
+`;
+
+const ButtonBox = styled.div`
+  position: relative;
+  top: 21rem;
+  right: 5rem;
 `;
 
 export default ErrorPage;
