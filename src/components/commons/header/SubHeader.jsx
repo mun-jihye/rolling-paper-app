@@ -14,6 +14,16 @@ import { useQuery } from 'react-query';
 import { getRecipient } from 'api/recipient';
 
 const SubHeader = () => {
+  //주소에서 id값 가져오기
+  /* useEffect(() => {
+    const regex = /post\/([^\/]+)(\/|$)/; post/{id} 또는 post/{id}/edit일때 추출
+
+    const match = window.location.pathname.match(regex);
+    if (match && match[1]) {
+      const postId = match[1];
+    }
+  }, []); */
+
   const recipientId = 4114;
 
   const {
@@ -61,15 +71,6 @@ const SubHeader = () => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-
-  //주소에서 id값 가져오기
-  /* useEffect(() => {
-    const regex = /post\/([^\/]+)(\/|$)/;
-    const match = window.location.pathname.match(regex);
-    if (match && match[1]) {
-      const postId = match[1];
-    }
-  }, []); */
 
   //핸들러 함수들
   const handleShareClick = () => {
@@ -272,6 +273,7 @@ const StyledContainer = styled.ul`
   margin: 0 auto;
   max-width: 126rem;
   padding: 0 2rem;
+  margin-bottom: 1rem;
 
   @media (min-width: 768px) {
     padding: 0 1.5rem;

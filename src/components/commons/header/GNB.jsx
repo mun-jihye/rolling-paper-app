@@ -31,6 +31,7 @@ const GNB = () => {
   const isPostOrEditPage = pathname === '/post' || pathname === '/edit';
 
   const isMobile = deviceType === 'Mobile';
+
   const shouldShowMainHeader =
     deviceType !== 'Mobile' ||
     (isMobile &&
@@ -38,6 +39,10 @@ const GNB = () => {
       (pathname === '/' || pathname === '/list'));
   const shouldShowMainHeaderButton = pathname === '/' || pathname === '/list';
   const shouldShowSubHeader = isPostOrEditPage && isMobile;
+
+  console.log('Should show main header button:', shouldShowMainHeaderButton);
+  console.log('Should show main header:', shouldShowMainHeader);
+  console.log('Device type:', deviceType);
 
   return (
     <>
