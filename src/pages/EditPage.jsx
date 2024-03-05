@@ -6,13 +6,18 @@ import { getRecipientList } from 'api/recipient';
 import Loader from 'components/commons/Loader';
 import MainHeader from 'components/commons/header/MainHeader';
 import SubHeader from 'components/commons/header/SubHeader';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Button from 'components/commons/buttons/Button';
 import styled from 'styled-components';
-import { useGetRecipientQuery } from 'hooks/queries/useGetEditQuery';
-
+import {
+  useDeleteRecipient,
+  useGetRecipientQuery,
+} from 'hooks/queries/useGetEditQuery';
+import { deleteAlert } from 'utils/deleteAlert';
+import routes from 'utils/constants/routes';
 const EditPage = () => {
   const { postId } = useParams();
+  const navigate = useNavigate();
   const [isDelete, setIsDelete] = useState(false);
 
   const { data, isLoading } = useGetRecipientQuery(postId);
@@ -20,13 +25,23 @@ const EditPage = () => {
     queryKey: ['messageList', postId],
     queryFn: () => getRecipientList(postId),
   });
+  const deleteRecipient = useDeleteRecipient(postId);
 
   const editData = data?.data;
   const messageData = message?.data.results;
 
   const handleDelete = () => {
-    alert('전체 메세지가 삭제됩니다.');
+    deleteAlert({
+      title: '롤링페이퍼 대상을 삭제하시겠습니까?',
+      subTitle: '삭제하면 되돌릴 수 없습니다 😥',
+      deleteMutaion: deleteRecipient,
+      postId: postId,
+      onSuccess: () => {
+        navigate(routes.list);
+      },
+    });
   };
+
   return (
     <>
       <MainHeader />
