@@ -11,15 +11,17 @@ const PostPage = () => {
   const [toggleState, setToggleState] = useState('컬러');
   const items = useMemo(() => {
     return toggleState === '컬러'
-      ? ['orange200', 'purple200', 'blue200', 'green200']
+      ? ['beige200', 'purple200', 'blue200', 'green200']
       : [nation1, nation2, nation1, nation2];
   }, [toggleState]);
 
-  const [selectedItem, setSelectedItem] = useState(items[0]);
+  const [background, setBackground] = useState(items[0]);
   const [isBtnDisabled, setIsBtnDisabled] = useState(true);
   const [formValues, setFormValues] = useState({
     textFieldInput: '',
-    selectedItem,
+    background: items[0],
+    backgroundColor: items[0],
+    backgroundImageURL: null,
   });
   const inputDisabled = false;
 
@@ -38,18 +40,17 @@ const PostPage = () => {
   };
 
   const handleToggle = e => {
-    console.log('toggle');
     setToggleState(e.target.innerText.toLowerCase());
-    setSelectedItem(items[0]);
+    setBackground(items[0]);
     setFormValues(prevState => ({
       ...prevState,
-      selectedItem: items[0],
+      background: items[0],
     }));
   };
-  const handleSelect = selectedItem => {
+  const handleSelect = (background, index) => {
     setFormValues(prevState => ({
       ...prevState,
-      selectedItem: items[0],
+      background: items[0],
     }));
   };
 
@@ -65,9 +66,9 @@ const PostPage = () => {
   useEffect(() => {
     setFormValues(prevState => ({
       ...prevState,
-      selectedItem,
+      background,
     }));
-  }, [selectedItem]);
+  }, [background]);
 
   return (
     <>
@@ -75,7 +76,7 @@ const PostPage = () => {
       <AddPostForm className="post-container">
         <InputContainer>
           <h2>To</h2>
-          <StyledTextFieldInput
+          <NameInput
             placeholder={'받는 사람 이름을 입력해주세요'}
             disabled={inputDisabled}
             error={error}
@@ -90,8 +91,8 @@ const PostPage = () => {
           <ToggleBtn onClick={handleToggle} />
           <StyledOptions
             toggleState={toggleState}
-            selectedItem={selectedItem}
-            setSelectedItem={setSelectedItem}
+            background={background}
+            setBackground={setBackground}
             handleSelect={handleSelect}
             items={items}
           />
@@ -135,7 +136,7 @@ const InputContainer = styled.div`
   }
 `;
 
-const StyledTextFieldInput = styled(TextFieldInput)`
+const NameInput = styled(TextFieldInput)`
   width: 72rem;
 `;
 
