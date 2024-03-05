@@ -16,11 +16,11 @@ const EditPage = () => {
 
   const { data, isLoading } = useQuery({
     queryKey: ['editPage', postId],
-    queryFn: context => getRecipient(context.queryKey[1]),
+    queryFn: () => getRecipient(postId),
   });
   const { data: message } = useQuery({
     queryKey: ['messageList', postId],
-    queryFn: context => getRecipientList(context.queryKey[1]),
+    queryFn: () => getRecipientList(postId),
   });
 
   const editData = data?.data;
