@@ -7,6 +7,7 @@ import AddCard from './AddCard';
 const FromCardList = ({ datas, isDelete }) => {
   return (
     <GridContainer>
+      <AddCard isDelete={isDelete} />
       {datas?.map(data => {
         const {
           id,
@@ -18,9 +19,7 @@ const FromCardList = ({ datas, isDelete }) => {
         } = data;
 
         const formattedDate = formatDate(createdAt);
-        return id === 'add' ? (
-          <AddCard key={id} isDelete={isDelete} />
-        ) : (
+        return (
           <FromCard
             key={id}
             profileImageURL={profileImageURL}

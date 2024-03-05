@@ -24,10 +24,7 @@ const EditPage = () => {
   });
 
   const editData = data?.data;
-  const messageData = message?.data.results && [
-    { id: 'add' },
-    ...message?.data.results,
-  ];
+  const messageData = message?.data.results;
 
   const handleDelete = () => {
     alert('전체 메세지가 삭제됩니다.');
