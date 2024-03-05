@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { Modal } from 'components/commons/modal/modal';
 import CardModal from 'components/commons/modal/CardModal';
 import IconButton from 'components/commons/buttons/IconButton';
-import { useDeleteMessageQuery } from 'hooks/queries/useGetEditQuery';
+import { useDeleteMessageQuery } from 'hooks/queries/useEditQuery';
 import { deleteAlert } from 'utils/deleteAlert';
 
 const FromCard = ({
