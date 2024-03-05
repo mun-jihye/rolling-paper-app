@@ -9,21 +9,22 @@ import SubHeader from 'components/commons/header/SubHeader';
 import { useParams } from 'react-router-dom';
 
 const EditPage = () => {
-  const postId = useParams();
+  const { postId } = useParams();
+  console.log(postId);
   const { data, isLoading } = useQuery({
-    queryKey: ['editPage'],
-    queryFn: ({ id = 4126 }) => getRecipient(id),
+    queryKey: ['editPage', postId],
+    queryFn: context => getRecipient(context.queryKey[1]),
   });
   const { data: message } = useQuery({
-    queryKey: ['messageList'],
-    queryFn: ({ id = 4126 }) => getRecipientList(id),
+    queryKey: ['messageList', postId],
+    queryFn: context => getRecipientList(context.queryKey[1]),
   });
+
   const editData = data?.data;
   const messageData = message?.data.results && [
     { id: 'add' },
     ...message?.data.results,
   ];
-  console.log(messageData);
   return (
     <>
       <MainHeader />

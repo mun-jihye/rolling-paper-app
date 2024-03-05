@@ -19,7 +19,7 @@ const FromCardList = ({ datas }) => {
 
         const formattedDate = formatDate(createdAt);
         return id === 'add' ? (
-          <AddCard />
+          <AddCard key={id} />
         ) : (
           <FromCard
             key={id}

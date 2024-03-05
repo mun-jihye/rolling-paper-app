@@ -1,14 +1,15 @@
 import React from 'react';
 import { CardContainer } from './CardContainer';
 import PlusBtn from 'components/commons/buttons/PlusBtn';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import routes from 'utils/constants/routes';
 import styled from 'styled-components';
 
 const AddCard = () => {
+  const { postId } = useParams();
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate(routes.post);
+    navigate(`${routes.post}/${postId}/message`);
   };
   return (
     <FlexContainer>
