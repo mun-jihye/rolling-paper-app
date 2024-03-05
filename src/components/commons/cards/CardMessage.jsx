@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const CardMessage = ({ message, isModal }) => {
-  return <Message isModal={isModal}>{message}</Message>;
+const CardMessage = ({ message, ismodal }) => {
+  return <Message ismodal={ismodal}>{message}</Message>;
 };
 
 const Message = styled.div`
@@ -10,12 +10,12 @@ const Message = styled.div`
   line-height: 2.8rem;
   letter-spacing: -0.01rem;
   color: #5a5a5a;
-  height: ${({ isModal }) => (isModal ? '24rem' : '10.6rem')};
-  overflow: ${({ isModal }) => (isModal ? 'scroll' : 'hidden')};
-  text-overflow: ${({ isModal }) => (isModal ? 'initial' : 'ellipsis')};
+  height: ${({ ismodal }) => (ismodal ? '24rem' : '10.6rem')};
+  overflow: ${({ ismodal }) => (ismodal ? 'scroll' : 'hidden')};
+  text-overflow: ${({ ismodal }) => (ismodal ? 'initial' : 'ellipsis')};
 
   ${props =>
-    !props.isModal &&
+    !props.ismodal &&
     `
     display: -webkit-box;
     -webkit-line-clamp: 4;
