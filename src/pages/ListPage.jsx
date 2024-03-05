@@ -1,51 +1,72 @@
 import React from 'react';
-import MainHeader from 'components/commons/header/MainHeader';
 import CardList from 'components/commons/cardList/CardList';
 import styled from 'styled-components';
 import PrimaryBtn from 'components/commons/buttons/PrimaryBtn';
 import useDeviceType from 'hooks/useDeviceType';
+import { useQuery } from 'react-query';
+import { getRecipients } from 'api/recipient';
+import { Link } from 'react-router-dom';
+import routes from 'utils/constants/routes';
+import GNB from 'components/commons/header/GNB';
 
 const ListPage = () => {
   const deviceType = useDeviceType();
+
+  const { data: lastestList, isLoading: isLastestListLoading } = useQuery({
+    queryKey: ['recipients', 'sortedLastest'],
+    queryFn: () => getRecipients(),
+  });
+
+  const { data: topRatedList, isLoading: isTopRatedListLoading } = useQuery({
+    queryKey: ['recipients', 'sortedTopRated'],
+    queryFn: () => getRecipients(undefined, undefined, 'like'),
+  });
+
   return (
     <div>
-      <MainHeader />
-      <PageContainer>
+      <GNB />
+      <MainContainer>
         <SectionConainer>
           <StyledHtag>인기 롤링 페이퍼 🔥</StyledHtag>
           <CardList
             carouselMargin={
               deviceType === 'PC' ? 0 : deviceType === 'Tablet' ? 2.4 : 2
             }
+            data={topRatedList?.data?.results}
+            isLoading={isTopRatedListLoading}
           />
         </SectionConainer>
         <SectionConainer>
-          <StyledHtag>최근에 만든 롤링 페이퍼⭐️</StyledHtag>
+          <StyledHtag>최근에 만든 롤링 페이퍼 ⭐️</StyledHtag>
           <CardList
             carouselMargin={
               deviceType === 'PC' ? 0 : deviceType === 'Tablet' ? 2.4 : 2
             }
+            data={lastestList?.data?.results}
+            isLoading={isLastestListLoading}
           />
         </SectionConainer>
-        <StyledFooter>
+      </MainContainer>
+      <StyledFooter>
+        <Link to={routes.post}>
           <ListPagePrimaryBtn>나도 만들어보기</ListPagePrimaryBtn>
-        </StyledFooter>
-      </PageContainer>
+        </Link>
+      </StyledFooter>
     </div>
   );
 };
 
 export default ListPage;
 
-const PageContainer = styled.main`
+const MainContainer = styled.main`
   display: flex;
   flex-direction: column;
-  gap: 7.4rem;
+  gap: 5.4rem;
   padding-top: 4rem;
   padding-bottom: 4.2rem;
 
   @media (min-width: 48rem) {
-    gap: 5rem;
+    gap: 3rem;
     padding-top: 5rem;
     padding-bottom: 13.2rem;
   }
@@ -66,7 +87,7 @@ const StyledHtag = styled.h1`
   font-size: 2rem;
   font-weight: 600;
   line-height: 3rem;
-  margin-bottom: 1.2rem;
+  margin-bottom: 0.2rem;
   margin-left: 2rem;
 
   @media (min-width: 48rem) {
@@ -74,7 +95,7 @@ const StyledHtag = styled.h1`
     font-weight: 700;
     line-height: 3.6rem;
     letter-spacing: -0.024rem;
-    margin-bottom: 1.6rem;
+    margin-bottom: 0.6rem;
     margin-left: 2.4rem;
   }
 
@@ -98,17 +119,19 @@ const StyledFooter = styled.footer`
 
 const ListPagePrimaryBtn = styled(PrimaryBtn)`
   width: 100%;
-  max-widht: 116rem;
-  transition: transform 0.5s;
+  height: 5.6rem;
+  font-size: 1.8rem;
+  font-weight: 400;
+  letter-spacing: -0.018rem;
+  line-height: 2.8rem;
+
+  @media (min-width: 48rem) {
+    font-weight: 700;
+  }
 
   @media (min-width: 75rem) {
     width: 28rem;
-    height: 5.6rem;
     display: block;
     margin: 0 auto;
-    font-size: 1.8rem;
-    font-weight: 700;
-    line-height: 2.8rem;
-    letter-spacing: -0.018rem;
   }
 `;

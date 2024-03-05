@@ -5,17 +5,21 @@ const CreateListItem = ({
   selectedItem,
   setSelectedItem,
   handleClickAndBlur,
-  Lists,
+  listItems,
+  handleChange,
 }) => {
   return (
     <StyledList alt="드롭다운 메뉴바" className="dropdown-list">
-      {Lists.map((element, index) => {
+      {listItems.map((element, index) => {
         return (
           <StyledListItem
             key={index}
             value={element}
             className="list-item"
-            onClick={event => handleClickAndBlur(event, index)}
+            onClick={event => {
+              handleClickAndBlur(event, index);
+              handleChange(element);
+            }}
           >
             <span>{element}</span>
           </StyledListItem>

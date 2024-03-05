@@ -3,6 +3,7 @@ const routes = {
   list: '/list',
   edit: '/edit',
   post: '/post',
+  message: '/message',
 };
 
 export default routes;
