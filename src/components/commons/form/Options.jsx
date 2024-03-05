@@ -5,8 +5,8 @@ import check from 'assets/images/buttons/check.svg';
 const Options = ({
   theme,
   toggleState,
-  selectedItem,
-  setSelectedItem,
+  background,
+  setBackground,
   handleSelect,
   items,
   ...props
@@ -18,14 +18,14 @@ const Options = ({
     const newSelected = new Array(4).fill(false);
     newSelected[index] = true;
     setIsSelected(newSelected);
-    setSelectedItem(items[index]);
-    handleSelect(selectedItem);
+    setBackground(items[index]);
+    handleSelect(background);
   };
 
   useEffect(() => {
-    setSelectedItem(items[0]);
+    setBackground(items[0]);
     setIsSelected([true, false, false, false]);
-  }, [setSelectedItem, items, toggleState]);
+  }, [setBackground, items, toggleState]);
 
   return (
     <PreviewBlocks {...props}>
