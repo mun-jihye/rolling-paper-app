@@ -13,17 +13,7 @@ import EmojiPicker from 'emoji-picker-react';
 import { useQuery } from 'react-query';
 import { getRecipient } from 'api/recipient';
 
-const SubHeader = () => {
-  //주소에서 id값 가져오기
-  /* useEffect(() => {
-    const regex = /post\/([^\/]+)(\/|$)/; post/{id} 또는 post/{id}/edit일때 추출
-
-    const match = window.location.pathname.match(regex);
-    if (match && match[1]) {
-      const postId = match[1];
-    }
-  }, []); */
-
+const SubHeader = ({ datas }) => {
   const recipientId = 4114;
 
   const {
@@ -33,6 +23,8 @@ const SubHeader = () => {
   } = useQuery(['recipient', recipientId], () => getRecipient(recipientId));
 
   const recipientName = response ? response.data.name : 'Unknown';
+  const recipientCount = response ? response.data.messageCount : '0';
+  const topReactions = response?.data?.topReactions?.slice(0, 3) || [];
 
   const [showShareOptions, setShowShareOptions] = useState(false);
   const [showArrowOptions, setArrowShareOptions] = useState(false);
@@ -40,6 +32,9 @@ const SubHeader = () => {
   const [showToast, setShowToast] = useState(false);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [selectedEmoji, setSelectedEmoji] = useState(null);
+
+  //selectEmoji 출력
+  console.log(selectedEmoji);
 
   //Ref사용해서 Dom요소 참조하기
   const shareOptionsRef = useRef();
@@ -144,14 +139,16 @@ const SubHeader = () => {
           <StyledProfileNum>+6</StyledProfileNum>
         </StyledProfiles>
         <StyledMessage>
-          <StyledEmp>{23}</StyledEmp>명이 작성했어요!
+          <StyledEmp>{recipientCount}</StyledEmp>명이 작성했어요!
         </StyledMessage>
         <StyledDivider />
         <StyledEmojis>
           {/* 이모지 버튼들 */}
-          <StyledEmoji>👍24</StyledEmoji>
-          <StyledEmoji>😍16</StyledEmoji>
-          <StyledEmoji>🎉10</StyledEmoji>
+          {topReactions.map(reaction => (
+            <StyledEmoji key={reaction.id}>
+              {reaction.emoji} {reaction.count}
+            </StyledEmoji>
+          ))}
           <StyledArrow onClick={handleArrowClick} src={ArrowDown} alt="Arrow" />
         </StyledEmojis>
         {!isMobile && (

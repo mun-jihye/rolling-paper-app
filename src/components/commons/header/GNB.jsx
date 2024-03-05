@@ -40,16 +40,12 @@ const GNB = () => {
   const shouldShowMainHeaderButton = pathname === '/' || pathname === '/list';
   const shouldShowSubHeader = isPostOrEditPage && isMobile;
 
-  console.log('Should show main header button:', shouldShowMainHeaderButton);
-  console.log('Should show main header:', shouldShowMainHeader);
-  console.log('Device type:', deviceType);
-
   return (
     <>
       {shouldShowMainHeader && (
         <MainHeader showButton={shouldShowMainHeaderButton} />
       )}
-      {shouldShowSubHeader && <SubHeader />}
+      {!shouldShowSubHeader && <SubHeader />}
     </>
   );
 };
