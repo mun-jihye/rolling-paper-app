@@ -1,7 +1,8 @@
-import useCloseModal from 'components/hooks/useCloseModal';
+import useCloseModal from 'hooks/useCloseModal';
 import React, { useRef } from 'react';
 import Portal from './Portal';
 import styled from 'styled-components';
+import { Button } from 'components/commons/buttons/PrimaryBtn';
 
 const Modal = ({ children, showModal, handleClose }) => {
   const modalRef = useRef();
@@ -11,7 +12,9 @@ const Modal = ({ children, showModal, handleClose }) => {
       <ModalBackground>
         <ModalInner ref={modalRef}>
           {children}
-          <button onClick={handleClose}>확인</button>
+          <FlexContainer>
+            <Button onClick={handleClose}>확인</Button>
+          </FlexContainer>
         </ModalInner>
       </ModalBackground>
     </Portal>
@@ -39,5 +42,10 @@ const ModalInner = styled.div`
   border-radius: 1.6rem;
   padding: 3.5rem;
   box-shadow: 0px 2px 12px 0px #00000014;
+`;
+const FlexContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 export default Modal;

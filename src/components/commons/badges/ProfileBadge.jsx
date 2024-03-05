@@ -1,16 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const data = {
-  relationship: '가족',
-};
-
-const ProfileBadge = () => {
+const ProfileBadge = ({ relationship }) => {
   return (
-    <StyledContainer relationship={data.relationship}>
-      <BadgeContent relationship={data.relationship}>
-        {data.relationship}
-      </BadgeContent>
+    <StyledContainer relationship={relationship}>
+      <BadgeContent relationship={relationship}>{relationship}</BadgeContent>
     </StyledContainer>
   );
 };
@@ -26,11 +20,14 @@ const StyledContainer = styled.div`
   background-color: ${({ theme, relationship }) => {
     if (relationship === '가족') {
       return theme.green100;
-    } else if (relationship === '친구') {
+    }
+    if (relationship === '친구') {
       return theme.blue100;
-    } else if (relationship === '지인') {
-      return theme.orange100;
-    } else if (relationship === '동료') {
+    }
+    if (relationship === '지인') {
+      return theme.beige100;
+    }
+    if (relationship === '동료') {
       return theme.purple100;
     }
   }};
@@ -42,11 +39,14 @@ const BadgeContent = styled.div`
   color: ${({ theme, relationship }) => {
     if (relationship === '가족') {
       return theme.green500;
-    } else if (relationship === '친구') {
+    }
+    if (relationship === '친구') {
       return theme.blue500;
-    } else if (relationship === '지인') {
-      return theme.orange500;
-    } else if (relationship === '동료') {
+    }
+    if (relationship === '지인') {
+      return theme.beige500;
+    }
+    if (relationship === '동료') {
       return theme.purple500;
     }
   }};

@@ -2,11 +2,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import GNB from 'components/commons/header/GNB';
-import CardModal from 'components/commons/modal/CardModal';
-import PrimaryBtn from 'components/commons/buttons/PrimaryBtn';
-import headerEmojiImg from 'components/assets/images/landingPage/headerEmoji.png';
-import emoji from 'components/assets/images/landingPage/emoji.png';
-import cursorImg from 'components/assets/images/landingPage/cursor.png';
+import cardImg from 'assets/images/landingPage/cardImg.png';
+import emojiImg from 'assets/images/landingPage/emojiImg.png';
+import Button from 'components/commons/buttons/Button';
+import { Link } from 'react-router-dom';
+import routes from 'utils/constants/routes';
 
 const LandingPage = () => {
   return (
@@ -24,9 +24,7 @@ const LandingPage = () => {
             </div>
           </TextBox>
           <ImgBox>
-            <CardList>
-              <CardModal />
-            </CardList>
+            <CardImg src={cardImg} alt="카드 이미지" />
           </ImgBox>
         </BlueBox>
         <BlueBoxReverse>
@@ -40,14 +38,12 @@ const LandingPage = () => {
             </div>
           </TextBox>
           <ImgBox>
-            <Card>
-              <HeaderEmoji src={headerEmojiImg} alt="해더 이모지 이미지" />
-              <Cursor src={cursorImg} alt="cursor 이미지" />
-              <Emoji src={emoji} alt="이모지 이미지" />
-            </Card>
+            <EmojiImg src={emojiImg} alt="이모지 이미지" />
           </ImgBox>
         </BlueBoxReverse>
-        <PrimaryBtn>구경해보기</PrimaryBtn>
+        <Link to={routes.list}>
+          <Button width={'28rem'}>구경해보기</Button>
+        </Link>
       </Main>
     </>
   );
@@ -57,29 +53,45 @@ const Main = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 0 2.4rem 4rem;
 `;
 
 const BlueBox = styled.div`
   display: flex;
+  flex-direction: row;
   justify-content: space-around;
   background-color: #f6f8ff;
   margin: 3rem;
-  width: 80%;
+  width: 120rem;
   border-radius: 1.6rem;
-  @media (max-width: 80rem) {
+  @media (min-width: '1248px') {
+    width: 100%;
+    margin: 0 2.4rem;
+  }
+  @media ${({ theme }) => theme.breakpoint.tablet} {
+    width: 100%;
+    margin: 2.4rem;
     flex-direction: column;
+  }
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    flex-direction: column;
+    width: 100%;
+    margin: 2.4rem;
   }
 `;
 const BlueBoxReverse = styled(BlueBox)`
   flex-direction: row-reverse;
-  @media (max-width: 80rem) {
+  @media ${({ theme }) => theme.breakpoint.tablet} {
+    flex-direction: column;
+  }
+  @media ${({ theme }) => theme.breakpoint.mobile} {
     flex-direction: column;
   }
 `;
 
 const Point = styled.div`
-  width: 8.2rem;
-  padding: 0.6rem 1.2rem;
+  width: 8rem;
+  padding: 0.6rem 1rem;
   border-radius: 5rem;
   background: ${({ theme }) => theme.purple600};
   font-size: 14px;
@@ -93,6 +105,9 @@ const TextBox = styled.div`
   justify-content: center;
   margin: 4rem;
   gap: 3rem;
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    margin: 4rem 2rem 0;
+  }
 `;
 
 const MainText = styled.div`
@@ -100,9 +115,11 @@ const MainText = styled.div`
   font-size: 2.4rem;
   font-weight: 700;
   color: ${({ theme }) => theme.gray900};
-  @media (max-width: 80rem) {
-    display: flex;
+  @media ${({ theme }) => theme.breakpoint.tablet} {
     gap: 0.6rem;
+  }
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    font-size: 1.8rem;
   }
 `;
 
@@ -110,42 +127,38 @@ const SubText = styled.div`
   font-size: 1.8rem;
   font-weight: 400;
   color: ${({ theme }) => theme.gray500};
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    font-size: 15px;
+    font-weight: 400;
+  }
 `;
 
 const ImgBox = styled.div`
   display: flex;
   justify-content: center;
-`;
-
-const CardList = styled.div`
-  width: 47rem;
-`;
-
-const Card = styled(CardList)`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 47rem;
-`;
-
-const HeaderEmoji = styled.img`
-  margin-top: 5rem;
-  width: 44rem;
-  @media (max-width: 80rem) {
+  margin: 9rem 0;
+  @media ${({ theme }) => theme.breakpoint.tablet} {
     margin: 0;
+    margin-bottom: 4rem;
+  }
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    width: 100%;
+    height: 11rem;
+    margin: 4rem 0;
+    overflow: hidden;
   }
 `;
-const Cursor = styled.img`
-  position: relative;
-  bottom: 4rem;
-  left: 15rem;
-  z-index: 100;
+
+const CardImg = styled.img`
+  object-fit: contain;
+  width: 64rem;
 `;
-const Emoji = styled.img`
-  width: 29rem;
-  position: relative;
-  bottom: 5rem;
+
+const EmojiImg = styled(CardImg)`
+  width: 47rem;
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    width: 100%;
+  }
 `;
 
 export default LandingPage;

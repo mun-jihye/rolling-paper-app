@@ -1,15 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const data = {
-  count: 24,
-  emoji: '😍',
-};
-const EmojiBadge = () => {
+const EmojiBadge = ({ className, data }) => {
   return (
-    <StyledContainer>
-      <Emoji>{data.emoji}</Emoji>
-      <Count>{data.count}</Count>
+    <StyledContainer className={className}>
+      <Emoji>{data?.emoji}</Emoji>
+      <Count>{data?.count}</Count>
     </StyledContainer>
   );
 };
@@ -34,4 +30,5 @@ const Count = styled.div`
   font-size: 1.6rem;
   line-height: 2rem;
 `;
+
 export default EmojiBadge;
