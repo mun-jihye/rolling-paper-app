@@ -1,5 +1,4 @@
 import React from 'react';
-import MainHeader from 'components/commons/header/MainHeader';
 import CardList from 'components/commons/cardList/CardList';
 import styled from 'styled-components';
 import PrimaryBtn from 'components/commons/buttons/PrimaryBtn';
@@ -8,6 +7,7 @@ import { useQuery } from 'react-query';
 import { getRecipients } from 'api/recipient';
 import { Link } from 'react-router-dom';
 import routes from 'utils/constants/routes';
+import GNB from 'components/commons/header/GNB';
 
 const ListPage = () => {
   const deviceType = useDeviceType();
@@ -24,7 +24,7 @@ const ListPage = () => {
 
   return (
     <div>
-      <MainHeader />
+      <GNB />
       <MainContainer>
         <SectionConainer>
           <StyledHtag>인기 롤링 페이퍼 🔥</StyledHtag>

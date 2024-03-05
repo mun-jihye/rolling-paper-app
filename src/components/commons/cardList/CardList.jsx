@@ -118,10 +118,22 @@ function CardList({ carouselMargin = 0, className, data: cards, isLoading }) {
 }
 
 const StyledContainer = styled.div`
-  max-width: 116rem;
+  width: 100%;
+  height: ${({ $layout }) => ($layout === 'outer' ? '25.2rem' : '')};
   padding: 0.5rem 0;
   position: ${({ $layout }) => ($layout === 'outer' ? 'relative' : '')};
   overflow: ${({ $layout }) => ($layout === 'outer' ? '' : 'hidden')};
+
+  @media (min-width: 48rem) {
+    height: ${({ $layout }) => ($layout === 'outer' ? '28rem' : '')};
+  }
+
+  @media (min-width: 75rem) {
+    padding-left: ${({ $layout }) => ($layout === 'outer' ? '' : '0.5rem')};
+    padding-right: ${({ $layout }) => ($layout === 'outer' ? '' : '0.5rem')};
+    left: -0.5rem;
+    width: ${({ $layout }) => ($layout === 'outer' ? '117rem' : '')};
+  }
 `;
 
 const StyledSlideBar = styled.div`
@@ -141,8 +153,8 @@ const ArrowButton = styled.img`
   transform: ${({ $position }) =>
     $position === 'left' ? 'rotate(180deg)' : ''};
   position: absolute;
-  left: ${({ $position }) => ($position === 'left' ? -2 : '')}rem;
-  right: ${({ $position }) => ($position === 'right' ? -2 : '')}rem;
+  left: ${({ $position }) => ($position === 'left' ? -1.5 : '')}rem;
+  right: ${({ $position }) => ($position === 'right' ? -1.5 : '')}rem;
   top: 42.3%;
   cursor: pointer;
 
