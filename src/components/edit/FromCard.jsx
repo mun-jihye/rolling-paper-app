@@ -58,21 +58,16 @@ const FromCard = ({
           <Date date={formattedDate} $ismodal={false} />
         </Content>
       </CardContainer>
-      {showModal && (
-        <Modal
-          showModal={showModal}
-          handleClose={handleClose}
-          isDelete={isDelete}
-        >
-          <CardModal
-            profileImageURL={profileImageURL}
-            sender={sender}
-            relationship={relationship}
-            content={content}
-            formattedDate={formattedDate}
-          />
-        </Modal>
-      )}
+      <CardModal
+        showModal={showModal}
+        handleClose={handleClose}
+        isDelete={isDelete}
+        profileImageURL={profileImageURL}
+        sender={sender}
+        relationship={relationship}
+        content={content}
+        formattedDate={formattedDate}
+      />
     </>
   );
 };

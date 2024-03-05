@@ -8,18 +8,20 @@ const Modal = ({ children, showModal, handleClose, isDelete }) => {
   const modalRef = useRef();
   useCloseModal(showModal, handleClose, modalRef);
   return (
-    <Portal>
-      <ModalBackground>
-        <ModalInner ref={modalRef}>
-          {children}
-          <FlexContainer>
-            <Button onClick={handleClose}>
-              {isDelete ? '삭제하기' : '확인'}
-            </Button>
-          </FlexContainer>
-        </ModalInner>
-      </ModalBackground>
-    </Portal>
+    showModal && (
+      <Portal>
+        <ModalBackground>
+          <ModalInner ref={modalRef}>
+            {children}
+            <FlexContainer>
+              <Button onClick={handleClose}>
+                {isDelete ? '삭제하기' : '확인'}
+              </Button>
+            </FlexContainer>
+          </ModalInner>
+        </ModalBackground>
+      </Portal>
+    )
   );
 };
 
