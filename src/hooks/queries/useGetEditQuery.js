@@ -27,9 +27,6 @@ export const useDeleteMessageQuery = messageId => {
     onSuccess: () => {
       queryClient.invalidateQueries(['message', messageId]);
     },
-    onError: error => {
-      console.log(error);
-    },
   });
   return deleteData;
 };

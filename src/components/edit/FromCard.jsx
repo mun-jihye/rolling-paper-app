@@ -20,19 +20,20 @@ const FromCard = ({
   isDelete,
   messageId,
 }) => {
-  console.log(messageId);
   const [showModal, setShowModal] = useState(false);
   const deleteMessage = useDeleteMessageQuery(messageId);
 
   const handleClick = () => {
     setShowModal(true);
   };
+
   const handleDelete = e => {
     e && e.stopPropagation();
     deleteAlert({
       title: '해당 메세지를 삭제하시겠습니까?',
       deleteMutaion: deleteMessage,
       Id: messageId,
+      onSuccess: () => window.location.reload(),
     });
   };
   const handleClose = () => {
