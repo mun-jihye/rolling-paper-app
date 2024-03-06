@@ -5,10 +5,9 @@ import CardMessage from 'components/commons/cards/CardMessage';
 import Date from 'components/commons/cards/Date';
 import styled from 'styled-components';
 import { useState } from 'react';
-import { Modal } from 'components/commons/modal/modal';
 import CardModal from 'components/commons/modal/CardModal';
 import IconButton from 'components/commons/buttons/IconButton';
-import { useDeleteMessageQuery } from 'hooks/queries/useGetEditQuery';
+import { useDeleteMessageQuery } from 'hooks/queries/useEditQuery';
 import { deleteAlert } from 'utils/deleteAlert';
 
 const FromCard = ({
@@ -58,21 +57,16 @@ const FromCard = ({
           <Date date={formattedDate} $ismodal={false} />
         </Content>
       </CardContainer>
-      {showModal && (
-        <Modal
-          showModal={showModal}
-          handleClose={handleClose}
-          isDelete={isDelete}
-        >
-          <CardModal
-            profileImageURL={profileImageURL}
-            sender={sender}
-            relationship={relationship}
-            content={content}
-            formattedDate={formattedDate}
-          />
-        </Modal>
-      )}
+      <CardModal
+        showModal={showModal}
+        handleClose={handleClose}
+        isDelete={isDelete}
+        profileImageURL={profileImageURL}
+        sender={sender}
+        relationship={relationship}
+        content={content}
+        formattedDate={formattedDate}
+      />
     </>
   );
 };

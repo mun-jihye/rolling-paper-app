@@ -12,7 +12,7 @@ import styled from 'styled-components';
 import {
   useDeleteRecipientQuery,
   useGetRecipientQuery,
-} from 'hooks/queries/useGetEditQuery';
+} from 'hooks/queries/useEditQuery';
 import { deleteAlert } from 'utils/deleteAlert';
 import routes from 'utils/constants/routes';
 const EditPage = () => {
