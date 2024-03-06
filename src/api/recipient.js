@@ -35,6 +35,8 @@ export const deleteRecipient = id => {
  * @param {*} id 대상 아이디
  * @returns
  */
-export const getRecipientList = id => {
-  return instance.get(`${AUTH.recipients}${id}/messages/`);
+export const getRecipientList = (id, limit = 8, offset = 0) => {
+  return instance.get(
+    `${AUTH.recipients}${id}/messages/?limit=${limit}&offset=${offset}`,
+  );
 };

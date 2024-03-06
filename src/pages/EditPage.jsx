@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { EditContainer } from 'components/edit/EditContainer';
 import FromCardList from 'components/edit/FromCardList';
-import { useQuery } from 'react-query';
-import { getRecipientList } from 'api/recipient';
 import Loader from 'components/commons/Loader';
 import MainHeader from 'components/commons/header/MainHeader';
 import SubHeader from 'components/commons/header/SubHeader';
@@ -11,24 +9,33 @@ import Button from 'components/commons/buttons/Button';
 import styled from 'styled-components';
 import {
   useDeleteRecipientQuery,
+  useGetMessagesQuery,
   useGetRecipientQuery,
 } from 'hooks/queries/useEditQuery';
 import { deleteAlert } from 'utils/deleteAlert';
 import routes from 'utils/constants/routes';
+import { useInView } from 'react-intersection-observer';
+import Error from 'components/commons/error/Error';
 const EditPage = () => {
   const { postId } = useParams();
   const navigate = useNavigate();
   const [isDelete, setIsDelete] = useState(false);
+  const [offset, setOffset] = useState(0);
 
-  const { data, isLoading } = useGetRecipientQuery(postId);
-  const { data: message } = useQuery({
-    queryKey: ['messageList', postId],
-    queryFn: () => getRecipientList(postId),
-  });
+  const { data: recipient, isLoading } = useGetRecipientQuery(postId);
   const deleteRecipient = useDeleteRecipientQuery(postId);
+  const {
+    fetchNextPage,
+    isFetchingNextPage,
+    hasNextPage,
+    data: messages,
+    isError,
+  } = useGetMessagesQuery(postId, offset);
+  console.log(messages?.pages[0].data.results);
+  const { ref, inView } = useInView();
 
-  const editData = data?.data;
-  const messageData = message?.data.results;
+  const editData = recipient?.data;
+  const messageData = messages?.pages[0].data.results;
 
   const handleDelete = () => {
     deleteAlert({
@@ -40,7 +47,16 @@ const EditPage = () => {
       },
     });
   };
+  useEffect(() => {
+    if (inView && hasNextPage && !isFetchingNextPage) {
+      setOffset(prevOffset => prevOffset + 3);
+      fetchNextPage();
+    }
+  }, [inView]);
 
+  if (isError) {
+    return <Error />;
+  }
   return (
     <>
       <MainHeader />
@@ -62,6 +78,7 @@ const EditPage = () => {
             )}
           </FlexContainer>
           <FromCardList datas={messageData} isDelete={isDelete} />
+          {isFetchingNextPage ? <Loader /> : <div ref={ref} />}
         </EditContainer>
       )}
     </>
