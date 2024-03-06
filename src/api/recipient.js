@@ -22,7 +22,7 @@ export const createRecipients = data => {
 export const getRecipient = id => {
   return instance.get(`${AUTH.recipients}${id}/`);
 };
-export const deleteRecipients = id => {
+export const deleteRecipient = id => {
   return instance.delete(`${AUTH.recipients}${id}/`);
 };
 

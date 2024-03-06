@@ -33,14 +33,12 @@ const MainHeader = ({ showButton }) => {
 export default MainHeader;
 
 const commonPadding = css`
-  padding: 0 5rem;
-
   @media (min-width: 768px) {
-    padding: 0 1rem;
+    padding: 0 2.4rem;
   }
 
   @media (max-width: 767px) {
-    padding: 0 0.5rem;
+    padding: 0 2.4rem;
   }
 `;
 
@@ -49,14 +47,14 @@ const StyledContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   margin: 0 auto;
-  max-width: 1248px;
+  max-width: 124.8rem;
   ${commonPadding}
 `;
 
 const StyledLogo = styled.img`
   width: 10.6rem;
   height: 4.2rem;
-  padding-top: 1.2rem;
+  padding-top: 1rem;
   cursor: pointer;
 `;
 
@@ -70,7 +68,7 @@ const StyledButton = styled.button`
   padding: 0.3rem 1.4rem;
   text-align: center;
   background-color: ${({ theme }) => theme.white};
-  margin-top: 0.8rem;
+  margin-top: 1rem;
   cursor: pointer;
 `;
 

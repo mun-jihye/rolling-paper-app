@@ -4,8 +4,9 @@ import styled from 'styled-components';
 import Date from '../cards/Date';
 import FromTitle from '../cards/FromTitle';
 import CardMessage from '../cards/CardMessage';
+import { Modal } from './modal';
 
-const CardModal = ({
+const CardModalContent = ({
   profileImageURL,
   sender,
   relationship,
@@ -24,6 +25,29 @@ const CardModal = ({
       <Hr />
       <CardMessage message={content} ismodal="true" />
     </>
+  );
+};
+
+const CardModal = ({
+  profileImageURL,
+  sender,
+  relationship,
+  content,
+  formattedDate,
+  showModal,
+  handleClose,
+  isDelete,
+}) => {
+  return (
+    <Modal showModal={showModal} handleClose={handleClose} isDelete={isDelete}>
+      <CardModalContent
+        profileImageURL={profileImageURL}
+        sender={sender}
+        relationship={relationship}
+        content={content}
+        formattedDate={formattedDate}
+      />
+    </Modal>
   );
 };
 
