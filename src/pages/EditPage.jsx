@@ -16,7 +16,7 @@ import { deleteAlert } from 'utils/deleteAlert';
 import routes from 'utils/constants/routes';
 import { useInView } from 'react-intersection-observer';
 import Error from 'components/commons/error/Error';
-import FromCardSkeleton from 'components/edit/FromCardSkeleton';
+import GNB from 'components/commons/header/GNB';
 
 const EditPage = () => {
   const { postId } = useParams();
@@ -56,8 +56,7 @@ const EditPage = () => {
 
   return (
     <>
-      <MainHeader />
-      <SubHeader />
+      <GNB data={editData} />
       {isLoading ? (
         <Loader />
       ) : (

@@ -8,27 +8,14 @@ import useCloseModal from 'hooks/useCloseModal';
 import EmojiPicker from 'emoji-picker-react';
 import EmojiBadge from 'components/commons/badges/EmojiBadge';
 
-import { useQuery } from 'react-query';
-import { getRecipient } from 'api/recipient';
-
-//data 넘겨 받기
-const SubHeader = () => {
-  //데이터 넘겨받으면 삭제
-  const recipientId = 4114;
-
-  const {
-    data: response,
-    isLoading,
-    error,
-  } = useQuery(['recipient', recipientId], () => getRecipient(recipientId));
-
-  const recipientName = response ? response.data.name : 'Unknown';
-  const recipientCount = response ? response.data.messageCount : '0';
-  const topReactions = response?.data?.topReactions?.slice(0, 3) || [];
-  const topProfileImages = response?.data?.recentMessages
+const SubHeader = ({ data }) => {
+  const recipientName = data ? data.name : 'Unknown';
+  const recipientCount = data ? data.messageCount : '0';
+  const topReactions = data?.topReactions.slice(0, 3) || [];
+  const topProfileImages = data?.recentMessages
     .slice(0, 3)
     .map(msg => msg.profileImageURL);
-  const userReactions = response?.data?.topReactions?.slice(0, 8) || [];
+  const userReactions = data?.topReactions?.slice(0, 8) || [];
 
   const [showShareOptions, setShowShareOptions] = useState(false);
   const [showArrowOptions, setArrowShareOptions] = useState(false);
@@ -117,16 +104,11 @@ const SubHeader = () => {
     setShowEmojiPicker(false);
   };
 
-  if (isLoading) return <div>데이터를 불러오는 중...</div>;
-  if (error)
-    return <div>데이터를 불러오는데 실패했습니다: {console.log(error)}</div>;
-
   return (
     <StyledContainer>
       <ToUser>To. {recipientName}</ToUser>
       <StyledSection>
         <StyledProfiles>
-          {/* 프로필 이미지들 */}
           {topProfileImages.map((image, index) => (
             <StyledProfile key={index} src={image} alt={`Profile ${index}`} />
           ))}
@@ -137,7 +119,6 @@ const SubHeader = () => {
         </StyledMessage>
         <StyledDivider />
         <StyledEmojis>
-          {/* 이모지 버튼들 */}
           {topReactions.map((reaction, index) => (
             <EmojiBadge key={index} data={reaction} />
           ))}
@@ -160,7 +141,7 @@ const SubHeader = () => {
           />
           {showEmojiPicker && (
             <StyledEmojiPicker ref={emojiPickerRef}>
-              <EmojiPicker onEmojiClick={onEmojiClick} />{' '}
+              <EmojiPicker onEmojiClick={onEmojiClick} />
             </StyledEmojiPicker>
           )}
           <StyledDivider2 />
