@@ -1,6 +1,11 @@
 import { deleteMessage } from 'api/message';
-import { deleteRecipient, getRecipient } from 'api/recipient';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { deleteRecipient, getRecipient, getRecipientList } from 'api/recipient';
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from 'react-query';
 
 export const useGetRecipientQuery = postId => {
   return useQuery({
@@ -29,4 +34,27 @@ export const useDeleteMessageQuery = messageId => {
     },
   });
   return deleteData;
+};
+
+export const useGetMessagesQuery = (postId, limit = 5) => {
+  return useInfiniteQuery({
+    queryKey: ['messages', postId],
+    queryFn: async ({ pageParam = 0 }) => {
+      return await getRecipientList(postId, limit, { offset: pageParam });
+    },
+    getNextPageParam: (lastPage, allPages) => {
+      const nextPage = allPages.length * limit;
+
+      if (lastPage?.data.next === null) {
+        return undefined;
+      }
+
+      if (lastPage?.data.count <= nextPage) {
+        return undefined;
+      }
+
+      return nextPage;
+    },
+    retry: false,
+  });
 };

@@ -1,17 +1,17 @@
-import { useState } from "react";
-import styled from "styled-components";
+import { useState } from 'react';
+import styled from 'styled-components';
 
-const ToggleBtn = ({ onClick, className, type = "button" }) => {
+const ToggleBtn = ({ onClick, className, type = 'button' }) => {
   const [isOn, setIsOn] = useState(true);
 
-  const handleColorClick = (e) => {
+  const handleColorClick = e => {
     if (!isOn) {
       setIsOn(true);
       onClick(e);
     }
   };
 
-  const handleImageClick = (e) => {
+  const handleImageClick = e => {
     if (isOn) {
       setIsOn(false);
       onClick(e);
@@ -19,7 +19,7 @@ const ToggleBtn = ({ onClick, className, type = "button" }) => {
   };
 
   return (
-    <div>
+    <ToggleBox>
       <ToggleOption
         onClick={handleColorClick}
         className={className}
@@ -36,9 +36,14 @@ const ToggleBtn = ({ onClick, className, type = "button" }) => {
       >
         이미지
       </ToggleOption>
-    </div>
+    </ToggleBox>
   );
 };
+
+const ToggleBox = styled.div`
+  background-color: ${({ theme }) => theme.gray100};
+  border-radius: 0.6rem;
+`;
 
 const ToggleOption = styled.button`
   width: 12.2rem;
@@ -51,7 +56,7 @@ const ToggleOption = styled.button`
   color: ${({ theme, selected }) =>
     selected ? theme.purple700 : theme.gray900};
   border: ${({ theme, selected }) =>
-    selected ? "0.2rem solid " + theme.purple600 : "none"};
+    selected ? '0.2rem solid ' + theme.purple600 : 'none'};
   background: ${({ theme, selected }) =>
     selected ? theme.white : theme.gray100};
 `;
