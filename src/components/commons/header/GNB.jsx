@@ -47,7 +47,7 @@ const GNB = () => {
         {shouldShowMainHeader && (
           <MainHeader showButton={shouldShowMainHeaderButton} />
         )}
-        {!shouldShowSubHeader && <SubHeader />}
+        {shouldShowSubHeader && <SubHeader />}
       </StickyContainer>
     </>
   );
