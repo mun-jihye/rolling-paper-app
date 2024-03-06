@@ -163,14 +163,15 @@ const EmojiImg = styled(CardImg)`
   }
 `;
 const ButtonBox = styled.div`
-  position: relative;
   @media ${({ theme }) => theme.breakpoint.tablet} {
-    /* bottom: 4rem; */
-    right: 49%;
+    position: absolute;
+    top: 95%;
+    right: 96.6%;
   }
   @media ${({ theme }) => theme.breakpoint.mobile} {
-    /* top: 0; */
-    right: 49%;
+    position: absolute;
+    bottom: 8%;
+    right: 94%;
   }
 `;
 
