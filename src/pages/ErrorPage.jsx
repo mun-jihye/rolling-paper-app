@@ -1,4 +1,3 @@
-// import Error from 'components/commons/error/Error';
 import Button from 'components/commons/buttons/Button';
 import GNB from 'components/commons/header/GNB';
 import React from 'react';
@@ -10,12 +9,11 @@ const ErrorPage = () => {
     <Main>
       <GNB />
       <Box>
-        {/* <Error /> */}
         <TextBox>
           <NumberText>404</NumberText>
           <Text>WHOOPS!!</Text>
           <SubText>is not found</SubText>
-          <SubText>something went wrong go back to Home</SubText>
+          <SubText>something went wrong go back to Home.</SubText>
         </TextBox>
         <ButtonBox>
           <Link to={'/'}>
@@ -42,15 +40,20 @@ const Main = styled.div`
 
 const Box = styled.div`
   display: flex;
-  /* flex-direction: column; */
   align-items: center;
   height: 90vh;
+  @media ${({ theme }) => theme.breakpoint.tablet} {
+    flex-direction: column;
+  }
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    flex-direction: column;
+  }
 `;
 
 const TextBox = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100vw;
+  width: 100%;
   height: 60vh;
   @media ${({ theme }) => theme.breakpoint.tablet} {
     margin-top: 10vh;
@@ -101,6 +104,14 @@ const ButtonBox = styled.div`
   position: relative;
   top: 21rem;
   right: 5rem;
+  @media ${({ theme }) => theme.breakpoint.tablet} {
+    top: -3rem;
+    right: 49%;
+  }
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    top: 0;
+    right: 49%;
+  }
 `;
 
 export default ErrorPage;
