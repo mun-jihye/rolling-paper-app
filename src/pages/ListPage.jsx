@@ -73,16 +73,16 @@ const MainContainer = styled.main`
   flex-direction: column;
   gap: 5.4rem;
   padding-top: 4rem;
-  padding-bottom: 4.2rem;
+  padding-bottom: 14.6rem;
 
   @media (min-width: 48rem) {
     gap: 3rem;
     padding-top: 5rem;
-    padding-bottom: 13.2rem;
+    padding-bottom: 23.6rem;
   }
 
   @media (min-width: 75rem) {
-    padding-bottom: 4rem;
+    padding-bottom: 14.4rem;
   }
 `;
 
@@ -115,6 +115,9 @@ const StyledHtag = styled.h1`
 `;
 
 const StyledFooter = styled.footer`
+  position: fixed;
+  width: 100%;
+  bottom: 0;
   padding: 2.4rem 2rem;
 
   @media (min-width: 48rem) {
@@ -128,6 +131,7 @@ const StyledFooter = styled.footer`
 `;
 
 const ListPageButton = styled(Button)`
+  position: static;
   width: 100%;
   height: 5.6rem;
   font-size: 1.8rem;
