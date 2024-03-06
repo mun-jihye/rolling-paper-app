@@ -27,7 +27,7 @@ const ListPage = () => {
     isError: isTopRatedListError,
   } = useQuery({
     queryKey: ['recipients', 'sortedTopRated'],
-    queryFn: () => getRecipients(undefined, undefined, 'like'),
+    queryFn: () => getRecipients({ sort: 'like' }),
   });
 
   return (
