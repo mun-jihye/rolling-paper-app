@@ -9,9 +9,10 @@ import nation2 from 'assets/backgrounds/nation2.svg';
 
 const PostPage = () => {
   const [toggleState, setToggleState] = useState('컬러');
+  const colors = ['beige', 'purple', 'blue', 'green'];
   const items = useMemo(() => {
     return toggleState === '컬러'
-      ? ['beige200', 'purple200', 'blue200', 'green200']
+      ? colors.map(color => `${color}200`)
       : [nation1, nation2, nation1, nation2];
   }, [toggleState]);
 
@@ -19,9 +20,8 @@ const PostPage = () => {
   const [isBtnDisabled, setIsBtnDisabled] = useState(true);
   const [formValues, setFormValues] = useState({
     textFieldInput: '',
-    background: items[0],
-    backgroundColor: items[0],
-    backgroundImageURL: null,
+    backgroundColor: toggleState === '컬러' ? items[0] : null,
+    backgroundImageURL: toggleState === '이미지' ? items[0] : null,
   });
   const inputDisabled = false;
 
@@ -40,23 +40,21 @@ const PostPage = () => {
   };
 
   const handleToggle = e => {
-    setToggleState(e.target.innerText.toLowerCase());
-    setBackground(items[0]);
-    setFormValues(prevState => ({
-      ...prevState,
-      background: items[0],
-    }));
+    const newToggleState = e.target.innerText.toLowerCase();
+    setToggleState(newToggleState);
   };
+
   const handleSelect = (background, index) => {
     setFormValues(prevState => ({
       ...prevState,
-      background: items[0],
+      backgroundColor:
+        toggleState === '컬러' ? items[index].replace(/[0-9]/g, '') : null,
+      backgroundImageURL: toggleState === '이미지' ? items[index] : null,
     }));
   };
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log(formValues);
     // this.props.history.push({
     //   pathname: '/post/{id}',
     //   state: { formValues },
@@ -66,9 +64,11 @@ const PostPage = () => {
   useEffect(() => {
     setFormValues(prevState => ({
       ...prevState,
-      background,
+      backgroundColor:
+        toggleState === '컬러' ? items[0].replace(/[0-9]/g, '') : null,
+      backgroundImageURL: toggleState === '이미지' ? items[0] : null,
     }));
-  }, [background]);
+  }, [toggleState]);
 
   return (
     <>
