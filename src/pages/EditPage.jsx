@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { EditContainer } from 'components/edit/EditContainer';
 import FromCardList from 'components/edit/FromCardList';
 import Loader from 'components/commons/Loader';
-import MainHeader from 'components/commons/header/MainHeader';
-import SubHeader from 'components/commons/header/SubHeader';
 import { useNavigate, useParams } from 'react-router-dom';
 import Button from 'components/commons/buttons/Button';
 import styled from 'styled-components';
