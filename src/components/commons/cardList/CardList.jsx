@@ -86,6 +86,7 @@ function CardList({
       >
         <StyledSlideBar
           $carouselMargin={carouselMargin}
+          $cardCount={cards?.length}
           style={{ transform: `translate(${slidePosition}rem)` }}
         >
           {isLoading
@@ -151,6 +152,10 @@ const StyledSlideBar = styled.div`
 
   @media (min-width: 48rem) {
     gap: 2rem;
+  }
+
+  @media (min-width: 75rem) {
+    justify-content: ${({ $cardCount }) => ($cardCount < 4 ? 'center' : '')};
   }
 `;
 
