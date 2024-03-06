@@ -2,12 +2,11 @@ import React from 'react';
 import CardList from 'components/commons/cardList/CardList';
 import styled from 'styled-components';
 import useDeviceType from 'hooks/useDeviceType';
-import { useQuery } from 'react-query';
-import { getRecipients } from 'api/recipient';
 import { Link } from 'react-router-dom';
 import routes from 'utils/constants/routes';
 import GNB from 'components/commons/header/GNB';
 import Button from 'components/commons/buttons/Button';
+import { useGetRecipientsInOrderQuery } from 'hooks/queries/useListQuery';
 
 const ListPage = () => {
   const deviceType = useDeviceType();
@@ -16,19 +15,13 @@ const ListPage = () => {
     data: lastestList,
     isLoading: isLastestListLoading,
     isError: isLastestListError,
-  } = useQuery({
-    queryKey: ['recipients', 'sortedLastest'],
-    queryFn: () => getRecipients(),
-  });
+  } = useGetRecipientsInOrderQuery();
 
   const {
     data: topRatedList,
     isLoading: isTopRatedListLoading,
     isError: isTopRatedListError,
-  } = useQuery({
-    queryKey: ['recipients', 'sortedTopRated'],
-    queryFn: () => getRecipients({ sort: 'like' }),
-  });
+  } = useGetRecipientsInOrderQuery('like');
 
   return (
     <div>
