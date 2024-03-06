@@ -7,6 +7,7 @@ import {
   StyledFooter,
   StyledHtag,
   MainContainer,
+  ChangeLayoutButton,
 } from './ListPage';
 import { Link } from 'react-router-dom';
 import routes from 'utils/constants/routes';
@@ -16,7 +17,12 @@ const PapersPage = () => {
     <div>
       <GNB />
       <PapersPageMainContainer>
-        <PapersPageHtag>모든 롤링 페이퍼 🌈</PapersPageHtag>
+        <PapersPageHtag>
+          모든 롤링 페이퍼 🌈
+          <Link to={routes.list}>
+            <ChangeLayoutButton>돌아가기</ChangeLayoutButton>
+          </Link>
+        </PapersPageHtag>
         <PapersContainer $count={mockDatas.length}>
           {mockDatas?.map(mockData => {
             return <PapersPageCard key={mockData.id} data={mockData} />;
@@ -53,7 +59,7 @@ const PapersPageMainContainer = styled(MainContainer)`
   }
 
   @media (min-width: 75rem) {
-    width: 116rem;
+    width: 117rem;
   }
 `;
 
@@ -63,6 +69,7 @@ const PapersContainer = styled.main`
   display: flex;
   gap: 2rem;
   margin: 0 auto;
+
   flex-wrap: wrap;
   align-items: center;
 
@@ -76,6 +83,9 @@ const PapersContainer = styled.main`
 
   @media (min-width: 75rem) {
     justify-content: ${({ $count }) => ($count < 4 ? 'center' : '')};
+    padding: 0 0.5rem;
+    position: relative;
+    left: -0.5rem;
   }
 `;
 

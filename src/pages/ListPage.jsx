@@ -28,7 +28,12 @@ const ListPage = () => {
       <GNB />
       <MainContainer>
         <SectionConainer>
-          <StyledHtag>인기 롤링 페이퍼 🔥</StyledHtag>
+          <StyledHtag>
+            인기 롤링 페이퍼 🔥
+            <Link to={routes.papers}>
+              <ChangeLayoutButton>전체 보기</ChangeLayoutButton>
+            </Link>
+          </StyledHtag>
           <CardList
             carouselMargin={
               deviceType === 'PC' ? 0 : deviceType === 'Tablet' ? 2.4 : 2
@@ -86,6 +91,7 @@ const SectionConainer = styled.section`
 `;
 
 export const StyledHtag = styled.h1`
+  position: relative;
   color: ${({ theme }) => theme.black};
   font-size: 2rem;
   font-weight: 600;
@@ -140,5 +146,22 @@ export const ListPageButton = styled(Button)`
     width: 28rem;
     display: block;
     margin: 0 auto;
+  }
+`;
+
+export const ChangeLayoutButton = styled(Button)`
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: auto;
+  height: auto;
+  padding: 0.8rem;
+
+  @media (min-width: 48rem) {
+    padding: 1rem;
+  }
+
+  @media (min-width: 75rem) {
+    right: 1rem;
   }
 `;
