@@ -1,11 +1,13 @@
 import React from 'react';
-import MainHeader from 'components/commons/header/MainHeader';
 import CardList from 'components/commons/cardList/CardList';
 import styled from 'styled-components';
 import PrimaryBtn from 'components/commons/buttons/PrimaryBtn';
 import useDeviceType from 'hooks/useDeviceType';
 import { useQuery } from 'react-query';
 import { getRecipients } from 'api/recipient';
+import { Link } from 'react-router-dom';
+import routes from 'utils/constants/routes';
+import GNB from 'components/commons/header/GNB';
 
 const ListPage = () => {
   const deviceType = useDeviceType();
@@ -22,7 +24,7 @@ const ListPage = () => {
 
   return (
     <div>
-      <MainHeader />
+      <GNB />
       <MainContainer>
         <SectionConainer>
           <StyledHtag>인기 롤링 페이퍼 🔥</StyledHtag>
@@ -46,7 +48,9 @@ const ListPage = () => {
         </SectionConainer>
       </MainContainer>
       <StyledFooter>
-        <ListPagePrimaryBtn>나도 만들어보기</ListPagePrimaryBtn>
+        <Link to={routes.post}>
+          <ListPagePrimaryBtn>나도 만들어보기</ListPagePrimaryBtn>
+        </Link>
       </StyledFooter>
     </div>
   );
@@ -115,16 +119,19 @@ const StyledFooter = styled.footer`
 
 const ListPagePrimaryBtn = styled(PrimaryBtn)`
   width: 100%;
-  max-widht: 116rem;
+  height: 5.6rem;
+  font-size: 1.8rem;
+  font-weight: 400;
+  letter-spacing: -0.018rem;
+  line-height: 2.8rem;
+
+  @media (min-width: 48rem) {
+    font-weight: 700;
+  }
 
   @media (min-width: 75rem) {
     width: 28rem;
-    height: 5.6rem;
     display: block;
     margin: 0 auto;
-    font-size: 1.8rem;
-    font-weight: 700;
-    line-height: 2.8rem;
-    letter-spacing: -0.018rem;
   }
 `;

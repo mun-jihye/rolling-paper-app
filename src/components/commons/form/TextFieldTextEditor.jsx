@@ -10,7 +10,10 @@ import bullet from 'assets/images/forms/bullet.svg';
 import fill from 'assets/images/forms/fill.svg';
 import fontSize from 'assets/images/forms/font_size.svg';
 
-export default function TextFieldTextEditor() {
+export default function TextFieldTextEditor({ handleChange }) {
+  const handleInputChange = e => {
+    handleChange(e);
+  };
   return (
     <StyledContainer>
       <ButtonContainer>
@@ -33,7 +36,11 @@ export default function TextFieldTextEditor() {
           <img src={fontSize} alt="fontSize" />
         </StyledImg>
       </ButtonContainer>
-      <StyledTextInput placeholder="I am your reach text editor." type="text" />
+      <StyledTextInput
+        placeholder="I am your reach text editor."
+        type="text"
+        onChange={handleInputChange}
+      />
     </StyledContainer>
   );
 }

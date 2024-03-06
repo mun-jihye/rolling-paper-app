@@ -4,6 +4,9 @@ import LandingPage from 'pages/LandingPage';
 import ListPage from 'pages/ListPage';
 import EditPage from 'pages/EditPage';
 import PostPage from 'pages/PostPage';
+import ErrorPage from 'pages/ErrorPage';
+import MessagePage from 'pages/MessagePage';
+
 
 function App() {
   return (
@@ -12,6 +15,8 @@ function App() {
       <Route path={routes.list} element={<ListPage />}></Route>
       <Route path={routes.edit} element={<EditPage />}></Route>
       <Route path={routes.post} element={<PostPage />}></Route>
+      <Route path={routes.error} element={<ErrorPage />}></Route>
+      <Route path={routes.message} element={<MessagePage />}></Route>
     </Routes>
   );
 }
