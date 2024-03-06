@@ -1,12 +1,12 @@
 // import MainHeader from 'components/commons/header/MainHeader';
 import React from 'react';
 import styled from 'styled-components';
-import GNB from 'components/commons/header/GNB';
 import cardImg from 'assets/images/landingPage/cardImg.png';
 import emojiImg from 'assets/images/landingPage/emojiImg.png';
 import Button from 'components/commons/buttons/Button';
 import { Link } from 'react-router-dom';
 import routes from 'utils/constants/routes';
+import GNB from 'components/commons/header/GNB';
 
 const LandingPage = () => {
   return (
@@ -41,11 +41,9 @@ const LandingPage = () => {
             <EmojiImg src={emojiImg} alt="이모지 이미지" />
           </ImgBox>
         </BlueBoxReverse>
-        <ButtonBox>
-          <Link to={routes.list}>
-            <Button width={'28rem'}>구경해보기</Button>
-          </Link>
-        </ButtonBox>
+        <Link to={routes.list}>
+          <ButtonStyle width={'28rem'}>구경해보기</ButtonStyle>
+        </Link>
       </Main>
     </>
   );
@@ -162,16 +160,15 @@ const EmojiImg = styled(CardImg)`
     width: 100%;
   }
 `;
-const ButtonBox = styled.div`
+
+const ButtonStyle = styled(Button)`
   @media ${({ theme }) => theme.breakpoint.tablet} {
-    position: absolute;
-    top: 95%;
-    right: 96.6%;
+    bottom: 2%;
+    right: 3.5%;
   }
   @media ${({ theme }) => theme.breakpoint.mobile} {
-    position: absolute;
-    bottom: 8%;
-    right: 94%;
+    bottom: 2%;
+    right: 6%;
   }
 `;
 
