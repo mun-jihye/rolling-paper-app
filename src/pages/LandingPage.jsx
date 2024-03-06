@@ -41,9 +41,11 @@ const LandingPage = () => {
             <EmojiImg src={emojiImg} alt="이모지 이미지" />
           </ImgBox>
         </BlueBoxReverse>
-        <Link to={routes.list}>
-          <ButtonStyle width={'28rem'}>구경해보기</ButtonStyle>
-        </Link>
+        <ButtonBox>
+          <Link to={routes.list}>
+            <ButtonStyle width={'28rem'}>구경해보기</ButtonStyle>
+          </Link>
+        </ButtonBox>
       </Main>
     </>
   );
@@ -54,6 +56,7 @@ const Main = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 0 2.4rem 4rem;
+  margin-bottom: 3rem;
 `;
 
 const BlueBox = styled.div`
@@ -161,6 +164,25 @@ const EmojiImg = styled(CardImg)`
   }
 `;
 
+const ButtonBox = styled.div`
+  @media ${({ theme }) => theme.breakpoint.tablet} {
+    position: fixed;
+    width: 100%;
+    height: 6.5rem;
+    bottom: 0;
+    left: 0;
+    background-color: white;
+  }
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    position: fixed;
+    width: 100%;
+    height: 6.5rem;
+    bottom: 0;
+    left: 0;
+    background-color: white;
+  }
+`;
+
 const ButtonStyle = styled(Button)`
   @media ${({ theme }) => theme.breakpoint.tablet} {
     margin: 2.4rem;
@@ -168,7 +190,7 @@ const ButtonStyle = styled(Button)`
     left: 0;
   }
   @media ${({ theme }) => theme.breakpoint.mobile} {
-    margin: 2.4rem;
+    margin: 0 2.4rem 2.4rem;
     bottom: 0;
     right: 0;
   }

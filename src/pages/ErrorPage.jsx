@@ -1,5 +1,4 @@
 import Button from 'components/commons/buttons/Button';
-// import MainHeader from 'components/commons/header/MainHeader';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -8,7 +7,6 @@ import routes from 'utils/constants/routes';
 const ErrorPage = () => {
   return (
     <>
-      {/* <MainHeader /> */}
       <Main>
         <TextBox>
           <NumberText>404</NumberText>
