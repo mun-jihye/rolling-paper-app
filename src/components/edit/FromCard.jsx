@@ -27,14 +27,14 @@ const FromCard = ({
       <CardContainer onClick={handleClick}>
         <Header>
           <FlexContainer>
-            <Profile src={profileImageURL} isCard={true} />
+            <Profile src={profileImageURL} $iscard="true" />
             <FromTitle sender={sender} relationship={relationship} />
           </FlexContainer>
         </Header>
         <Hr />
         <Content>
-          <CardMessage message={content} isModal={false} />
-          <Date date={formattedDate} isModal={false} />
+          <CardMessage message={content} $ismodal={false} />
+          <Date date={formattedDate} $ismodal={false} />
         </Content>
       </CardContainer>
       {showModal && (

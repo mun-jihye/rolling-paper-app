@@ -31,6 +31,7 @@ function Button({
 }
 
 const StyledButton = styled.button`
+  z-index: 100;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -55,9 +56,11 @@ const StyledButton = styled.button`
   }
   @media ${({ theme }) => theme.breakpoint.tablet} {
     width: 93vw;
+    position: fixed;
   }
   @media ${({ theme }) => theme.breakpoint.mobile} {
-    width: 90vw;
+    width: 88vw;
+    position: fixed;
   }
   ${props =>
     props.outline &&
