@@ -3,12 +3,10 @@ import styled from 'styled-components';
 import ArrowDown from 'assets/images/headers/ArrowDown.svg';
 import AddImage from 'assets/images/headers/AddImage.svg';
 import ShareImage from 'assets/images/headers/ShareImage.svg';
-import Profile1 from 'assets/images/profiles/profile1.png';
-import Profile2 from 'assets/images/profiles/profile2.png';
-import Profile3 from 'assets/images/profiles/profile3.png';
 import Toast from 'components/commons/toast/Toast';
 import useCloseModal from 'hooks/useCloseModal';
 import EmojiPicker from 'emoji-picker-react';
+import EmojiBadge from 'components/commons/badges/EmojiBadge';
 
 import { useQuery } from 'react-query';
 import { getRecipient } from 'api/recipient';
@@ -25,6 +23,9 @@ const SubHeader = ({ datas }) => {
   const recipientName = response ? response.data.name : 'Unknown';
   const recipientCount = response ? response.data.messageCount : '0';
   const topReactions = response?.data?.topReactions?.slice(0, 3) || [];
+  const topProfileImages = response?.data?.recentMessages
+    .slice(0, 3)
+    .map(msg => msg.profileImageURL);
 
   const [showShareOptions, setShowShareOptions] = useState(false);
   const [showArrowOptions, setArrowShareOptions] = useState(false);
@@ -34,7 +35,7 @@ const SubHeader = ({ datas }) => {
   const [selectedEmoji, setSelectedEmoji] = useState(null);
 
   //selectEmoji 출력
-  console.log(selectedEmoji);
+  // console.log(selectedEmoji);
 
   //Ref사용해서 Dom요소 참조하기
   const shareOptionsRef = useRef();
@@ -129,14 +130,16 @@ const SubHeader = ({ datas }) => {
 
   return (
     <StyledContainer>
-      <ToUser>To. {recipientName}</ToUser>
+      <StyledSection>
+        <ToUser>To. {recipientName}</ToUser>
+      </StyledSection>
       <StyledSection>
         <StyledProfiles>
           {/* 프로필 이미지들 */}
-          <StyledProfile src={Profile1} alt="Profile" />
-          <StyledProfile src={Profile2} alt="Profile" />
-          <StyledProfile src={Profile3} alt="Profile" />
-          <StyledProfileNum>+6</StyledProfileNum>
+          {topProfileImages.map((image, index) => (
+            <StyledProfile key={index} src={image} alt={`Profile ${index}`} />
+          ))}
+          <StyledProfileNum>+{recipientCount - 3}</StyledProfileNum>
         </StyledProfiles>
         <StyledMessage>
           <StyledEmp>{recipientCount}</StyledEmp>명이 작성했어요!
@@ -144,17 +147,19 @@ const SubHeader = ({ datas }) => {
         <StyledDivider />
         <StyledEmojis>
           {/* 이모지 버튼들 */}
-          {topReactions.map(reaction => (
-            <StyledEmoji key={reaction.id}>
-              {reaction.emoji} {reaction.count}
-            </StyledEmoji>
+          {topReactions.map((reaction, index) => (
+            <EmojiBadge key={index} data={reaction} />
           ))}
           <StyledArrow onClick={handleArrowClick} src={ArrowDown} alt="Arrow" />
         </StyledEmojis>
         {!isMobile && (
           <StyledButtons>
             {showArrowOptions && (
-              <ArrowOptions ref={arrowOptionsRef}>이모지 옵션</ArrowOptions>
+              <ArrowOptions ref={arrowOptionsRef}>
+                {topReactions.map((reaction, index) => (
+                  <EmojiBadge key={index} data={reaction} />
+                ))}
+              </ArrowOptions>
             )}
             <StyledDivider2 />
             <AddButton
@@ -212,8 +217,10 @@ const AddButton = ({ src, alt, onClick, text }) => (
 
 const ArrowOptions = styled.div`
   position: absolute;
-  width: 14rem;
-  height: 10.1rem;
+  display: flex;
+  gap: 1rem;
+  width: auto;
+  height: auto;
   border-radius: 0.8rem;
   border: 0.1rem;
   background-color: ${({ theme }) => theme.white};
@@ -222,6 +229,7 @@ const ArrowOptions = styled.div`
   top: 120%;
   right: 105%;
   z-index: 10;
+  padding: 2.4rem;
 `;
 
 const ShareButton = ({ src, alt, onClick }) => (
@@ -263,21 +271,21 @@ const ShareButtonList = styled.div`
 `;
 
 const StyledContainer = styled.ul`
-  height: 3.7rem;
+  height: 6rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 0 auto;
-  max-width: 126rem;
+  max-width: 124.8rem;
   padding: 0 2rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
 
   @media (min-width: 768px) {
-    padding: 0 1.5rem;
+    padding: 2.4rem;
   }
 
   @media (min-width: 375px) and (max-width: 767px) {
-    padding: 0 1rem;
+    padding: 0 2.4;
   }
 `;
 
@@ -285,20 +293,17 @@ const StyledSection = styled.div`
   justify-content: space-between;
   display: flex;
   align-items: center;
+  margin-bottom: 1rem;
 `;
 
 const ToUser = styled.div`
   display: flex;
-  font-family: Pretendard;
+  font-family: Noto;
   font-size: 2.6rem;
-  font-weight: 900;
+  font-weight: ${({ theme }) => theme.fontWeights.regular};
   line-height: auto;
   text-align: left;
   padding: 0 0.2rem;
-
-  @media (max-width: 1248px) {
-    padding: 0rem;
-  }
 `;
 
 const StyledProfileNum = styled.div`
@@ -379,23 +384,10 @@ const StyledDivider2 = styled.div`
   background-color: ${({ theme }) => theme.gray200};
 `;
 
-const StyledEmoji = styled.button`
-  width: 6.3rem;
-  height: 3.6rem;
-  padding: 0.8rem 1.2rem;
-  border-radius: 3.2rem;
-  background-color: ${({ theme }) => theme.gray400};
-  margin-right: 1rem;
-  color: ${({ theme }) => theme.white};
-
-  @media (max-width: 768px) {
-    display: none;
-  }
-`;
-
 const StyledEmojis = styled.div`
   display: flex;
   align-items: center;
+  gap: 1rem;
 
   @media (max-width: 768px) {
     display: none;
@@ -417,7 +409,11 @@ const StyledButton = styled.button`
   background: ${({ theme }) => theme.white};
   border: 1px solid ${({ theme }) => theme.gray400};
   text-align: center;
-  gap: 1rem;
+  gap: 0.8rem;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const StyledButtons = styled.div`

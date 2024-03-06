@@ -1,4 +1,5 @@
 import { useLocation } from 'react-router-dom';
+import styled from 'styled-components';
 import MainHeader from 'components/commons/header/MainHeader';
 import SubHeader from 'components/commons/header/SubHeader';
 import useDeviceType from 'hooks/useDeviceType';
@@ -42,12 +43,21 @@ const GNB = () => {
 
   return (
     <>
-      {shouldShowMainHeader && (
-        <MainHeader showButton={shouldShowMainHeaderButton} />
-      )}
-      {!shouldShowSubHeader && <SubHeader />}
+      <StickyContainer>
+        {shouldShowMainHeader && (
+          <MainHeader showButton={shouldShowMainHeaderButton} />
+        )}
+        {!shouldShowSubHeader && <SubHeader />}
+      </StickyContainer>
     </>
   );
 };
 
 export default GNB;
+
+const StickyContainer = styled.div`
+  position: sticky;
+  top: 0;
+  z-index: 9;
+  background-color: ${({ theme }) => theme.white};
+`;
