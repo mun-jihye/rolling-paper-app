@@ -1,3 +1,5 @@
+import tempImg from 'assets/images/cardList/tempImg.jpg';
+
 const mockData = {
   id: 2,
   name: '강영훈',

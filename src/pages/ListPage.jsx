@@ -107,7 +107,7 @@ const StyledHtag = styled.h1`
   }
 `;
 
-const StyledFooter = styled.footer`
+export const StyledFooter = styled.footer`
   position: fixed;
   width: 100%;
   bottom: 0;
@@ -123,7 +123,7 @@ const StyledFooter = styled.footer`
   }
 `;
 
-const ListPageButton = styled(Button)`
+export const ListPageButton = styled(Button)`
   position: static;
   width: 100%;
   height: 5.6rem;

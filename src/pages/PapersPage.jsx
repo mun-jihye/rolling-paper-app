@@ -2,35 +2,87 @@ import Card from 'components/commons/cardList/Card';
 import GNB from 'components/commons/header/GNB';
 import mockDatas from 'data/papersPage';
 import styled from 'styled-components';
+import { ListPageButton, StyledFooter } from './ListPage';
+import { Link } from 'react-router-dom';
+import routes from 'utils/constants/routes';
 
 const PapersPage = () => {
   return (
     <div>
       <GNB />
-      <GridContainer>
+      <MainContainer>
         {mockDatas?.map(mockData => {
-          return <Card key={mockData.id} data={mockData} />;
+          return <PapersPageCard key={mockData.id} data={mockData} />;
         })}
-      </GridContainer>
+      </MainContainer>
+      <StyledFooter>
+        <Link to={routes.post}>
+          <ListPageButton>나도 만들어보기</ListPageButton>
+        </Link>
+      </StyledFooter>
     </div>
   );
 };
 
 export default PapersPage;
 
-const GridContainer = styled.div`
+const MainContainer = styled.main`
   width: 100%;
-  max-width: 120rem;
+  padding-top: 10rem;
+  max-width: 27.5rem;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
   gap: 2rem;
-  justify-items: center;
+  flex-wrap: wrap;
   align-items: center;
-  @media ${({ theme }) => theme.breakpoint.tablet} {
-    grid-template-columns: repeat(2, 1fr);
+
+  @media (min-width: 38.6rem) {
+    max-width: 57rem;
   }
-  @media ${({ theme }) => theme.breakpoint.mobile} {
-    grid-template-columns: repeat(1, 1fr);
+
+  @media (min-width: 57.1rem) {
+    max-width: 86.5rem;
+  }
+
+  @media (min-width: 75rem) {
+    max-width: 116rem;
+  }
+`;
+
+const PapersPageCard = styled(Card)`
+  padding: 3rem 2.4rem 2rem;
+  width: 27.5rem;
+  height: 26rem;
+  background-size: ${({ data }) =>
+    data?.backgroundImageURL ? 'cover' : '14.2rem'};
+
+  & h3 {
+    font-size: 2.4rem;
+    line-height: 3.6rem;
+    letter-spacing: -0.024rem;
+  }
+
+  & span {
+    font-size: 1.6rem;
+    line-height: 2.6rem;
+    letter-spacing: -0.016rem;
+  }
+
+  & hr {
+    margin-top: 4.3rem;
+
+    & + div {
+      gap: 0.8rem;
+    }
+
+    & + div > div {
+      width: 6.5rem;
+      height: 3.6rem;
+
+      & div {
+        font-size: 1.6rem;
+        line-height: 2rem;
+      }
+    }
   }
 `;
