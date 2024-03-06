@@ -2,7 +2,12 @@ import Card from 'components/commons/cardList/Card';
 import GNB from 'components/commons/header/GNB';
 import mockDatas from 'data/papersPage';
 import styled from 'styled-components';
-import { ListPageButton, StyledFooter } from './ListPage';
+import {
+  ListPageButton,
+  StyledFooter,
+  StyledHtag,
+  MainContainer,
+} from './ListPage';
 import { Link } from 'react-router-dom';
 import routes from 'utils/constants/routes';
 
@@ -10,11 +15,14 @@ const PapersPage = () => {
   return (
     <div>
       <GNB />
-      <MainContainer count={mockDatas.length}>
-        {mockDatas?.map(mockData => {
-          return <PapersPageCard key={mockData.id} data={mockData} />;
-        })}
-      </MainContainer>
+      <PapersPageMainContainer>
+        <PapersPageHtag>모든 롤링 페이퍼 🌈</PapersPageHtag>
+        <PapersContainer $count={mockDatas.length}>
+          {mockDatas?.map(mockData => {
+            return <PapersPageCard key={mockData.id} data={mockData} />;
+          })}
+        </PapersContainer>
+      </PapersPageMainContainer>
       <StyledFooter>
         <Link to={routes.post}>
           <ListPageButton>나도 만들어보기</ListPageButton>
@@ -26,31 +34,54 @@ const PapersPage = () => {
 
 export default PapersPage;
 
-// 화면 크기에 따라 flex column 수 변경
-const MainContainer = styled.main`
-  width: 100%;
-  padding-top: 10rem;
-  max-width: 27.5rem;
+// 화면 크기에 따라 flex column 수 변경되도록 width 조절
+const PapersPageMainContainer = styled(MainContainer)`
+  gap: 1.2rem;
   margin: 0 auto;
+  width: 27.5rem;
+
+  @media (min-width: 38.6rem) {
+    width: 57rem;
+  }
+
+  @media (min-width: 48rem) {
+    gap: 1.6rem;
+  }
+
+  @media (min-width: 57.1rem) {
+    width: 86.5rem;
+  }
+
+  @media (min-width: 75rem) {
+    width: 116rem;
+  }
+`;
+
+// 첫 줄의 Card 개수가 column 을 전부 채우지 못하는 경우 가운데 정렬
+const PapersContainer = styled.main`
+  width: 100%;
   display: flex;
   gap: 2rem;
+  margin: 0 auto;
   flex-wrap: wrap;
   align-items: center;
 
   @media (min-width: 38.6rem) {
-    max-width: 57rem;
-    justify-content: ${({ count }) => (count < 2 ? 'center' : '')};
+    justify-content: ${({ $count }) => ($count < 2 ? 'center' : '')};
   }
 
   @media (min-width: 57.1rem) {
-    max-width: 86.5rem;
-    justify-content: ${({ count }) => (count < 3 ? 'center' : '')};
+    justify-content: ${({ $count }) => ($count < 3 ? 'center' : '')};
   }
 
   @media (min-width: 75rem) {
-    max-width: 116rem;
-    justify-content: ${({ count }) => (count < 4 ? 'center' : '')};
+    justify-content: ${({ $count }) => ($count < 4 ? 'center' : '')};
   }
+`;
+
+const PapersPageHtag = styled(StyledHtag)`
+  margin-left: 0;
+  margin-bottom: 0;
 `;
 
 const PapersPageCard = styled(Card)`
@@ -81,12 +112,16 @@ const PapersPageCard = styled(Card)`
     }
 
     & + div > div {
-      width: 6.5rem;
       height: 3.6rem;
+      padding: 0.8rem 1.2rem;
 
       & div {
         font-size: 1.6rem;
-        line-height: 2rem;
+        line-height: 2.3rem;
+      }
+
+      & div:first-child {
+        line-height: 2.4rem;
       }
     }
   }

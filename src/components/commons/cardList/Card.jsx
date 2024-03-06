@@ -185,19 +185,29 @@ const LastProfile = styled.div`
 
 const CardEmojiBadge = styled(EmojiBadge)`
   align-items: start;
+  width: auto;
+  height: 3.6rem;
+
+  & div {
+    line-height: 2.3rem;
+  }
+
+  & div:first-child {
+    line-height: 2.4rem;
+  }
 
   @media (max-width: 48rem) {
-    width: 5.5rem;
     height: 3.2rem;
+    padding: 0.6rem 0.8rem;
 
     & div {
       font-size: 1.4rem;
-      line-height: 1.6rem;
+      line-height: 2rem;
       letter-spacing: -0.007rem;
     }
 
     & div:first-child {
-      line-height: 1.8rem;
+      line-height: 2.2rem;
     }
   }
 `;

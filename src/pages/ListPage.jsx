@@ -61,7 +61,7 @@ const ListPage = () => {
 
 export default ListPage;
 
-const MainContainer = styled.main`
+export const MainContainer = styled.main`
   display: flex;
   flex-direction: column;
   gap: 5.4rem;
@@ -85,7 +85,7 @@ const SectionConainer = styled.section`
   }
 `;
 
-const StyledHtag = styled.h1`
+export const StyledHtag = styled.h1`
   color: ${({ theme }) => theme.black};
   font-size: 2rem;
   font-weight: 600;
