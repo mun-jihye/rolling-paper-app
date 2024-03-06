@@ -16,11 +16,13 @@ import { deleteAlert } from 'utils/deleteAlert';
 import routes from 'utils/constants/routes';
 import { useInView } from 'react-intersection-observer';
 import Error from 'components/commons/error/Error';
+import FromCardSkeleton from 'components/edit/FromCardSkeleton';
 
 const EditPage = () => {
   const { postId } = useParams();
   const navigate = useNavigate();
   const [isDelete, setIsDelete] = useState(false);
+  const { ref, inView } = useInView();
 
   const { data: recipient, isLoading } = useGetRecipientQuery(postId);
   const deleteRecipient = useDeleteRecipientQuery(postId);
@@ -30,8 +32,6 @@ const EditPage = () => {
     data: messages,
     isError,
   } = useGetMessagesQuery(postId);
-
-  const { ref, inView } = useInView();
 
   const editData = recipient?.data;
   const messageData = messages?.pages.flatMap(param => param.data.results);
@@ -46,6 +46,7 @@ const EditPage = () => {
       },
     });
   };
+
   useEffect(() => {
     if (inView) {
       fetchNextPage();
@@ -53,9 +54,6 @@ const EditPage = () => {
     // eslint-disable-next-line
   }, [inView]);
 
-  if (isError) {
-    return <Error />;
-  }
   return (
     <>
       <MainHeader />
@@ -76,10 +74,20 @@ const EditPage = () => {
               </StyledButton>
             )}
           </FlexContainer>
-          <FromCardList datas={messageData} isDelete={isDelete} />
+          {isError ? (
+            <Error />
+          ) : (
+            <>
+              <FromCardList
+                datas={messageData}
+                isDelete={isDelete}
+                isFetchingNextPage={isFetchingNextPage}
+              />
+            </>
+          )}
+          {!isFetchingNextPage && <div ref={ref} />}
         </EditContainer>
       )}
-      {isFetchingNextPage ? <Loader /> : <div ref={ref} />}
     </>
   );
 };
