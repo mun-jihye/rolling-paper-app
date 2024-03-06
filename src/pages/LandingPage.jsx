@@ -41,9 +41,11 @@ const LandingPage = () => {
             <EmojiImg src={emojiImg} alt="이모지 이미지" />
           </ImgBox>
         </BlueBoxReverse>
-        <Link to={routes.list}>
-          <Button width={'28rem'}>구경해보기</Button>
-        </Link>
+        <ButtonBox>
+          <Link to={routes.list}>
+            <Button width={'28rem'}>구경해보기</Button>
+          </Link>
+        </ButtonBox>
       </Main>
     </>
   );
@@ -158,6 +160,17 @@ const EmojiImg = styled(CardImg)`
   width: 47rem;
   @media ${({ theme }) => theme.breakpoint.mobile} {
     width: 100%;
+  }
+`;
+const ButtonBox = styled.div`
+  position: relative;
+  @media ${({ theme }) => theme.breakpoint.tablet} {
+    /* bottom: 4rem; */
+    right: 49%;
+  }
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    /* top: 0; */
+    right: 49%;
   }
 `;
 

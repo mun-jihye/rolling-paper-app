@@ -3,6 +3,7 @@ import GNB from 'components/commons/header/GNB';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import routes from 'utils/constants/routes';
 
 const ErrorPage = () => {
   return (
@@ -16,7 +17,7 @@ const ErrorPage = () => {
           <SubText>something went wrong go back to Home.</SubText>
         </TextBox>
         <ButtonBox>
-          <Link to={'/'}>
+          <Link to={routes.home}>
             <Button
               secondary
               width={'30rem'}
