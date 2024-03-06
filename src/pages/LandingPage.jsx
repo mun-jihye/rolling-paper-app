@@ -163,12 +163,14 @@ const EmojiImg = styled(CardImg)`
 
 const ButtonStyle = styled(Button)`
   @media ${({ theme }) => theme.breakpoint.tablet} {
-    bottom: 2%;
-    right: 3.5%;
+    margin: 2.4rem;
+    bottom: 0;
+    left: 0;
   }
   @media ${({ theme }) => theme.breakpoint.mobile} {
-    bottom: 2%;
-    right: 6%;
+    margin: 2.4rem;
+    bottom: 0;
+    right: 0;
   }
 `;
 

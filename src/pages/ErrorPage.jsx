@@ -1,5 +1,5 @@
 import Button from 'components/commons/buttons/Button';
-import MainHeader from 'components/commons/header/MainHeader';
+// import MainHeader from 'components/commons/header/MainHeader';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -8,7 +8,7 @@ import routes from 'utils/constants/routes';
 const ErrorPage = () => {
   return (
     <>
-      <MainHeader />
+      {/* <MainHeader /> */}
       <Main>
         <TextBox>
           <NumberText>404</NumberText>
@@ -102,11 +102,13 @@ const ButtonStyle = styled(Button)`
   top: 21rem;
   right: 5rem;
   @media ${({ theme }) => theme.breakpoint.tablet} {
-    top: -8rem;
+    margin-bottom: 2.4rem;
+    top: 0;
     right: 0;
   }
   @media ${({ theme }) => theme.breakpoint.mobile} {
-    top: -8rem;
+    margin-bottom: 2.4rem;
+    top: 0;
     right: 0;
   }
 `;
