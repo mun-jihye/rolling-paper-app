@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { EditContainer } from 'components/edit/EditContainer';
 import FromCardList from 'components/edit/FromCardList';
 import Loader from 'components/commons/Loader';
-import MainHeader from 'components/commons/header/MainHeader';
-import SubHeader from 'components/commons/header/SubHeader';
 import { useNavigate, useParams } from 'react-router-dom';
 import Button from 'components/commons/buttons/Button';
 import styled from 'styled-components';
@@ -16,11 +14,13 @@ import { deleteAlert } from 'utils/deleteAlert';
 import routes from 'utils/constants/routes';
 import { useInView } from 'react-intersection-observer';
 import Error from 'components/commons/error/Error';
+import GNB from 'components/commons/header/GNB';
 
 const EditPage = () => {
   const { postId } = useParams();
   const navigate = useNavigate();
   const [isDelete, setIsDelete] = useState(false);
+  const { ref, inView } = useInView();
 
   const { data: recipient, isLoading } = useGetRecipientQuery(postId);
   const deleteRecipient = useDeleteRecipientQuery(postId);
@@ -30,8 +30,6 @@ const EditPage = () => {
     data: messages,
     isError,
   } = useGetMessagesQuery(postId);
-
-  const { ref, inView } = useInView();
 
   const editData = recipient?.data;
   const messageData = messages?.pages.flatMap(param => param.data.results);
@@ -46,6 +44,7 @@ const EditPage = () => {
       },
     });
   };
+
   useEffect(() => {
     if (inView) {
       fetchNextPage();
@@ -53,13 +52,9 @@ const EditPage = () => {
     // eslint-disable-next-line
   }, [inView]);
 
-  if (isError) {
-    return <Error />;
-  }
   return (
     <>
-      <MainHeader />
-      <SubHeader />
+      <GNB data={editData} />
       {isLoading ? (
         <Loader />
       ) : (
@@ -76,10 +71,20 @@ const EditPage = () => {
               </StyledButton>
             )}
           </FlexContainer>
-          <FromCardList datas={messageData} isDelete={isDelete} />
+          {isError ? (
+            <Error />
+          ) : (
+            <>
+              <FromCardList
+                datas={messageData}
+                isDelete={isDelete}
+                isFetchingNextPage={isFetchingNextPage}
+              />
+            </>
+          )}
+          {!isFetchingNextPage && <div ref={ref} />}
         </EditContainer>
       )}
-      {isFetchingNextPage ? <Loader /> : <div ref={ref} />}
     </>
   );
 };

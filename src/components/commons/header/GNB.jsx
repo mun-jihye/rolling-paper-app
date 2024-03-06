@@ -4,7 +4,7 @@ import MainHeader from 'components/commons/header/MainHeader';
 import SubHeader from 'components/commons/header/SubHeader';
 import useDeviceType from 'hooks/useDeviceType';
 
-const GNB = () => {
+const GNB = ({ data }) => {
   const location = useLocation();
   const { pathname } = location;
 
@@ -24,9 +24,9 @@ const GNB = () => {
     <>
       <StickyContainer>
         {shouldShowMainHeader && (
-          <MainHeader showButton={shouldShowMainHeaderButton} />
+          <MainHeader showButton={shouldShowMainHeaderButton} data={data} />
         )}
-        {shouldShowSubHeader && <SubHeader />}
+        {shouldShowSubHeader && <SubHeader data={data} />}
       </StickyContainer>
     </>
   );

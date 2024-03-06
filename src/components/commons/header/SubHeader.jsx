@@ -7,44 +7,40 @@ import Toast from 'components/commons/toast/Toast';
 import useCloseModal from 'hooks/useCloseModal';
 import EmojiPicker from 'emoji-picker-react';
 import EmojiBadge from 'components/commons/badges/EmojiBadge';
+import {
+  useGetReactionQuery,
+  usePostReactionQuery,
+} from 'hooks/queries/useReactionQuery';
+import { useParams } from 'react-router-dom';
 
-import { useQuery } from 'react-query';
-import { getRecipient } from 'api/recipient';
-
-//data 넘겨 받기
-const SubHeader = () => {
-  //데이터 넘겨받으면 삭제
-  const recipientId = 4114;
-
-  const {
-    data: response,
-    isLoading,
-    error,
-  } = useQuery(['recipient', recipientId], () => getRecipient(recipientId));
-
-  const recipientName = response ? response.data.name : 'Unknown';
-  const recipientCount = response ? response.data.messageCount : '0';
-  const topReactions = response?.data?.topReactions?.slice(0, 3) || [];
-  const topProfileImages = response?.data?.recentMessages
+const SubHeader = ({ data }) => {
+  const { postId } = useParams();
+  const { data: reaction } = useGetReactionQuery(postId);
+  const postReaction = usePostReactionQuery(postId);
+  const recipientName = data ? data.name : 'Unknown';
+  const recipientCount = data ? data.messageCount : '0';
+  const topReactions = data?.topReactions.slice(0, 3) || [];
+  const topProfileImages = data?.recentMessages
     .slice(0, 3)
     .map(msg => msg.profileImageURL);
-  const userReactions = response?.data?.topReactions?.slice(0, 8) || [];
+  const userReactions = reaction?.data.results.slice(0, 8) || [];
 
   const [showShareOptions, setShowShareOptions] = useState(false);
   const [showArrowOptions, setArrowShareOptions] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-  const [selectedEmoji, setSelectedEmoji] = useState(null);
+  const [selectedEmoji, setSelectedEmoji] = useState({
+    emoji: null,
+    type: 'increase',
+  });
 
   //출력 콘솔이 너무 많이 찍혀서 주석 처리
   // console.log(selectedEmoji);
 
-  //Ref사용해서 Dom요소 참조하기
   const shareOptionsRef = useRef();
   const arrowOptionsRef = useRef();
   const emojiPickerRef = useRef();
 
-  //Modal 닫기 훅 사용
   useCloseModal(
     showShareOptions,
     () => setShowShareOptions(false),
@@ -61,7 +57,6 @@ const SubHeader = () => {
     emojiPickerRef,
   );
 
-  //핸들러 함수들
   const handleShareClick = () => {
     setShowShareOptions(!showShareOptions);
     setArrowShareOptions(false);
@@ -113,21 +108,17 @@ const SubHeader = () => {
   };
 
   const onEmojiClick = emojiObject => {
-    setSelectedEmoji(emojiObject.emoji);
+    setSelectedEmoji({ emoji: emojiObject.emoji });
     setShowEmojiPicker(false);
+    // postReaction.mutate(selectedEmoji);
   };
-
-  if (isLoading) return <div>데이터를 불러오는 중...</div>;
-  if (error)
-    return <div>데이터를 불러오는데 실패했습니다: {console.log(error)}</div>;
 
   return (
     <StyledContainer>
       <ToUser>To. {recipientName}</ToUser>
       <StyledSection>
         <StyledProfiles>
-          {/* 프로필 이미지들 */}
-          {topProfileImages.map((image, index) => (
+          {topProfileImages?.map((image, index) => (
             <StyledProfile key={index} src={image} alt={`Profile ${index}`} />
           ))}
           <StyledProfileNum>+{recipientCount - 3}</StyledProfileNum>
@@ -137,7 +128,6 @@ const SubHeader = () => {
         </StyledMessage>
         <StyledDivider />
         <StyledEmojis>
-          {/* 이모지 버튼들 */}
           {topReactions.map((reaction, index) => (
             <EmojiBadge key={index} data={reaction} />
           ))}
@@ -147,8 +137,8 @@ const SubHeader = () => {
         <StyledButtons>
           {showArrowOptions && (
             <ArrowOptions ref={arrowOptionsRef}>
-              {userReactions.map((reaction, index) => (
-                <EmojiBadge key={index} data={reaction} />
+              {userReactions.map((emoji, id) => (
+                <EmojiBadge key={id} data={emoji} />
               ))}
             </ArrowOptions>
           )}
@@ -160,7 +150,7 @@ const SubHeader = () => {
           />
           {showEmojiPicker && (
             <StyledEmojiPicker ref={emojiPickerRef}>
-              <EmojiPicker onEmojiClick={onEmojiClick} />{' '}
+              <EmojiPicker onEmojiClick={onEmojiClick} />
             </StyledEmojiPicker>
           )}
           <StyledDivider2 />
@@ -215,11 +205,11 @@ const AddText = styled.div`
 `;
 
 const ArrowOptions = styled.div`
+  max-width: 31.2rem;
   position: absolute;
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
-  width: auto;
-  height: auto;
   border-radius: 0.8rem;
   border: 0.1rem;
   background-color: ${({ theme }) => theme.white};
@@ -228,6 +218,12 @@ const ArrowOptions = styled.div`
   right: 105%;
   z-index: 200;
   padding: 2.4rem;
+  @media ${({ theme }) => theme.breakpoint.tablet} {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    grid-template-columns: repeat(3, 1fr);
+  }
 `;
 
 const ShareButton = ({ src, alt, onClick }) => (

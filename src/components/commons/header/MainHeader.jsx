@@ -6,24 +6,12 @@ import routes from 'utils/constants/routes';
 import { useLocation } from 'react-router-dom';
 import useDeviceType from 'hooks/useDeviceType';
 
-import { useQuery } from 'react-query';
-import { getRecipient } from 'api/recipient';
-
-const MainHeader = ({ showButton }) => {
+const MainHeader = ({ showButton, data }) => {
   const location = useLocation();
   const deviceType = useDeviceType();
   const isMobile = deviceType === 'Mobile';
   const isPostIdPage = location.pathname.match(/^\/post\/\d+$/);
-
-  //데이터 넘겨받으면 삭제
-  const recipientId = 4114;
-
-  const {
-    data: response,
-    isLoading,
-    error,
-  } = useQuery(['recipient', recipientId], () => getRecipient(recipientId));
-  const recipientName = response ? response.data.name : 'Unknown';
+  const recipientName = data ? data.name : 'Unknown';
 
   const navigate = useNavigate();
 
@@ -34,11 +22,6 @@ const MainHeader = ({ showButton }) => {
   const handleCreateClick = () => {
     navigate(routes.post);
   };
-
-  //데이터 넘겨받으면 삭제
-  if (isLoading) return <div>데이터를 불러오는 중...</div>;
-  if (error)
-    return <div>데이터를 불러오는데 실패했습니다: {console.log(error)}</div>;
 
   if (isMobile && isPostIdPage) {
     return (
