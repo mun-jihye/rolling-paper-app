@@ -4,7 +4,7 @@ const mockData = {
   id: 2,
   name: '강영훈',
   backgroundColor: 'green',
-  backgroundImageURL: null,
+  backgroundImageURL: tempImg,
   createdAt: '2023-10-26T13:19:31.401765Z',
   messageCount: 2,
   recentMessages: [
@@ -51,7 +51,7 @@ const mockData = {
   ],
 };
 
-const mockDatas = Array(8)
+const mockDatas = Array(4)
   .fill(1)
   .map((undefined, index) => ({
     ...mockData,

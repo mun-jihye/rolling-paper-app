@@ -81,7 +81,7 @@ const StyledCard = styled.div`
 
   &:hover {
     transform: scale(1.03);
-    transition: transform 0.5s;
+    transition: transform 0.3s;
   }
 
   @media (min-width: 48rem) {
@@ -194,6 +194,10 @@ const CardEmojiBadge = styled(EmojiBadge)`
       font-size: 1.4rem;
       line-height: 1.6rem;
       letter-spacing: -0.007rem;
+    }
+
+    & div:first-child {
+      line-height: 1.8rem;
     }
   }
 `;

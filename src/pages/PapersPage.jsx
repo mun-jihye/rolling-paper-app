@@ -10,7 +10,7 @@ const PapersPage = () => {
   return (
     <div>
       <GNB />
-      <MainContainer>
+      <MainContainer count={mockDatas.length}>
         {mockDatas?.map(mockData => {
           return <PapersPageCard key={mockData.id} data={mockData} />;
         })}
@@ -26,6 +26,7 @@ const PapersPage = () => {
 
 export default PapersPage;
 
+// 화면 크기에 따라 flex column 수 변경
 const MainContainer = styled.main`
   width: 100%;
   padding-top: 10rem;
@@ -38,14 +39,17 @@ const MainContainer = styled.main`
 
   @media (min-width: 38.6rem) {
     max-width: 57rem;
+    justify-content: ${({ count }) => (count < 2 ? 'center' : '')};
   }
 
   @media (min-width: 57.1rem) {
     max-width: 86.5rem;
+    justify-content: ${({ count }) => (count < 3 ? 'center' : '')};
   }
 
   @media (min-width: 75rem) {
     max-width: 116rem;
+    justify-content: ${({ count }) => (count < 4 ? 'center' : '')};
   }
 `;
 
@@ -53,6 +57,7 @@ const PapersPageCard = styled(Card)`
   padding: 3rem 2.4rem 2rem;
   width: 27.5rem;
   height: 26rem;
+  border: none;
   background-size: ${({ data }) =>
     data?.backgroundImageURL ? 'cover' : '14.2rem'};
 
