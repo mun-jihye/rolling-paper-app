@@ -36,10 +36,25 @@ export const useDeleteMessageQuery = messageId => {
   return deleteData;
 };
 
-export const useGetMessagesQuery = (postId, limit = 8, offset = 0) => {
+export const useGetMessagesQuery = (postId, limit = 5) => {
   return useInfiniteQuery({
     queryKey: ['messages', postId],
-    queryFn: () => getRecipientList(postId, limit, offset),
-    getNextPageParam: (lastPage, allPages) => lastPage.nextCursor,
+    queryFn: async ({ pageParam = 0 }) => {
+      return await getRecipientList(postId, limit, { offset: pageParam });
+    },
+    getNextPageParam: (lastPage, allPages) => {
+      const nextPage = allPages.length * limit;
+
+      if (lastPage?.data.next === null) {
+        return undefined;
+      }
+
+      if (lastPage?.data.count <= nextPage) {
+        return undefined;
+      }
+
+      return nextPage;
+    },
+    retry: false,
   });
 };

@@ -16,26 +16,25 @@ import { deleteAlert } from 'utils/deleteAlert';
 import routes from 'utils/constants/routes';
 import { useInView } from 'react-intersection-observer';
 import Error from 'components/commons/error/Error';
+
 const EditPage = () => {
   const { postId } = useParams();
   const navigate = useNavigate();
   const [isDelete, setIsDelete] = useState(false);
-  const [offset, setOffset] = useState(0);
 
   const { data: recipient, isLoading } = useGetRecipientQuery(postId);
   const deleteRecipient = useDeleteRecipientQuery(postId);
   const {
     fetchNextPage,
     isFetchingNextPage,
-    hasNextPage,
     data: messages,
     isError,
-  } = useGetMessagesQuery(postId, offset);
-  console.log(messages?.pages[0].data.results);
+  } = useGetMessagesQuery(postId);
+
   const { ref, inView } = useInView();
 
   const editData = recipient?.data;
-  const messageData = messages?.pages[0].data.results;
+  const messageData = messages?.pages.flatMap(param => param.data.results);
 
   const handleDelete = () => {
     deleteAlert({
@@ -48,8 +47,7 @@ const EditPage = () => {
     });
   };
   useEffect(() => {
-    if (inView && hasNextPage && !isFetchingNextPage) {
-      setOffset(prevOffset => prevOffset + 3);
+    if (inView) {
       fetchNextPage();
     }
   }, [inView]);
@@ -78,9 +76,9 @@ const EditPage = () => {
             )}
           </FlexContainer>
           <FromCardList datas={messageData} isDelete={isDelete} />
-          {isFetchingNextPage ? <Loader /> : <div ref={ref} />}
         </EditContainer>
       )}
+      {isFetchingNextPage ? <Loader /> : <div ref={ref} />}
     </>
   );
 };
