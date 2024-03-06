@@ -50,6 +50,7 @@ const EditPage = () => {
     if (inView) {
       fetchNextPage();
     }
+    // eslint-disable-next-line
   }, [inView]);
 
   if (isError) {
