@@ -11,6 +11,7 @@ const EmojiBadge = ({ className, data }) => {
 };
 
 const StyledContainer = styled.div`
+  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
