@@ -1,23 +1,31 @@
 import React from 'react';
 import CardList from 'components/commons/cardList/CardList';
 import styled from 'styled-components';
-import PrimaryBtn from 'components/commons/buttons/PrimaryBtn';
 import useDeviceType from 'hooks/useDeviceType';
 import { useQuery } from 'react-query';
 import { getRecipients } from 'api/recipient';
 import { Link } from 'react-router-dom';
 import routes from 'utils/constants/routes';
 import GNB from 'components/commons/header/GNB';
+import Button from 'components/commons/buttons/Button';
 
 const ListPage = () => {
   const deviceType = useDeviceType();
 
-  const { data: lastestList, isLoading: isLastestListLoading } = useQuery({
+  const {
+    data: lastestList,
+    isLoading: isLastestListLoading,
+    isError: isLastestListError,
+  } = useQuery({
     queryKey: ['recipients', 'sortedLastest'],
     queryFn: () => getRecipients(),
   });
 
-  const { data: topRatedList, isLoading: isTopRatedListLoading } = useQuery({
+  const {
+    data: topRatedList,
+    isLoading: isTopRatedListLoading,
+    isError: isTopRatedListError,
+  } = useQuery({
     queryKey: ['recipients', 'sortedTopRated'],
     queryFn: () => getRecipients(undefined, undefined, 'like'),
   });
@@ -34,6 +42,7 @@ const ListPage = () => {
             }
             data={topRatedList?.data?.results}
             isLoading={isTopRatedListLoading}
+            isError={isTopRatedListError}
           />
         </SectionConainer>
         <SectionConainer>
@@ -44,12 +53,13 @@ const ListPage = () => {
             }
             data={lastestList?.data?.results}
             isLoading={isLastestListLoading}
+            isError={isLastestListError}
           />
         </SectionConainer>
       </MainContainer>
       <StyledFooter>
         <Link to={routes.post}>
-          <ListPagePrimaryBtn>나도 만들어보기</ListPagePrimaryBtn>
+          <ListPageButton>나도 만들어보기</ListPageButton>
         </Link>
       </StyledFooter>
     </div>
@@ -117,7 +127,7 @@ const StyledFooter = styled.footer`
   }
 `;
 
-const ListPagePrimaryBtn = styled(PrimaryBtn)`
+const ListPageButton = styled(Button)`
   width: 100%;
   height: 5.6rem;
   font-size: 1.8rem;

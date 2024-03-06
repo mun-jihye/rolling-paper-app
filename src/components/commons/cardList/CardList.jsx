@@ -2,8 +2,15 @@ import styled from 'styled-components';
 import Card from './Card';
 import arrowImg from 'assets/images/cardList/arrow.png';
 import { useEffect, useRef, useState } from 'react';
+import Error from '../error/Error';
 
-function CardList({ carouselMargin = 0, className, data: cards, isLoading }) {
+function CardList({
+  carouselMargin = 0,
+  className,
+  data: cards,
+  isLoading,
+  isError,
+}) {
   const [containerWidth, setContainerWidth] = useState();
   const [carouselLength, setCarouselLength] = useState();
   // slidePosition 은 px 단위가 아닌 rem 단위
@@ -55,7 +62,6 @@ function CardList({ carouselMargin = 0, className, data: cards, isLoading }) {
 
     if (slidePosition < (containerWidth - carouselLength) / 10) {
       setSlidePosition((containerWidth - carouselLength) / 10);
-      console.log(containerWidth, carouselLength);
       return;
     }
   }
@@ -93,6 +99,7 @@ function CardList({ carouselMargin = 0, className, data: cards, isLoading }) {
                   </div>
                 );
               })}
+          {isError && <Error />}
         </StyledSlideBar>
         {slidePosition < 0 && (
           <ArrowButton
