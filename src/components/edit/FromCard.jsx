@@ -18,6 +18,7 @@ const FromCard = ({
   formattedDate,
   isDelete,
   messageId,
+  font,
 }) => {
   const [showModal, setShowModal] = useState(false);
   const deleteMessage = useDeleteMessageQuery(messageId);
@@ -53,7 +54,7 @@ const FromCard = ({
         </Header>
         <Hr />
         <Content>
-          <CardMessage message={content} $ismodal={false} />
+          <CardMessage font={font} message={content} $ismodal={false} />
           <Date date={formattedDate} $ismodal={false} />
         </Content>
       </CardContainer>

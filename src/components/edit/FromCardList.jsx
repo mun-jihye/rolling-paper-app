@@ -18,11 +18,13 @@ const FromCardList = ({ datas, isDelete, isFetchingNextPage }) => {
           relationship,
           content,
           createdAt,
+          font,
         } = data;
         const formattedDate = formatDate(createdAt);
         return (
           <FromCard
             key={id}
+            font={font}
             messageId={id}
             profileImageURL={profileImageURL}
             sender={sender}
