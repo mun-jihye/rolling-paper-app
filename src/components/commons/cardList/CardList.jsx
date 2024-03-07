@@ -21,7 +21,6 @@ function CardList({
   const containerRef = useRef();
   const cardRef = useRef();
 
-  // PC 사이즈에서 화살표 클릭으로 캐러셀 제어
   const handleLeftClick = () => {
     const carouselDistanceAtPC = 118;
     setSlidePosition(slidePosition + carouselDistanceAtPC);
@@ -32,7 +31,6 @@ function CardList({
     setSlidePosition(slidePosition - carouselDistanceAtPC);
   };
 
-  // 태블릿, 모바일 사이즈에서 터치를 통해 캐러셀 제어
   function handleTouchStart(event) {
     setIsDragging(true);
     setStartTouchPosition(event.changedTouches[0].clientX);
@@ -54,7 +52,6 @@ function CardList({
 
     if (carouselLength <= containerWidth) return;
 
-    // 캐러셀 재위치
     if (slidePosition > 0) {
       setSlidePosition(0);
       return;
