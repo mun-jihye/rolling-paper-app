@@ -4,24 +4,36 @@ import GNB from 'components/commons/header/GNB';
 import { TextFieldInput, Options } from 'components/commons/form';
 import ToggleBtn from 'components/commons/buttons/ToggleBtn';
 import Button from 'components/commons/buttons/Button';
-import nation1 from 'assets/backgrounds/nation1.svg';
-import nation2 from 'assets/backgrounds/nation2.svg';
 import { createRecipients } from 'api/recipient';
+import { AUTH } from 'utils/constants/API';
+import { instance } from 'api/';
+import { useNavigate } from 'react-router-dom';
 
 const PostPage = () => {
   const [toggleState, setToggleState] = useState('컬러');
   const colors = ['beige', 'purple', 'blue', 'green'];
+  const [imageURLs, setImageURLs] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const getBackgroundImages = async () => {
+      const response = await instance.get(AUTH.backgroundImages);
+      setImageURLs(response.data.imageUrls);
+    };
+    getBackgroundImages();
+  }, []);
+
   const items = useMemo(() => {
     return toggleState === '컬러'
       ? colors.map(color => `${color}200`)
-      : [nation1, nation2, nation1, nation2];
+      : imageURLs;
   }, [toggleState]);
 
   const [background, setBackground] = useState(items[0]);
   const [isBtnDisabled, setIsBtnDisabled] = useState(true);
   const [formValues, setFormValues] = useState({
     name: '',
-    backgroundColor: toggleState === '컬러' ? items[0] : null,
+    backgroundColor: toggleState === '컬러' ? items[0] : 'beige',
     backgroundImageURL: toggleState === '이미지' ? items[0] : null,
   });
   const inputDisabled = false;
@@ -49,26 +61,25 @@ const PostPage = () => {
     setFormValues(prevState => ({
       ...prevState,
       backgroundColor:
-        toggleState === '컬러' ? items[index].replace(/[0-9]/g, '') : null,
+        toggleState === '컬러' ? items[index].replace(/[0-9]/g, '') : 'beige',
       backgroundImageURL: toggleState === '이미지' ? items[index] : null,
     }));
   };
 
   const handleSubmit = async e => {
     e.preventDefault();
+    const jsonFormValues = JSON.stringify(formValues);
     try {
-      await createRecipients(formValues);
-      console.log('Data successfully sent');
-    } catch (err) {
-      console.error('Failed to send data: ', err);
-    }
+      const response = await createRecipients(jsonFormValues);
+      navigate(`/post/${response.data.id}`);
+    } catch (err) {}
   };
 
   useEffect(() => {
     setFormValues(prevState => ({
       ...prevState,
       backgroundColor:
-        toggleState === '컬러' ? items[0].replace(/[0-9]/g, '') : null,
+        toggleState === '컬러' ? items[0].replace(/[0-9]/g, '') : 'beige',
       backgroundImageURL: toggleState === '이미지' ? items[0] : null,
     }));
   }, [toggleState]);
