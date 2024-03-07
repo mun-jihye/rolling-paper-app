@@ -11,12 +11,13 @@ const EmojiBadge = ({ className, data }) => {
 };
 
 const StyledContainer = styled.div`
+  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 6.6rem;
-  height: 3.6rem;
-  padding: 0.8rem 1.2rem;
+  width: 5.8rem;
+  height: 3.8rem;
+  padding: 0.6rem 1.2rem;
   border-radius: 3.2rem;
   gap: 0.5rem;
   background-color: #0000008a;
