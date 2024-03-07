@@ -3,9 +3,10 @@ import styled from 'styled-components';
 import GNB from 'components/commons/header/GNB';
 import { TextFieldInput, Options } from 'components/commons/form';
 import ToggleBtn from 'components/commons/buttons/ToggleBtn';
-import Primary from 'components/commons/buttons/PrimaryBtn';
+import Button from 'components/commons/buttons/Button';
 import nation1 from 'assets/backgrounds/nation1.svg';
 import nation2 from 'assets/backgrounds/nation2.svg';
+import { createRecipients } from 'api/recipient';
 
 const PostPage = () => {
   const [toggleState, setToggleState] = useState('컬러');
@@ -19,7 +20,7 @@ const PostPage = () => {
   const [background, setBackground] = useState(items[0]);
   const [isBtnDisabled, setIsBtnDisabled] = useState(true);
   const [formValues, setFormValues] = useState({
-    textFieldInput: '',
+    name: '',
     backgroundColor: toggleState === '컬러' ? items[0] : null,
     backgroundImageURL: toggleState === '이미지' ? items[0] : null,
   });
@@ -35,7 +36,7 @@ const PostPage = () => {
     }
     setFormValues({
       ...formValues,
-      textFieldInput: e.target.value,
+      name: e.target.value,
     });
   };
 
@@ -53,12 +54,14 @@ const PostPage = () => {
     }));
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    // this.props.history.push({
-    //   pathname: '/post/{id}',
-    //   state: { formValues },
-    // });
+    try {
+      await createRecipients(formValues);
+      console.log('Data successfully sent');
+    } catch (err) {
+      console.error('Failed to send data: ', err);
+    }
   };
 
   useEffect(() => {
@@ -171,7 +174,7 @@ const Description = styled.div`
 const StyledOptions = styled(Options)`
   padding: 4.5rem 0;
 `;
-const StyledBtn = styled(Primary)`
+const StyledBtn = styled(Button)`
   width: 72rem;
 
   font-size: 1.8rem;
