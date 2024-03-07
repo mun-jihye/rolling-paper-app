@@ -15,7 +15,7 @@ const Message = styled.div`
   line-height: 2.8rem;
   letter-spacing: -0.01rem;
   color: #5a5a5a;
-  height: ${({ ismodal }) => (ismodal ? '24rem' : '10.6rem')};
+  height: ${({ ismodal }) => (ismodal ? '28rem' : '10.6rem')};
   overflow: ${({ ismodal }) => (ismodal ? 'scroll' : 'hidden')};
   text-overflow: ${({ ismodal }) => (ismodal ? 'initial' : 'ellipsis')};
 

@@ -12,6 +12,7 @@ const CardModalContent = ({
   relationship,
   content,
   formattedDate,
+  font,
 }) => {
   return (
     <>
@@ -23,7 +24,7 @@ const CardModalContent = ({
         <Date date={formattedDate} ismodal="true" />
       </Header>
       <Hr />
-      <CardMessage message={content} ismodal="true" />
+      <CardMessage message={content} ismodal="true" font={font} />
     </>
   );
 };
@@ -37,10 +38,12 @@ const CardModal = ({
   showModal,
   handleClose,
   isDelete,
+  font,
 }) => {
   return (
     <Modal showModal={showModal} handleClose={handleClose} isDelete={isDelete}>
       <CardModalContent
+        font={font}
         profileImageURL={profileImageURL}
         sender={sender}
         relationship={relationship}

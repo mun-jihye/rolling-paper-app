@@ -59,6 +59,7 @@ const FromCard = ({
         </Content>
       </CardContainer>
       <CardModal
+        font={font}
         showModal={showModal}
         handleClose={handleClose}
         isDelete={isDelete}
