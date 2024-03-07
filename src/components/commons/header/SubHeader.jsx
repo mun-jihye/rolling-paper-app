@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import ArrowDown from 'assets/images/headers/ArrowDown.svg';
 import AddImage from 'assets/images/headers/AddImage.svg';
@@ -7,42 +7,40 @@ import Toast from 'components/commons/toast/Toast';
 import useCloseModal from 'hooks/useCloseModal';
 import EmojiPicker from 'emoji-picker-react';
 import EmojiBadge from 'components/commons/badges/EmojiBadge';
+import {
+  useGetReactionQuery,
+  usePostReactionQuery,
+} from 'hooks/queries/useReactionQuery';
+import { useParams } from 'react-router-dom';
 
-import { useQuery } from 'react-query';
-import { getRecipient } from 'api/recipient';
-
-const SubHeader = ({ datas }) => {
-  const recipientId = 4114;
-
-  const {
-    data: response,
-    isLoading,
-    error,
-  } = useQuery(['recipient', recipientId], () => getRecipient(recipientId));
-
-  const recipientName = response ? response.data.name : 'Unknown';
-  const recipientCount = response ? response.data.messageCount : '0';
-  const topReactions = response?.data?.topReactions?.slice(0, 3) || [];
-  const topProfileImages = response?.data?.recentMessages
+const SubHeader = ({ data }) => {
+  const { postId } = useParams();
+  const { data: reaction } = useGetReactionQuery(postId);
+  const postReaction = usePostReactionQuery(postId);
+  const recipientName = data ? data.name : 'Unknown';
+  const recipientCount = data ? data.messageCount : '0';
+  const topReactions = data?.topReactions.slice(0, 3) || [];
+  const topProfileImages = data?.recentMessages
     .slice(0, 3)
     .map(msg => msg.profileImageURL);
+  const userReactions = reaction?.data.results.slice(0, 8) || [];
 
   const [showShareOptions, setShowShareOptions] = useState(false);
   const [showArrowOptions, setArrowShareOptions] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [showToast, setShowToast] = useState(false);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-  const [selectedEmoji, setSelectedEmoji] = useState(null);
+  const [selectedEmoji, setSelectedEmoji] = useState({
+    emoji: null,
+    type: 'increase',
+  });
 
-  //selectEmoji 출력
+  //출력 콘솔이 너무 많이 찍혀서 주석 처리
   // console.log(selectedEmoji);
 
-  //Ref사용해서 Dom요소 참조하기
   const shareOptionsRef = useRef();
   const arrowOptionsRef = useRef();
   const emojiPickerRef = useRef();
 
-  //Modal 닫기 훅 사용
   useCloseModal(
     showShareOptions,
     () => setShowShareOptions(false),
@@ -59,16 +57,6 @@ const SubHeader = ({ datas }) => {
     emojiPickerRef,
   );
 
-  //모바일 환경 감지
-  const isMobile = windowWidth < 768;
-
-  useEffect(() => {
-    const handleResize = () => setWindowWidth(window.innerWidth);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  //핸들러 함수들
   const handleShareClick = () => {
     setShowShareOptions(!showShareOptions);
     setArrowShareOptions(false);
@@ -120,23 +108,17 @@ const SubHeader = ({ datas }) => {
   };
 
   const onEmojiClick = emojiObject => {
-    setSelectedEmoji(emojiObject.emoji);
+    setSelectedEmoji({ emoji: emojiObject.emoji });
     setShowEmojiPicker(false);
+    // postReaction.mutate(selectedEmoji);
   };
-
-  if (isLoading) return <div>데이터를 불러오는 중...</div>;
-  if (error)
-    return <div>데이터를 불러오는데 실패했습니다: {console.log(error)}</div>;
 
   return (
     <StyledContainer>
-      <StyledSection>
-        <ToUser>To. {recipientName}</ToUser>
-      </StyledSection>
+      <ToUser>To. {recipientName}</ToUser>
       <StyledSection>
         <StyledProfiles>
-          {/* 프로필 이미지들 */}
-          {topProfileImages.map((image, index) => (
+          {topProfileImages?.map((image, index) => (
             <StyledProfile key={index} src={image} alt={`Profile ${index}`} />
           ))}
           <StyledProfileNum>+{recipientCount - 3}</StyledProfileNum>
@@ -146,51 +128,49 @@ const SubHeader = ({ datas }) => {
         </StyledMessage>
         <StyledDivider />
         <StyledEmojis>
-          {/* 이모지 버튼들 */}
           {topReactions.map((reaction, index) => (
             <EmojiBadge key={index} data={reaction} />
           ))}
           <StyledArrow onClick={handleArrowClick} src={ArrowDown} alt="Arrow" />
         </StyledEmojis>
-        {!isMobile && (
-          <StyledButtons>
-            {showArrowOptions && (
-              <ArrowOptions ref={arrowOptionsRef}>
-                {topReactions.map((reaction, index) => (
-                  <EmojiBadge key={index} data={reaction} />
-                ))}
-              </ArrowOptions>
-            )}
-            <StyledDivider2 />
-            <AddButton
-              src={AddImage}
-              alt="Add"
-              text="추가"
-              onClick={handleAddClick}
-            />
-            {showEmojiPicker && (
-              <StyledEmojiPicker ref={emojiPickerRef}>
-                <EmojiPicker onEmojiClick={onEmojiClick} />{' '}
-              </StyledEmojiPicker>
-            )}
 
-            <ShareButton
-              src={ShareImage}
-              alt="Share"
-              onClick={handleShareClick}
-            />
-            {showShareOptions && (
-              <ShareButtonList ref={shareOptionsRef}>
-                <ShareButtonText onClick={handleShareKakao}>
-                  카카오톡 공유
-                </ShareButtonText>
-                <ShareButtonText onClick={handleShareURL}>
-                  URL 복사
-                </ShareButtonText>
-              </ShareButtonList>
-            )}
-          </StyledButtons>
-        )}
+        <StyledButtons>
+          {showArrowOptions && (
+            <ArrowOptions ref={arrowOptionsRef}>
+              {userReactions.map((emoji, id) => (
+                <EmojiBadge key={id} data={emoji} />
+              ))}
+            </ArrowOptions>
+          )}
+          <AddButton
+            src={AddImage}
+            alt="Add"
+            text="추가"
+            onClick={handleAddClick}
+          />
+          {showEmojiPicker && (
+            <StyledEmojiPicker ref={emojiPickerRef}>
+              <EmojiPicker onEmojiClick={onEmojiClick} />
+            </StyledEmojiPicker>
+          )}
+          <StyledDivider2 />
+
+          <ShareButton
+            src={ShareImage}
+            alt="Share"
+            onClick={handleShareClick}
+          />
+          {showShareOptions && (
+            <ShareButtonList ref={shareOptionsRef}>
+              <ShareButtonText onClick={handleShareKakao}>
+                카카오톡 공유
+              </ShareButtonText>
+              <ShareButtonText onClick={handleShareURL}>
+                URL 복사
+              </ShareButtonText>
+            </ShareButtonList>
+          )}
+        </StyledButtons>
       </StyledSection>
       {showToast && <Toast setIsAlert={setShowToast} toast={showToast} />}
     </StyledContainer>
@@ -205,31 +185,45 @@ const StyledEmojiPicker = styled.div`
   height: 10.1rem;
   top: 120%;
   right: 114%;
-  z-index: 10;
+  z-index: 200;
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    right: 195%;
+  }
 `;
 
 const AddButton = ({ src, alt, onClick, text }) => (
   <StyledButton onClick={onClick}>
     <img src={src} alt={alt} />
-    {text}
+    <AddText>{text}</AddText>
   </StyledButton>
 );
 
+const AddText = styled.div`
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
 const ArrowOptions = styled.div`
+  max-width: 31.2rem;
   position: absolute;
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
-  width: auto;
-  height: auto;
   border-radius: 0.8rem;
   border: 0.1rem;
   background-color: ${({ theme }) => theme.white};
   border: 0.1rem solid ${({ theme }) => theme.gray300};
-  box-shadow: 0 0.2rem 1.2rem 0 ${({ theme }) => theme.gray200};
   top: 120%;
   right: 105%;
-  z-index: 10;
+  z-index: 200;
   padding: 2.4rem;
+  @media ${({ theme }) => theme.breakpoint.tablet} {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    grid-template-columns: repeat(3, 1fr);
+  }
 `;
 
 const ShareButton = ({ src, alt, onClick }) => (
@@ -254,6 +248,12 @@ const ShareButtonText = styled.div`
   &:hover {
     background-color: ${({ theme }) => theme.gray200};
   }
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    width: 138px;
+    height: 50px;
+    padding: 12px 16px 12px 16px;
+    gap: 10px;
+  }
 `;
 
 const ShareButtonList = styled.div`
@@ -264,28 +264,25 @@ const ShareButtonList = styled.div`
   border: 0.1rem;
   background-color: ${({ theme }) => theme.white};
   border: 0.1rem solid ${({ theme }) => theme.gray300};
-  box-shadow: 0 0.2rem 1.2rem 0 ${({ theme }) => theme.gray200};
   top: 120%;
   left: 24%;
-  z-index: 10;
+  z-index: 200;
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    left: -30%;
+  }
 `;
 
 const StyledContainer = styled.ul`
-  height: 6rem;
+  height: 5.2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 0 auto;
-  max-width: 124.8rem;
+  max-width: 124.2rem;
   padding: 0 2rem;
-  margin-bottom: 0.8rem;
 
-  @media (min-width: 768px) {
+  @media ${({ theme }) => theme.breakpoint.tablet} {
     padding: 2.4rem;
-  }
-
-  @media (min-width: 375px) and (max-width: 767px) {
-    padding: 0 2.4;
   }
 `;
 
@@ -294,16 +291,24 @@ const StyledSection = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 1rem;
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    gap: auto;
+    width: 100%;
+  }
 `;
 
 const ToUser = styled.div`
   display: flex;
-  font-family: Noto;
-  font-size: 2.6rem;
-  font-weight: ${({ theme }) => theme.fontWeights.regular};
+  font-family: Pretendard;
+  font-size: 2.8rem;
+  font-weight: 500;
   line-height: auto;
   text-align: left;
-  padding: 0 0.2rem;
+  margin-bottom: 1.2rem;
+
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    display: none;
+  }
 `;
 
 const StyledProfileNum = styled.div`
@@ -320,7 +325,7 @@ const StyledProfileNum = styled.div`
   text-align: left;
   padding: 0.4rem 0.4rem;
 
-  @media (max-width: 1248px) {
+  @media ${({ theme }) => theme.breakpoint.tablet} {
     display: none;
   }
 `;
@@ -332,7 +337,7 @@ const StyledProfile = styled.img`
   margin-right: -0.8rem;
   border: 0.14rem solid ${({ theme }) => theme.white};
 
-  @media (max-width: 1248px) {
+  @media ${({ theme }) => theme.breakpoint.tablet} {
     display: none;
   }
 `;
@@ -340,7 +345,7 @@ const StyledProfile = styled.img`
 const StyledProfiles = styled.div`
   display: flex;
   margin-right: 1.5rem;
-  @media (max-width: 767px) {
+  @media ${({ theme }) => theme.breakpoint.mobile} {
     display: none;
   }
 `;
@@ -351,29 +356,33 @@ const StyledMessage = styled.div`
   font-weight: 400;
   line-height: 2.8rem;
   display: flex;
-  @media (max-width: 1248px) {
+  @media ${({ theme }) => theme.breakpoint.tablet} {
     display: none;
   }
 
-  @media (max-width: 768px) {
+  @media ${({ theme }) => theme.breakpoint.mobile} {
     display: none;
   }
 `;
 
 const StyledEmp = styled.p`
   font-weight: 900;
-  @media (max-width: 768px) {
+  @media ${({ theme }) => theme.breakpoint.mobile} {
     display: none;
   }
 `;
 
 const StyledDivider = styled.div`
   height: 2.5rem;
-  width: 0.1rem;
+  width: 0.15rem;
   background-color: ${({ theme }) => theme.gray200};
-  margin: 0 1rem;
+  margin: 0 2rem;
 
-  @media (max-width: 768px) {
+  @media ${({ theme }) => theme.breakpoint.tablet} {
+    display: none;
+  }
+
+  @media ${({ theme }) => theme.breakpoint.mobile} {
     display: none;
   }
 `;
@@ -388,10 +397,6 @@ const StyledEmojis = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
-
-  @media (max-width: 768px) {
-    display: none;
-  }
 `;
 
 const StyledArrow = styled.img`
@@ -409,10 +414,10 @@ const StyledButton = styled.button`
   background: ${({ theme }) => theme.white};
   border: 1px solid ${({ theme }) => theme.gray400};
   text-align: center;
-  gap: 0.8rem;
+  gap: 0.9rem;
 
-  @media (max-width: 768px) {
-    display: none;
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    padding: 0.6rem 0.8rem;
   }
 `;
 
@@ -421,4 +426,8 @@ const StyledButtons = styled.div`
   align-items: center;
   gap: 2.15rem;
   position: relative;
+
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    gap: 1.6rem;
+  }
 `;
