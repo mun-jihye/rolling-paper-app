@@ -8,7 +8,7 @@ import {
   MainContainer,
   ChangeLayoutButton,
 } from './ListPage';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import routes from 'utils/constants/routes';
 import { useGetRecipientsAllQuery } from 'hooks/queries/usePapersQuery';
 import { useInView } from 'react-intersection-observer';
@@ -19,8 +19,10 @@ import Error from 'components/commons/error/Error';
 const LIMIT_PER_PAGE = 8;
 
 const PapersPage = () => {
+  const { sort } = useParams();
+
   const { data, isLoading, isError, fetchNextPage, isFetchingNextPage } =
-    useGetRecipientsAllQuery(LIMIT_PER_PAGE);
+    useGetRecipientsAllQuery(LIMIT_PER_PAGE, sort);
 
   const { ref, inView } = useInView();
   const paperData = data?.pages.flatMap(param => param.data.results);
@@ -48,15 +50,13 @@ const PapersPage = () => {
             {paperData?.map(data => {
               return <PapersPageCard key={data.id} data={data} />;
             })}
-            {isFetchingNextPage ? (
-              Array(4)
-                .fill(1)
-                .map((_, index) => (
-                  <PapersPageCard key={index + 1} isLoading={true} />
-                ))
-            ) : (
-              <div ref={ref} />
-            )}
+            {isFetchingNextPage
+              ? Array(4)
+                  .fill(1)
+                  .map((_, index) => (
+                    <PapersPageCard key={index + 1} isLoading={true} />
+                  ))
+              : !isError && <div ref={ref} />}
           </PapersContainer>
         </PapersPageMainContainer>
       )}
@@ -72,7 +72,6 @@ const PapersPage = () => {
 
 export default PapersPage;
 
-// 화면 크기에 따라 flex column 수 변경되도록 width 조절
 const PapersPageMainContainer = styled(MainContainer)`
   gap: 1.2rem;
   margin: 0 auto;
@@ -95,7 +94,6 @@ const PapersPageMainContainer = styled(MainContainer)`
   }
 `;
 
-// 첫 줄의 Card 개수가 column 을 전부 채우지 못하는 경우 가운데 정렬
 const PapersContainer = styled.main`
   width: 100%;
   display: flex;
@@ -151,6 +149,7 @@ const PapersPageCard = styled(Card)`
 
     & + div {
       gap: 0.8rem;
+      height: 3.6rem;
     }
 
     & + div > div {

@@ -63,10 +63,8 @@ const StyledCard = styled.div`
   border: 0.1rem solid rgba(0, 0, 0, 0.1);
   background: ${({ theme, $data }) =>
     $data?.backgroundImageURL
-      ? // 배경 이미지가 존재할 경우, 배경을 이미지로 설정
-        `linear-gradient(180deg, rgba(0, 0, 0, 0.54) 0%, rgba(0, 0, 0, 0.54) 100%), url(${$data?.backgroundImageURL})`
-      : // 배경 이미지 없으면 원하는 색의 default 배경 설정
-        theme[
+      ? `linear-gradient(180deg, rgba(0, 0, 0, 0.54) 0%, rgba(0, 0, 0, 0.54) 100%), url(${$data?.backgroundImageURL})`
+      : theme[
           BACK_GROUND[
             $data?.backgroundColor ? $data?.backgroundColor : 'beige'
           ][0]
@@ -137,19 +135,15 @@ const StyledContainer = styled.div`
   gap: ${({ $isBadge, $isImage }) =>
     $isBadge ? '0.4rem' : $isImage ? 0 : '1.2rem'};
 
-  & div {
-    height: ${({ $isBadge, $isImage }) =>
-      $isBadge ? '3.2rem' : $isImage && '2.8rem'};
-  }
+  height: ${({ $isBadge, $isImage }) =>
+    $isBadge ? '3.2rem' : $isImage && '2.8rem'};
 
   @media (min-width: 48rem) {
     gap: ${({ $isBadge, $isImage }) =>
       $isBadge ? '0.8rem' : $isImage ? 0 : '1.2rem'};
 
-    & div {
-      height: ${({ $isBadge, $isImage }) =>
-        $isBadge ? '3.6rem' : $isImage && '2.8rem'};
-    }
+    height: ${({ $isBadge, $isImage }) =>
+      $isBadge ? '3.6rem' : $isImage && '2.8rem'};
   }
 `;
 

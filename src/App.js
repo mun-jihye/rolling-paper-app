@@ -13,7 +13,7 @@ function App() {
     <Routes>
       <Route path={routes.home} element={<LandingPage />}></Route>
       <Route path={routes.list} element={<ListPage />}></Route>
-      <Route path={routes.papers} element={<PapersPage />}></Route>
+      <Route path={`${routes.papers}/:sort`} element={<PapersPage />}></Route>
       <Route path={`${routes.post}/:postId`} element={<EditPage />}></Route>
       <Route
         path={`${routes.post}/:postId/message`}

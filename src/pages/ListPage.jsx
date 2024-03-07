@@ -30,7 +30,7 @@ const ListPage = () => {
         <SectionConainer>
           <StyledHtag>
             인기 롤링 페이퍼 🔥
-            <Link to={routes.papers}>
+            <Link to={`${routes.papers}/like`}>
               <ChangeLayoutButton>전체 보기</ChangeLayoutButton>
             </Link>
           </StyledHtag>
@@ -44,7 +44,12 @@ const ListPage = () => {
           />
         </SectionConainer>
         <SectionConainer>
-          <StyledHtag>최근에 만든 롤링 페이퍼 ⭐️</StyledHtag>
+          <StyledHtag>
+            최근에 만든 롤링 페이퍼 ⭐️
+            <Link to={`${routes.papers}/date`}>
+              <ChangeLayoutButton>전체 보기</ChangeLayoutButton>
+            </Link>
+          </StyledHtag>
           <CardList
             carouselMargin={
               deviceType === 'PC' ? 0 : deviceType === 'Tablet' ? 2.4 : 2
