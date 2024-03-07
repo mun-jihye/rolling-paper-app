@@ -7,10 +7,12 @@ export const useGetReactionQuery = postId => {
     queryFn: () => getReactions(postId),
   });
 };
-export const usePostReactionQuery = (postId, data) => {
-  // const queryClient = useQueryClient();
+export const usePostReactionQuery = postId => {
+  const queryClient = useQueryClient();
   return useMutation({
-    mutationKey: ['reaction', postId],
-    mutationFn: () => postReactions(postId, data),
+    mutationFn: data => postReactions(postId, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries(['reaction', postId]);
+    },
   });
 };

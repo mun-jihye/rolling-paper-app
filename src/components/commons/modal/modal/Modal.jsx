@@ -2,7 +2,7 @@ import useCloseModal from 'hooks/useCloseModal';
 import React, { useRef } from 'react';
 import Portal from './Portal';
 import styled from 'styled-components';
-import { Button } from 'components/commons/buttons/PrimaryBtn';
+import Button from 'components/commons/buttons/Button';
 
 const Modal = ({ children, showModal, handleClose, isDelete }) => {
   const modalRef = useRef();
