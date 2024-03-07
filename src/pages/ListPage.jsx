@@ -152,12 +152,13 @@ export const ListPageButton = styled(Button)`
 export const ChangeLayoutButton = styled(Button)`
   position: absolute;
   top: 0;
-  right: 0;
+  right: 1.2rem;
   width: auto;
   height: auto;
   padding: 0.8rem;
 
   @media (min-width: 48rem) {
+    right: 2.4rem;
     padding: 1rem;
   }
 

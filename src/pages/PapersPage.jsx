@@ -20,7 +20,7 @@ const PapersPage = () => {
         <PapersPageHtag>
           모든 롤링 페이퍼 🌈
           <Link to={routes.list}>
-            <ChangeLayoutButton>돌아가기</ChangeLayoutButton>
+            <ChangeLayoutButtonInPapers>돌아가기</ChangeLayoutButtonInPapers>
           </Link>
         </PapersPageHtag>
         <PapersContainer $count={mockDatas.length}>
@@ -134,5 +134,13 @@ const PapersPageCard = styled(Card)`
         line-height: 2.4rem;
       }
     }
+  }
+`;
+
+const ChangeLayoutButtonInPapers = styled(ChangeLayoutButton)`
+  right: 0;
+
+  @media (min-width: 75rem) {
+    right: 1rem;
   }
 `;
