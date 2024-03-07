@@ -64,6 +64,7 @@ const PreviewBlocks = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    background-size: cover;
   }
 
   .checkbox {

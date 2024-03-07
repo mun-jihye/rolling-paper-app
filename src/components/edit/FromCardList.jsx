@@ -1,12 +1,15 @@
 import styled from 'styled-components';
-import React from 'react';
 import FromCard from './FromCard';
 import { formatDate } from 'utils/date';
 import AddCard from './AddCard';
+import FromCardSkeleton from './FromCardSkeleton';
 
-const FromCardList = ({ datas }) => {
+const FromCardList = ({ datas, isDelete, isFetchingNextPage }) => {
+  const skeletonCount = 3 - ((datas?.length % 3) + 1);
+
   return (
     <GridContainer>
+      <AddCard isDelete={isDelete} />
       {datas?.map(data => {
         const {
           id,
@@ -16,21 +19,24 @@ const FromCardList = ({ datas }) => {
           content,
           createdAt,
         } = data;
-
         const formattedDate = formatDate(createdAt);
-        return id === 'add' ? (
-          <AddCard />
-        ) : (
+        return (
           <FromCard
             key={id}
+            messageId={id}
             profileImageURL={profileImageURL}
             sender={sender}
             relationship={relationship}
             content={content}
             formattedDate={formattedDate}
+            isDelete={isDelete}
           />
         );
       })}
+      {isFetchingNextPage &&
+        Array.from({ length: skeletonCount }).map((_, index) => (
+          <FromCardSkeleton key={index} />
+        ))}
     </GridContainer>
   );
 };

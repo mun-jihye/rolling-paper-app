@@ -5,8 +5,10 @@ import CardMessage from 'components/commons/cards/CardMessage';
 import Date from 'components/commons/cards/Date';
 import styled from 'styled-components';
 import { useState } from 'react';
-import { Modal } from 'components/commons/modal/modal';
 import CardModal from 'components/commons/modal/CardModal';
+import IconButton from 'components/commons/buttons/IconButton';
+import { useDeleteMessageQuery } from 'hooks/queries/useEditQuery';
+import { deleteAlert } from 'utils/deleteAlert';
 
 const FromCard = ({
   profileImageURL,
@@ -14,13 +16,28 @@ const FromCard = ({
   relationship,
   content,
   formattedDate,
+  isDelete,
+  messageId,
 }) => {
   const [showModal, setShowModal] = useState(false);
+  const deleteMessage = useDeleteMessageQuery(messageId);
+
   const handleClick = () => {
     setShowModal(true);
   };
+
+  const handleDelete = e => {
+    e && e.stopPropagation();
+    deleteAlert({
+      title: '해당 메세지를 삭제하시겠습니까?',
+      deleteMutaion: deleteMessage,
+      Id: messageId,
+      onSuccess: () => window.location.reload(),
+    });
+  };
   const handleClose = () => {
     setShowModal(false);
+    isDelete && handleDelete();
   };
   return (
     <>
@@ -30,6 +47,9 @@ const FromCard = ({
             <Profile src={profileImageURL} $iscard="true" />
             <FromTitle sender={sender} relationship={relationship} />
           </FlexContainer>
+          {isDelete && (
+            <IconButton icon={'delete'} Delete onClick={handleDelete} />
+          )}
         </Header>
         <Hr />
         <Content>
@@ -37,17 +57,16 @@ const FromCard = ({
           <Date date={formattedDate} $ismodal={false} />
         </Content>
       </CardContainer>
-      {showModal && (
-        <Modal showModal={showModal} handleClose={handleClose}>
-          <CardModal
-            profileImageURL={profileImageURL}
-            sender={sender}
-            relationship={relationship}
-            content={content}
-            formattedDate={formattedDate}
-          />
-        </Modal>
-      )}
+      <CardModal
+        showModal={showModal}
+        handleClose={handleClose}
+        isDelete={isDelete}
+        profileImageURL={profileImageURL}
+        sender={sender}
+        relationship={relationship}
+        content={content}
+        formattedDate={formattedDate}
+      />
     </>
   );
 };

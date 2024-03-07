@@ -3,24 +3,37 @@ import styled from 'styled-components';
 import GNB from 'components/commons/header/GNB';
 import { TextFieldInput, Options } from 'components/commons/form';
 import ToggleBtn from 'components/commons/buttons/ToggleBtn';
-import Primary from 'components/commons/buttons/PrimaryBtn';
-import nation1 from 'assets/backgrounds/nation1.svg';
-import nation2 from 'assets/backgrounds/nation2.svg';
+import Button from 'components/commons/buttons/Button';
+import { createRecipients } from 'api/recipient';
+import { AUTH } from 'utils/constants/API';
+import { instance } from 'api/';
+import { useNavigate } from 'react-router-dom';
 
 const PostPage = () => {
   const [toggleState, setToggleState] = useState('컬러');
   const colors = ['beige', 'purple', 'blue', 'green'];
+  const [imageURLs, setImageURLs] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const getBackgroundImages = async () => {
+      const response = await instance.get(AUTH.backgroundImages);
+      setImageURLs(response.data.imageUrls);
+    };
+    getBackgroundImages();
+  }, []);
+
   const items = useMemo(() => {
     return toggleState === '컬러'
       ? colors.map(color => `${color}200`)
-      : [nation1, nation2, nation1, nation2];
+      : imageURLs;
   }, [toggleState]);
 
   const [background, setBackground] = useState(items[0]);
   const [isBtnDisabled, setIsBtnDisabled] = useState(true);
   const [formValues, setFormValues] = useState({
-    textFieldInput: '',
-    backgroundColor: toggleState === '컬러' ? items[0] : null,
+    name: '',
+    backgroundColor: toggleState === '컬러' ? items[0] : 'beige',
     backgroundImageURL: toggleState === '이미지' ? items[0] : null,
   });
   const inputDisabled = false;
@@ -35,7 +48,7 @@ const PostPage = () => {
     }
     setFormValues({
       ...formValues,
-      textFieldInput: e.target.value,
+      name: e.target.value,
     });
   };
 
@@ -48,24 +61,25 @@ const PostPage = () => {
     setFormValues(prevState => ({
       ...prevState,
       backgroundColor:
-        toggleState === '컬러' ? items[index].replace(/[0-9]/g, '') : null,
+        toggleState === '컬러' ? items[index].replace(/[0-9]/g, '') : 'beige',
       backgroundImageURL: toggleState === '이미지' ? items[index] : null,
     }));
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    // this.props.history.push({
-    //   pathname: '/post/{id}',
-    //   state: { formValues },
-    // });
+    const jsonFormValues = JSON.stringify(formValues);
+    try {
+      const response = await createRecipients(jsonFormValues);
+      navigate(`/post/${response.data.id}`);
+    } catch (err) {}
   };
 
   useEffect(() => {
     setFormValues(prevState => ({
       ...prevState,
       backgroundColor:
-        toggleState === '컬러' ? items[0].replace(/[0-9]/g, '') : null,
+        toggleState === '컬러' ? items[0].replace(/[0-9]/g, '') : 'beige',
       backgroundImageURL: toggleState === '이미지' ? items[0] : null,
     }));
   }, [toggleState]);
@@ -171,7 +185,7 @@ const Description = styled.div`
 const StyledOptions = styled(Options)`
   padding: 4.5rem 0;
 `;
-const StyledBtn = styled(Primary)`
+const StyledBtn = styled(Button)`
   width: 72rem;
 
   font-size: 1.8rem;
