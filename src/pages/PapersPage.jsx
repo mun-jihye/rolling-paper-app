@@ -1,6 +1,5 @@
 import Card from 'components/commons/cardList/Card';
 import GNB from 'components/commons/header/GNB';
-import mockDatas from 'data/papersPage';
 import styled from 'styled-components';
 import {
   ListPageButton,
@@ -11,24 +10,57 @@ import {
 } from './ListPage';
 import { Link } from 'react-router-dom';
 import routes from 'utils/constants/routes';
+import { useGetRecipientsAllQuery } from 'hooks/queries/usePapersQuery';
+import { useInView } from 'react-intersection-observer';
+import { useEffect } from 'react';
+import Loader from 'components/commons/Loader';
+import Error from 'components/commons/error/Error';
+
+const LIMIT_PER_PAGE = 8;
 
 const PapersPage = () => {
+  const { data, isLoading, isError, fetchNextPage, isFetchingNextPage } =
+    useGetRecipientsAllQuery(LIMIT_PER_PAGE);
+
+  const { ref, inView } = useInView();
+  const paperData = data?.pages.flatMap(param => param.data.results);
+
+  useEffect(() => {
+    if (inView) {
+      fetchNextPage();
+    }
+  }, [inView, fetchNextPage]);
+
   return (
     <div>
       <GNB />
-      <PapersPageMainContainer>
-        <PapersPageHtag>
-          모든 롤링 페이퍼 🌈
-          <Link to={routes.list}>
-            <ChangeLayoutButtonInPapers>돌아가기</ChangeLayoutButtonInPapers>
-          </Link>
-        </PapersPageHtag>
-        <PapersContainer $count={mockDatas.length}>
-          {mockDatas?.map(mockData => {
-            return <PapersPageCard key={mockData.id} data={mockData} />;
-          })}
-        </PapersContainer>
-      </PapersPageMainContainer>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <PapersPageMainContainer>
+          <PapersPageHtag>
+            모든 롤링 페이퍼 🌈
+            <Link to={routes.list}>
+              <ChangeLayoutButtonInPapers>돌아가기</ChangeLayoutButtonInPapers>
+            </Link>
+          </PapersPageHtag>
+          <PapersContainer $count={paperData?.length}>
+            {paperData?.map(data => {
+              return <PapersPageCard key={data.id} data={data} />;
+            })}
+            {isFetchingNextPage ? (
+              Array(4)
+                .fill(1)
+                .map((_, index) => (
+                  <PapersPageCard key={index + 1} isLoading={true} />
+                ))
+            ) : (
+              <div ref={ref} />
+            )}
+          </PapersContainer>
+        </PapersPageMainContainer>
+      )}
+      {isError && <Error />}
       <StyledFooter>
         <Link to={routes.post}>
           <ListPageButton>나도 만들어보기</ListPageButton>
