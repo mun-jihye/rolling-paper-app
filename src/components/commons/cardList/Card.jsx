@@ -9,12 +9,12 @@ import { Link } from 'react-router-dom';
 import routes from 'utils/constants/routes';
 import React from 'react';
 
-function Card({ data, isLoading }) {
+function Card({ data, isLoading, className }) {
   return isLoading ? (
-    <LoadingCard />
+    <LoadingCard className={className} />
   ) : (
     <Link to={`${routes.post}/${data?.id}`}>
-      <StyledCard $data={data}>
+      <StyledCard $data={data} className={className}>
         <StyledContainer $isProfile={true}>
           <StyledH3tag $data={data}>{`To. ${data?.name}`}</StyledH3tag>
           <StyledContainer $isImage={true}>
@@ -81,12 +81,7 @@ const StyledCard = styled.div`
 
   &:hover {
     transform: scale(1.03);
-    transition: transform 0.5s;
-  }
-
-  &:active {
-    transform: scale(0.9);
-    transition: transform 0.5s;
+    transition: transform 0.3s;
   }
 
   @media (min-width: 48rem) {
@@ -116,8 +111,7 @@ const StyledH3tag = styled.h3`
   }
 `;
 
-const StyledText = styled.div`
-  display: inline-block;
+const StyledText = styled.span`
   color: ${({ theme, $data }) =>
     $data?.backgroundImageURL ? theme.white : theme.gray700};
   font-size: 1.4rem;
@@ -191,15 +185,29 @@ const LastProfile = styled.div`
 
 const CardEmojiBadge = styled(EmojiBadge)`
   align-items: start;
+  width: auto;
+  height: 3.6rem;
+
+  & div {
+    line-height: 2.3rem;
+  }
+
+  & div:first-child {
+    line-height: 2.4rem;
+  }
 
   @media (max-width: 48rem) {
-    width: 5.5rem;
     height: 3.2rem;
+    padding: 0.6rem 0.8rem;
 
     & div {
       font-size: 1.4rem;
-      line-height: 1.6rem;
+      line-height: 2rem;
       letter-spacing: -0.007rem;
+    }
+
+    & div:first-child {
+      line-height: 2.2rem;
     }
   }
 `;
