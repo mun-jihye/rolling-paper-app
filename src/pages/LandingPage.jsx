@@ -64,26 +64,21 @@ const BlueBox = styled.div`
   flex-direction: row;
   justify-content: space-around;
   background-color: #f6f8ff;
-  margin: 3rem;
+  margin: 2.4rem 0 0;
   width: 120rem;
   border-radius: 1.6rem;
-  @media (min-width: '1248px') {
-    width: 100%;
-    margin: 0 2.4rem;
-  }
   @media ${({ theme }) => theme.breakpoint.tablet} {
     width: 100%;
-    margin: 2.4rem;
     flex-direction: column;
   }
   @media ${({ theme }) => theme.breakpoint.mobile} {
     flex-direction: column;
     width: 100%;
-    margin: 2.4rem;
   }
 `;
 const BlueBoxReverse = styled(BlueBox)`
   flex-direction: row-reverse;
+  margin-bottom: 2.4rem;
   @media ${({ theme }) => theme.breakpoint.tablet} {
     flex-direction: column;
   }
