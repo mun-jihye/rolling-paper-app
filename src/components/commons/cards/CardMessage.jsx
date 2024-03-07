@@ -1,16 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const CardMessage = ({ message, ismodal }) => {
-  return <Message ismodal={ismodal}>{message}</Message>;
+const CardMessage = ({ message, ismodal, font }) => {
+  return (
+    <Message $font={font} ismodal={ismodal}>
+      {message}
+    </Message>
+  );
 };
 
 const Message = styled.div`
+  font-family: ${props => props.$font};
   font-size: 1.8rem;
   line-height: 2.8rem;
   letter-spacing: -0.01rem;
   color: #5a5a5a;
-  height: ${({ ismodal }) => (ismodal ? '24rem' : '10.6rem')};
+  height: ${({ ismodal }) => (ismodal ? '28rem' : '10.6rem')};
   overflow: ${({ ismodal }) => (ismodal ? 'scroll' : 'hidden')};
   text-overflow: ${({ ismodal }) => (ismodal ? 'initial' : 'ellipsis')};
 

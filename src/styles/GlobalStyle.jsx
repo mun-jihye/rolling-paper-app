@@ -1,11 +1,12 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
+  @import url(//fonts.googleapis.com/earlyaccess/nanummyeongjo.css);
   * {
     box-sizing: border-box; 
     margin: 0;
     padding: 0;
-    font-family: 'Pretendard', sans-serif;
+    font-family: 'Pretendard', "Noto Sans KR","Nanum Myeongjo",sans-serif;
   }
   html,
   body {
