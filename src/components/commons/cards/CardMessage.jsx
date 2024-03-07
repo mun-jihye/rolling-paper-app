@@ -3,14 +3,14 @@ import styled from 'styled-components';
 
 const CardMessage = ({ message, ismodal, font }) => {
   return (
-    <Message font={font} ismodal={ismodal}>
+    <Message $font={font} ismodal={ismodal}>
       {message}
     </Message>
   );
 };
 
 const Message = styled.div`
-  font-family: ${props => props.font};
+  font-family: ${props => props.$font};
   font-size: 1.8rem;
   line-height: 2.8rem;
   letter-spacing: -0.01rem;
