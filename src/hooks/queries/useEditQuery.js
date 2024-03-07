@@ -12,7 +12,7 @@ export const useGetRecipientQuery = postId => {
   return useQuery({
     queryKey: ['recipient', postId],
     queryFn: () => getRecipient(postId),
-    onError: errorAlert({ title: '롤링페이퍼 대상 조회 실패' }),
+    onError: () => errorAlert({ title: '롤링페이퍼 대상 조회 실패' }),
   });
 };
 
@@ -23,7 +23,7 @@ export const useDeleteRecipientQuery = postId => {
     onSuccess: () => {
       queryClient.invalidateQueries(['recipient', postId]);
     },
-    onError: errorAlert({ title: '롤링페이퍼 대상 삭제 실패' }),
+    onError: () => errorAlert({ title: '롤링페이퍼 대상 삭제 실패' }),
   });
   return deleteData;
 };
@@ -35,7 +35,7 @@ export const useDeleteMessageQuery = messageId => {
     onSuccess: () => {
       queryClient.invalidateQueries(['message', messageId]);
     },
-    onError: errorAlert({ title: '롤링페이퍼 메세지 삭제 실패' }),
+    onError: () => errorAlert({ title: '롤링페이퍼 메세지 삭제 실패' }),
   });
   return deleteData;
 };
