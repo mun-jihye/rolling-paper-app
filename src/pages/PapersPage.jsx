@@ -8,7 +8,7 @@ import {
   MainContainer,
   ChangeLayoutButton,
 } from './ListPage';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import routes from 'utils/constants/routes';
 import { useGetRecipientsAllQuery } from 'hooks/queries/usePapersQuery';
 import { useInView } from 'react-intersection-observer';
@@ -19,8 +19,10 @@ import Error from 'components/commons/error/Error';
 const LIMIT_PER_PAGE = 8;
 
 const PapersPage = () => {
+  const { sort } = useParams();
+
   const { data, isLoading, isError, fetchNextPage, isFetchingNextPage } =
-    useGetRecipientsAllQuery(LIMIT_PER_PAGE);
+    useGetRecipientsAllQuery(LIMIT_PER_PAGE, sort);
 
   const { ref, inView } = useInView();
   const paperData = data?.pages.flatMap(param => param.data.results);
