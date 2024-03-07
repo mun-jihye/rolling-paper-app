@@ -28,7 +28,12 @@ const ListPage = () => {
       <GNB />
       <MainContainer>
         <SectionConainer>
-          <StyledHtag>인기 롤링 페이퍼 🔥</StyledHtag>
+          <StyledHtag>
+            인기 롤링 페이퍼 🔥
+            <Link to={`${routes.papers}/like`}>
+              <ChangeLayoutButton>전체 보기</ChangeLayoutButton>
+            </Link>
+          </StyledHtag>
           <CardList
             carouselMargin={
               deviceType === 'PC' ? 0 : deviceType === 'Tablet' ? 2.4 : 2
@@ -39,7 +44,12 @@ const ListPage = () => {
           />
         </SectionConainer>
         <SectionConainer>
-          <StyledHtag>최근에 만든 롤링 페이퍼 ⭐️</StyledHtag>
+          <StyledHtag>
+            최근에 만든 롤링 페이퍼 ⭐️
+            <Link to={`${routes.papers}/date`}>
+              <ChangeLayoutButton>전체 보기</ChangeLayoutButton>
+            </Link>
+          </StyledHtag>
           <CardList
             carouselMargin={
               deviceType === 'PC' ? 0 : deviceType === 'Tablet' ? 2.4 : 2
@@ -61,7 +71,7 @@ const ListPage = () => {
 
 export default ListPage;
 
-const MainContainer = styled.main`
+export const MainContainer = styled.main`
   display: flex;
   flex-direction: column;
   gap: 5.4rem;
@@ -85,7 +95,8 @@ const SectionConainer = styled.section`
   }
 `;
 
-const StyledHtag = styled.h1`
+export const StyledHtag = styled.h1`
+  position: relative;
   color: ${({ theme }) => theme.black};
   font-size: 2rem;
   font-weight: 600;
@@ -107,7 +118,7 @@ const StyledHtag = styled.h1`
   }
 `;
 
-const StyledFooter = styled.footer`
+export const StyledFooter = styled.footer`
   position: fixed;
   width: 100%;
   bottom: 0;
@@ -123,7 +134,7 @@ const StyledFooter = styled.footer`
   }
 `;
 
-const ListPageButton = styled(Button)`
+export const ListPageButton = styled(Button)`
   position: static;
   width: 100%;
   height: 5.6rem;
@@ -140,5 +151,23 @@ const ListPageButton = styled(Button)`
     width: 28rem;
     display: block;
     margin: 0 auto;
+  }
+`;
+
+export const ChangeLayoutButton = styled(Button)`
+  position: absolute;
+  top: 0;
+  right: 1.2rem;
+  width: auto;
+  height: auto;
+  padding: 0.8rem;
+
+  @media (min-width: 48rem) {
+    right: 2.4rem;
+    padding: 1rem;
+  }
+
+  @media (min-width: 75rem) {
+    right: 1rem;
   }
 `;

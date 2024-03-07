@@ -9,12 +9,12 @@ import { Link } from 'react-router-dom';
 import routes from 'utils/constants/routes';
 import React from 'react';
 
-function Card({ data, isLoading }) {
+function Card({ data, isLoading, className }) {
   return isLoading ? (
-    <LoadingCard />
+    <LoadingCard className={className} />
   ) : (
     <Link to={`${routes.post}/${data?.id}`}>
-      <StyledCard $data={data}>
+      <StyledCard $data={data} className={className}>
         <StyledContainer $isProfile={true}>
           <StyledH3tag $data={data}>{`To. ${data?.name}`}</StyledH3tag>
           <StyledContainer $isImage={true}>
@@ -63,14 +63,16 @@ const StyledCard = styled.div`
   border: 0.1rem solid rgba(0, 0, 0, 0.1);
   background: ${({ theme, $data }) =>
     $data?.backgroundImageURL
-      ? // 배경 이미지가 존재할 경우, 배경을 이미지로 설정
-        `linear-gradient(180deg, rgba(0, 0, 0, 0.54) 0%, rgba(0, 0, 0, 0.54) 100%), url(${$data?.backgroundImageURL})`
-      : // 배경 이미지 없으면 원하는 색의 default 배경 설정
-        theme[BACK_GROUND[$data ? $data?.backgroundColor : 'beige'][0]]};
+      ? `linear-gradient(180deg, rgba(0, 0, 0, 0.54) 0%, rgba(0, 0, 0, 0.54) 100%), url(${$data?.backgroundImageURL})`
+      : theme[
+          BACK_GROUND[
+            $data?.backgroundColor ? $data?.backgroundColor : 'beige'
+          ][0]
+        ]};
   background-image: ${({ $data }) =>
     $data?.backgroundImageURL
       ? ''
-      : `url(${BACK_GROUND[$data ? $data?.backgroundColor : 'beige'][1]})`};
+      : `url(${BACK_GROUND[$data?.backgroundColor ? $data?.backgroundColor : 'beige'][1]})`};
   background-position: ${({ $data }) =>
     $data?.backgroundImageURL ? 'center' : 'right bottom'};
   background-repeat: no-repeat;
@@ -81,12 +83,7 @@ const StyledCard = styled.div`
 
   &:hover {
     transform: scale(1.03);
-    transition: transform 0.5s;
-  }
-
-  &:active {
-    transform: scale(0.9);
-    transition: transform 0.5s;
+    transition: transform 0.3s;
   }
 
   @media (min-width: 48rem) {
@@ -116,8 +113,7 @@ const StyledH3tag = styled.h3`
   }
 `;
 
-const StyledText = styled.div`
-  display: inline-block;
+const StyledText = styled.span`
   color: ${({ theme, $data }) =>
     $data?.backgroundImageURL ? theme.white : theme.gray700};
   font-size: 1.4rem;
@@ -139,19 +135,15 @@ const StyledContainer = styled.div`
   gap: ${({ $isBadge, $isImage }) =>
     $isBadge ? '0.4rem' : $isImage ? 0 : '1.2rem'};
 
-  & div {
-    height: ${({ $isBadge, $isImage }) =>
-      $isBadge ? '3.2rem' : $isImage && '2.8rem'};
-  }
+  height: ${({ $isBadge, $isImage }) =>
+    $isBadge ? '3.2rem' : $isImage && '2.8rem'};
 
   @media (min-width: 48rem) {
     gap: ${({ $isBadge, $isImage }) =>
       $isBadge ? '0.8rem' : $isImage ? 0 : '1.2rem'};
 
-    & div {
-      height: ${({ $isBadge, $isImage }) =>
-        $isBadge ? '3.6rem' : $isImage && '2.8rem'};
-    }
+    height: ${({ $isBadge, $isImage }) =>
+      $isBadge ? '3.6rem' : $isImage && '2.8rem'};
   }
 `;
 
@@ -191,15 +183,29 @@ const LastProfile = styled.div`
 
 const CardEmojiBadge = styled(EmojiBadge)`
   align-items: start;
+  width: auto;
+  height: 3.6rem;
+
+  & div {
+    line-height: 2.3rem;
+  }
+
+  & div:first-child {
+    line-height: 2.4rem;
+  }
 
   @media (max-width: 48rem) {
-    width: 5.5rem;
     height: 3.2rem;
+    padding: 0.6rem 0.8rem;
 
     & div {
       font-size: 1.4rem;
-      line-height: 1.6rem;
+      line-height: 2rem;
       letter-spacing: -0.007rem;
+    }
+
+    & div:first-child {
+      line-height: 2.2rem;
     }
   }
 `;
