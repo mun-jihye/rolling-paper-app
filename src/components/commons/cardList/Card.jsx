@@ -135,19 +135,15 @@ const StyledContainer = styled.div`
   gap: ${({ $isBadge, $isImage }) =>
     $isBadge ? '0.4rem' : $isImage ? 0 : '1.2rem'};
 
-  & div {
-    height: ${({ $isBadge, $isImage }) =>
-      $isBadge ? '3.2rem' : $isImage && '2.8rem'};
-  }
+  height: ${({ $isBadge, $isImage }) =>
+    $isBadge ? '3.2rem' : $isImage && '2.8rem'};
 
   @media (min-width: 48rem) {
     gap: ${({ $isBadge, $isImage }) =>
       $isBadge ? '0.8rem' : $isImage ? 0 : '1.2rem'};
 
-    & div {
-      height: ${({ $isBadge, $isImage }) =>
-        $isBadge ? '3.6rem' : $isImage && '2.8rem'};
-    }
+    height: ${({ $isBadge, $isImage }) =>
+      $isBadge ? '3.6rem' : $isImage && '2.8rem'};
   }
 `;
 

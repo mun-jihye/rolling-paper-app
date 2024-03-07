@@ -147,6 +147,7 @@ const PapersPageCard = styled(Card)`
 
     & + div {
       gap: 0.8rem;
+      height: 3.6rem;
     }
 
     & + div > div {
