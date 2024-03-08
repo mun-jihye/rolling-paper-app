@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import CardModal from 'components/commons/modal/CardModal';
 import IconButton from 'components/commons/buttons/IconButton';
-import { useDeleteMessageQuery } from 'hooks/queries/useEditQuery';
+import { useDeleteMessageQuery } from 'hooks/queries/edit/useDeleteMessageQuery';
 import { deleteAlert } from 'utils/deleteAlert';
 
 /**

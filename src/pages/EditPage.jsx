@@ -5,11 +5,9 @@ import Loader from 'components/commons/Loader';
 import { useNavigate, useParams } from 'react-router-dom';
 import Button from 'components/commons/buttons/Button';
 import styled from 'styled-components';
-import {
-  useDeleteRecipientQuery,
-  useGetMessagesQuery,
-  useGetRecipientQuery,
-} from 'hooks/queries/useEditQuery';
+import { useGetRecipientQuery } from 'hooks/queries/edit/useGetRecipientQuery';
+import { useDeleteRecipientQuery } from 'hooks/queries/edit/useDeleteRecipientQuery';
+import { useGetMessagesQuery } from 'hooks/queries/edit/useGetMessagesQuery';
 import { deleteAlert } from 'utils/deleteAlert';
 import routes from 'utils/constants/routes';
 import { useInView } from 'react-intersection-observer';
