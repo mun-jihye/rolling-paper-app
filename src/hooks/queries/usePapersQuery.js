@@ -1,5 +1,6 @@
 import { getRecipients } from 'api/recipient';
 import { useInfiniteQuery } from 'react-query';
+import { errorAlert } from 'utils/errorAlert';
 
 /**
  * 롤링 페이퍼 목록을 page 로 구분해 가져오기 위한 useInfiniteQuery hook
@@ -32,6 +33,8 @@ export const useGetRecipientsAllQuery = (limit = 8, sort) => {
 
       return nextPage;
     },
+
+    onError: () => errorAlert({ title: '롤링 페이퍼 목록 불러오기 실패' }),
 
     retry: false,
   });
