@@ -31,7 +31,8 @@ const PapersPage = () => {
     if (inView) {
       fetchNextPage();
     }
-  }, [inView, fetchNextPage]);
+    // eslint-disable-next-line
+  }, [inView]);
 
   return (
     <div>
@@ -60,7 +61,7 @@ const PapersPage = () => {
           </PapersContainer>
         </PapersPageMainContainer>
       )}
-      {isError && <Error />}
+      {isError && <ErrorContainer>{<Error />}</ErrorContainer>}
       <StyledFooter>
         <Link to={routes.post}>
           <ListPageButton>나도 만들어보기</ListPageButton>
@@ -128,7 +129,6 @@ const PapersPageCard = styled(Card)`
   padding: 3rem 2.4rem 2rem;
   width: 27.5rem;
   height: 26rem;
-  border: none;
   background-size: ${({ data }) =>
     data?.backgroundImageURL ? 'cover' : '14.2rem'};
 
@@ -174,4 +174,9 @@ const ChangeLayoutButtonInPapers = styled(ChangeLayoutButton)`
   @media (min-width: 75rem) {
     right: 1rem;
   }
+`;
+
+const ErrorContainer = styled.div`
+  position: relative;
+  bottom: 10rem;
 `;

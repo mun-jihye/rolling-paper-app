@@ -60,7 +60,7 @@ const StyledCard = styled.div`
   width: 20.8rem;
   height: 23.2rem;
   border-radius: 1.6rem;
-  border: 0.1rem solid rgba(0, 0, 0, 0.1);
+  border: none;
   background: ${({ theme, $data }) =>
     $data?.backgroundImageURL
       ? `linear-gradient(180deg, rgba(0, 0, 0, 0.54) 0%, rgba(0, 0, 0, 0.54) 100%), url(${$data?.backgroundImageURL})`
