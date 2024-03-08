@@ -225,6 +225,7 @@ const ShareButton = ({ src, alt, onClick }) => (
 );
 
 const ShareButtonText = styled.div`
+  cursor: pointer;
   box-sizing: border-box;
   width: 100%;
   padding: 1.2rem 1.6rem;
