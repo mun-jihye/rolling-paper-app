@@ -1,39 +1,46 @@
 import React from 'react';
 import CardList from 'components/commons/cardList/CardList';
 import styled from 'styled-components';
-import PrimaryBtn from 'components/commons/buttons/PrimaryBtn';
 import useDeviceType from 'hooks/useDeviceType';
-import { useQuery } from 'react-query';
-import { getRecipients } from 'api/recipient';
 import { Link } from 'react-router-dom';
 import routes from 'utils/constants/routes';
 import GNB from 'components/commons/header/GNB';
+import Button from 'components/commons/buttons/Button';
+import { useGetRecipientsInOrderQuery } from 'hooks/queries/useListQuery';
 
 const ListPage = () => {
   const deviceType = useDeviceType();
 
-  const { data: lastestList, isLoading: isLastestListLoading } = useQuery({
-    queryKey: ['recipients', 'sortedLastest'],
-    queryFn: () => getRecipients(),
-  });
+  const {
+    data: lastestList,
+    isLoading: isLastestListLoading,
+    isError: isLastestListError,
+  } = useGetRecipientsInOrderQuery();
 
-  const { data: topRatedList, isLoading: isTopRatedListLoading } = useQuery({
-    queryKey: ['recipients', 'sortedTopRated'],
-    queryFn: () => getRecipients(undefined, undefined, 'like'),
-  });
+  const {
+    data: topRatedList,
+    isLoading: isTopRatedListLoading,
+    isError: isTopRatedListError,
+  } = useGetRecipientsInOrderQuery('like');
 
   return (
     <div>
       <GNB />
       <MainContainer>
         <SectionConainer>
-          <StyledHtag>인기 롤링 페이퍼 🔥</StyledHtag>
+          <StyledHtag>
+            인기 롤링 페이퍼 🔥
+            <Link to={routes.papers}>
+              <ChangeLayoutButton>전체 보기</ChangeLayoutButton>
+            </Link>
+          </StyledHtag>
           <CardList
             carouselMargin={
               deviceType === 'PC' ? 0 : deviceType === 'Tablet' ? 2.4 : 2
             }
             data={topRatedList?.data?.results}
             isLoading={isTopRatedListLoading}
+            isError={isTopRatedListError}
           />
         </SectionConainer>
         <SectionConainer>
@@ -44,12 +51,13 @@ const ListPage = () => {
             }
             data={lastestList?.data?.results}
             isLoading={isLastestListLoading}
+            isError={isLastestListError}
           />
         </SectionConainer>
       </MainContainer>
       <StyledFooter>
         <Link to={routes.post}>
-          <ListPagePrimaryBtn>나도 만들어보기</ListPagePrimaryBtn>
+          <ListPageButton>나도 만들어보기</ListPageButton>
         </Link>
       </StyledFooter>
     </div>
@@ -58,21 +66,21 @@ const ListPage = () => {
 
 export default ListPage;
 
-const MainContainer = styled.main`
+export const MainContainer = styled.main`
   display: flex;
   flex-direction: column;
   gap: 5.4rem;
   padding-top: 4rem;
-  padding-bottom: 4.2rem;
+  padding-bottom: 14.6rem;
 
   @media (min-width: 48rem) {
     gap: 3rem;
     padding-top: 5rem;
-    padding-bottom: 13.2rem;
+    padding-bottom: 23.6rem;
   }
 
   @media (min-width: 75rem) {
-    padding-bottom: 4rem;
+    padding-bottom: 14.4rem;
   }
 `;
 
@@ -82,7 +90,8 @@ const SectionConainer = styled.section`
   }
 `;
 
-const StyledHtag = styled.h1`
+export const StyledHtag = styled.h1`
+  position: relative;
   color: ${({ theme }) => theme.black};
   font-size: 2rem;
   font-weight: 600;
@@ -104,7 +113,10 @@ const StyledHtag = styled.h1`
   }
 `;
 
-const StyledFooter = styled.footer`
+export const StyledFooter = styled.footer`
+  position: fixed;
+  width: 100%;
+  bottom: 0;
   padding: 2.4rem 2rem;
 
   @media (min-width: 48rem) {
@@ -117,7 +129,8 @@ const StyledFooter = styled.footer`
   }
 `;
 
-const ListPagePrimaryBtn = styled(PrimaryBtn)`
+export const ListPageButton = styled(Button)`
+  position: static;
   width: 100%;
   height: 5.6rem;
   font-size: 1.8rem;
@@ -133,5 +146,23 @@ const ListPagePrimaryBtn = styled(PrimaryBtn)`
     width: 28rem;
     display: block;
     margin: 0 auto;
+  }
+`;
+
+export const ChangeLayoutButton = styled(Button)`
+  position: absolute;
+  top: 0;
+  right: 1.2rem;
+  width: auto;
+  height: auto;
+  padding: 0.8rem;
+
+  @media (min-width: 48rem) {
+    right: 2.4rem;
+    padding: 1rem;
+  }
+
+  @media (min-width: 75rem) {
+    right: 1rem;
   }
 `;

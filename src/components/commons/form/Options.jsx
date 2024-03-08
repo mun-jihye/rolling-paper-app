@@ -19,7 +19,7 @@ const Options = ({
     newSelected[index] = true;
     setIsSelected(newSelected);
     setBackground(items[index]);
-    handleSelect(background);
+    handleSelect(background, index);
   };
 
   useEffect(() => {

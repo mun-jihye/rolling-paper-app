@@ -41,9 +41,11 @@ const LandingPage = () => {
             <EmojiImg src={emojiImg} alt="이모지 이미지" />
           </ImgBox>
         </BlueBoxReverse>
-        <Link to={routes.list}>
-          <ButtonStyle width={'28rem'}>구경해보기</ButtonStyle>
-        </Link>
+        <ButtonBox>
+          <Link to={routes.list}>
+            <ButtonStyle width={'28rem'}>구경해보기</ButtonStyle>
+          </Link>
+        </ButtonBox>
       </Main>
     </>
   );
@@ -54,6 +56,7 @@ const Main = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 0 2.4rem 4rem;
+  margin-bottom: 3rem;
 `;
 
 const BlueBox = styled.div`
@@ -61,26 +64,21 @@ const BlueBox = styled.div`
   flex-direction: row;
   justify-content: space-around;
   background-color: #f6f8ff;
-  margin: 3rem;
+  margin: 2.4rem 0 0;
   width: 120rem;
   border-radius: 1.6rem;
-  @media (min-width: '1248px') {
-    width: 100%;
-    margin: 0 2.4rem;
-  }
   @media ${({ theme }) => theme.breakpoint.tablet} {
     width: 100%;
-    margin: 2.4rem;
     flex-direction: column;
   }
   @media ${({ theme }) => theme.breakpoint.mobile} {
     flex-direction: column;
     width: 100%;
-    margin: 2.4rem;
   }
 `;
 const BlueBoxReverse = styled(BlueBox)`
   flex-direction: row-reverse;
+  margin-bottom: 2.4rem;
   @media ${({ theme }) => theme.breakpoint.tablet} {
     flex-direction: column;
   }
@@ -161,14 +159,35 @@ const EmojiImg = styled(CardImg)`
   }
 `;
 
-const ButtonStyle = styled(Button)`
+const ButtonBox = styled.div`
   @media ${({ theme }) => theme.breakpoint.tablet} {
-    bottom: 2%;
-    right: 3.5%;
+    position: fixed;
+    width: 100%;
+    height: 6.5rem;
+    bottom: 0;
+    left: 0;
+    background-color: white;
   }
   @media ${({ theme }) => theme.breakpoint.mobile} {
-    bottom: 2%;
-    right: 6%;
+    position: fixed;
+    width: 100%;
+    height: 6.5rem;
+    bottom: 0;
+    left: 0;
+    background-color: white;
+  }
+`;
+
+const ButtonStyle = styled(Button)`
+  @media ${({ theme }) => theme.breakpoint.tablet} {
+    margin: 2.4rem;
+    bottom: 0;
+    left: 0;
+  }
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    margin: 0 2.4rem 2.4rem;
+    bottom: 0;
+    right: 0;
   }
 `;
 
