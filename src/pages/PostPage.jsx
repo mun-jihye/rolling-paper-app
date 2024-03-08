@@ -8,6 +8,7 @@ import { createRecipients } from 'api/recipient';
 import { AUTH } from 'utils/constants/API';
 import { instance } from 'api/';
 import { useNavigate } from 'react-router-dom';
+import { errorAlert } from 'utils/errorAlert';
 
 const PostPage = () => {
   const [toggleState, setToggleState] = useState('컬러');
@@ -68,11 +69,12 @@ const PostPage = () => {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const jsonFormValues = JSON.stringify(formValues);
     try {
-      const response = await createRecipients(jsonFormValues);
+      const response = await createRecipients(formValues);
       navigate(`/post/${response.data.id}`);
-    } catch (err) {}
+    } catch (err) {
+      errorAlert('/Post 페이지 생성에 실패했습니다.');
+    }
   };
 
   useEffect(() => {

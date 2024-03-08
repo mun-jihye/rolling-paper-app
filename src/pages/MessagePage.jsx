@@ -11,6 +11,7 @@ import person from 'assets/images/profiles/person.svg';
 import { useParams, useNavigate } from 'react-router-dom';
 import { AUTH } from 'utils/constants/API';
 import { instance } from 'api/';
+import { errorAlert } from 'utils/errorAlert';
 
 const MessagePage = () => {
   const { postId } = useParams();
@@ -83,11 +84,12 @@ const MessagePage = () => {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const jsonFormValues = JSON.stringify(formValues);
     try {
-      const response = await createMessage(jsonFormValues);
+      const response = await createMessage(formValues);
       navigate(`/post/${response.data.recipientId}`);
-    } catch (err) {}
+    } catch (err) {
+      errorAlert('/Post{id}/message 페이지 생성에 실패했습니다.');
+    }
   };
 
   useEffect(() => {
@@ -241,6 +243,7 @@ const SampleImages = styled.div`
   flex-direction: row;
   justify-content: space-between;
   width: 60.5rem;
+  cursor: pointer;
   img {
     width: 5.6rem;
     height: 5.6rem;
