@@ -9,7 +9,7 @@ export const useGetRecipientsAllQuery = (limit = 8, sort) => {
       return getRecipients({
         limit,
         offset: pageParam,
-        sort: sort === 'date' ? '' : 'like',
+        sort: sort === 'date' ? '' : sort,
       });
     },
 
