@@ -7,19 +7,19 @@
 
 ## 📚목차
 
-- [배포주소](##배포-주소)
-- [프로젝트에 대한 소개](##프로젝트-소개)
-- [주요 기능](##사용한-기술-스택)
-- [사용한 기술 스택](#기술스택)
-- [페이지 구성](#페이지-구성)
-- [팀 소개](#팀-소개)<br><br>
+- 배포주소
+- 프로젝트에 대한 소개
+- 사용한 기술 스택
+- 주요 기능
+- 서비스 구성
+- 팀 소개
 
 ## 💾 배포 주소
 
 https://naver.com
 <br><br>
 
-## 🎀프로젝트 소개
+## 🎀프로젝트에 대한 소개
 
 추억의 롤링 페이퍼를 웹 상에서도 즐길 수 있는 플랫폼인 '롤링'이라는 반응형 웹앱을 구현 했습니다.
 코드잇 프론트 엔드 4기에서 진행이 된 첫 프로젝트로, 주어진 피그마 디자인에 맞추어서 웹 개발을 진행 하였습니다. 주된 내용은 아래에서 부가 설명 하겠습니다.
@@ -27,13 +27,13 @@ https://naver.com
 
 ## 🏝 사용한 기술 스택
 
-|                                                                                                   collaboration                                                                                                    |                                                                                                                                                                                                                                                                                                                                           Front End                                                                                                                                                                                                                                                                                                                                           |
+|                                                                                                       tools                                                                                                        |                                                                                                                                                                                                                                                                                                                                     FlatForms & Language                                                                                                                                                                                                                                                                                                                                      |
 | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 | <img src="https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white"><br /><img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"> | <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white"> <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=white"><br /><img src="https://img.shields.io/badge/recoil-3578E5?style=for-the-badge&logo=recoil&logoColor=white"> <img src="https://img.shields.io/badge/react query-FF4154?style=for-the-badge&logo=reactquery&logoColor=white"><br /><img src="https://img.shields.io/badge/styledcomponents-DB7093?style=for-the-badge&logo=tailwindcss&logoColor=white"> <img src="https://img.shields.io/badge/react router-CA4245?style=for-the-badge&logo=react router&logoColor=white"> |
 
 </div><br>
 
-## 📲 주요 기능
+## 📲 구현한 주요 기능
 
 - 사용자가 롤링 페이퍼를 게시할 수 있는 기능
 - 사용자가 다른 사용자들의 롤링 페이퍼에 이모지를 달 수 있는 기능
@@ -41,8 +41,6 @@ https://naver.com
 - 게시글 무한 스크롤 기능
 - 해당 게시글을 카카오톡이나 URL로 공유할 수 있는 기능
   <br><br>
-
-## 📖 화면 구성
 
 ### 전반적인 서비스 구성:
 
@@ -68,6 +66,7 @@ https://naver.com
 - 주요 기능: 특정 사람의 롤링페이퍼를 볼수 있고 페이퍼 삭제와 추가가 가능함
 - 무한 스크롤 구현<br><br>
   <img src = "public\images\ReadMeEdit.png">
+  <img src = "public\images\ReadMeScroll.gif">
 
 ### 포스트 페이지 (주소: /post)
 
