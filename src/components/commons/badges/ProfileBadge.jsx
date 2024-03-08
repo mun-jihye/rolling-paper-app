@@ -1,6 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 
+/**
+ *
+ * @param {object} props
+ * @param {string} props.relationship
+ * @returns
+ */
 const ProfileBadge = ({ relationship }) => {
   return (
     <StyledContainer $relationship={relationship}>

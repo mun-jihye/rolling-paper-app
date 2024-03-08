@@ -1,6 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 
+/**
+ * 이모지 벳지 컴포넌트
+ * @param {object} props
+ * @param {string} props.className
+ * @param {object} props.data 이모지 개수, 이모지
+ * @returns
+ */
 const EmojiBadge = ({ className, data }) => {
   return (
     <StyledContainer className={className}>

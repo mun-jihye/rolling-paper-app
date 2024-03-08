@@ -2,6 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import ProfileBadge from '../badges/ProfileBadge';
 
+/**
+ *
+ * @param {object} props
+ * @param {string} props.sender 메세지 보낸 사람 이름
+ * @param {string} props.relationship 메세지 보낸 사람과의 관계
+ * @returns
+ */
 const FromTitle = ({ sender, relationship }) => {
   return (
     <StyledTitle>
