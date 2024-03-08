@@ -1,16 +1,15 @@
 import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
-import ArrowDown from 'assets/images/headers/ArrowDown.svg';
 import AddImage from 'assets/images/headers/AddImage.svg';
-import ShareImage from 'assets/images/headers/ShareImage.svg';
-import Toast from 'components/commons/toast/Toast';
 import useCloseModal from 'hooks/useCloseModal';
 import EmojiPicker from 'emoji-picker-react';
 import EmojiBadge from 'components/commons/badges/EmojiBadge';
 import { useGetReactionQuery } from 'hooks/queries/reaction/useGetReactionQuery';
 import { usePostReactionQuery } from 'hooks/queries/reaction/usePostReactionQuery';
 import { useParams } from 'react-router-dom';
-import { errorAlert } from 'utils/errorAlert';
+import TopEmoji from './TopEmoji';
+import { StyledButton, StyledButtons } from './ButtonContainer';
+import Share from './Share';
 
 const SubHeader = ({ data }) => {
   const { postId } = useParams();
@@ -24,11 +23,9 @@ const SubHeader = ({ data }) => {
     .map(msg => msg.profileImageURL);
   const topReactions = reaction?.data.results.slice(0, 3) || [];
   const userReactions = reaction?.data.results.slice(0, 8) || [];
-  const kakaoKey = process.env.REACT_APP_KAKAO_KEY;
 
   const [showShareOptions, setShowShareOptions] = useState(false);
   const [showArrowOptions, setArrowShareOptions] = useState(false);
-  const [showToast, setShowToast] = useState(false);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 
   const shareOptionsRef = useRef();
@@ -51,48 +48,6 @@ const SubHeader = ({ data }) => {
     emojiPickerRef,
   );
 
-  const handleShareClick = () => {
-    setShowShareOptions(!showShareOptions);
-    setArrowShareOptions(false);
-    setShowEmojiPicker(false);
-  };
-
-  const handleShareKakao = () => {
-    try {
-      if (!window.Kakao.isInitialized()) {
-        window.Kakao.init(kakaoKey);
-      }
-
-      window.Kakao.Link.sendCustom({
-        templateId: 104962,
-        templateArgs: {
-          title: 'Rolling Paper로 마음을 전해봐요',
-          description: '평상시 고마웠던 지인에게 마음을 표현해봐요',
-        },
-      });
-    } catch (error) {
-      errorAlert({ title: '카카오톡 공유 실패' });
-    }
-  };
-
-  const handleShareURL = () => {
-    setShowShareOptions(false);
-    navigator.clipboard
-      .writeText(window.location.href)
-      .then(() => {
-        setShowToast(true);
-      })
-      .catch(err => {
-        errorAlert({ title: 'url 복사 실패' });
-      });
-  };
-
-  const handleArrowClick = () => {
-    setArrowShareOptions(!showArrowOptions);
-    setShowEmojiPicker(false);
-    setShowShareOptions(false);
-  };
-
   const handleAddClick = () => {
     setShowEmojiPicker(!showEmojiPicker);
     setShowShareOptions(false);
@@ -102,10 +57,6 @@ const SubHeader = ({ data }) => {
   const onEmojiClick = emojiObject => {
     setShowEmojiPicker(false);
     postReaction.mutate({ emoji: emojiObject.emoji, type: 'increase' });
-  };
-
-  const handleBadgeClick = data => {
-    postReaction.mutate({ emoji: data.emoji, type: 'decrease' });
   };
 
   return (
@@ -124,17 +75,14 @@ const SubHeader = ({ data }) => {
           <StyledEmp>{recipientCount}</StyledEmp>명이 작성했어요!
         </StyledMessage>
         <StyledDivider />
-        <StyledEmojis>
-          {topReactions.map((reaction, index) => (
-            <EmojiBadge
-              key={index}
-              data={reaction}
-              onClick={() => handleBadgeClick(reaction)}
-            />
-          ))}
-          <StyledArrow onClick={handleArrowClick} src={ArrowDown} alt="Arrow" />
-        </StyledEmojis>
-
+        <TopEmoji
+          topReactions={topReactions}
+          setShowEmojiPicker={setShowEmojiPicker}
+          setShowShareOptions={setShowShareOptions}
+          postReaction={postReaction}
+          showArrowOptions={showArrowOptions}
+          setArrowShareOptions={setArrowShareOptions}
+        />
         <StyledButtons>
           {showArrowOptions && (
             <ArrowOptions ref={arrowOptionsRef}>
@@ -155,30 +103,27 @@ const SubHeader = ({ data }) => {
             </StyledEmojiPicker>
           )}
           <StyledDivider2 />
-
-          <ShareButton
-            src={ShareImage}
-            alt="Share"
-            onClick={handleShareClick}
+          <Share
+            setArrowShareOptions={setArrowShareOptions}
+            setShowEmojiPicker={setShowEmojiPicker}
+            showShareOptions={showShareOptions}
+            setShowShareOptions={setShowShareOptions}
+            shareOptionsRef={shareOptionsRef}
           />
-          {showShareOptions && (
-            <ShareButtonList ref={shareOptionsRef}>
-              <ShareButtonText onClick={handleShareKakao}>
-                카카오톡 공유
-              </ShareButtonText>
-              <ShareButtonText onClick={handleShareURL}>
-                URL 복사
-              </ShareButtonText>
-            </ShareButtonList>
-          )}
         </StyledButtons>
       </StyledSection>
-      {showToast && <Toast setIsAlert={setShowToast} toast={showToast} />}
     </StyledContainer>
   );
 };
 
 export default SubHeader;
+
+const AddButton = ({ src, alt, onClick, text }) => (
+  <StyledButton onClick={onClick}>
+    <img src={src} alt={alt} />
+    <AddText>{text}</AddText>
+  </StyledButton>
+);
 
 const StyledEmojiPicker = styled.div`
   position: absolute;
@@ -191,13 +136,6 @@ const StyledEmojiPicker = styled.div`
     right: 195%;
   }
 `;
-
-const AddButton = ({ src, alt, onClick, text }) => (
-  <StyledButton onClick={onClick}>
-    <img src={src} alt={alt} />
-    <AddText>{text}</AddText>
-  </StyledButton>
-);
 
 const AddText = styled.div`
   @media (max-width: 768px) {
@@ -224,53 +162,6 @@ const ArrowOptions = styled.div`
   }
   @media ${({ theme }) => theme.breakpoint.mobile} {
     grid-template-columns: repeat(3, 1fr);
-  }
-`;
-
-const ShareButton = ({ src, alt, onClick }) => (
-  <StyledButton onClick={onClick}>
-    <img src={src} alt={alt} />
-  </StyledButton>
-);
-
-const ShareButtonText = styled.div`
-  cursor: pointer;
-  box-sizing: border-box;
-  width: 100%;
-  padding: 1.2rem 1.6rem;
-  font-size: 1.5rem;
-  font-weight: 400;
-  line-height: 2.6rem;
-  letter-spacing: -0.01em;
-  text-align: left;
-  background-color: ${({ theme }) => theme.white};
-  border-radius: 0.8rem;
-  margin: 0;
-
-  &:hover {
-    background-color: ${({ theme }) => theme.gray200};
-  }
-  @media ${({ theme }) => theme.breakpoint.mobile} {
-    width: 138px;
-    height: 50px;
-    padding: 12px 16px 12px 16px;
-    gap: 10px;
-  }
-`;
-
-const ShareButtonList = styled.div`
-  position: absolute;
-  width: 14rem;
-  height: 10.1rem;
-  border-radius: 0.8rem;
-  border: 0.1rem;
-  background-color: ${({ theme }) => theme.white};
-  border: 0.1rem solid ${({ theme }) => theme.gray300};
-  top: 120%;
-  left: 24%;
-  z-index: 200;
-  @media ${({ theme }) => theme.breakpoint.mobile} {
-    left: -30%;
   }
 `;
 
@@ -393,43 +284,4 @@ const StyledDivider2 = styled.div`
   height: 2.5rem;
   width: 0.1rem;
   background-color: ${({ theme }) => theme.gray200};
-`;
-
-const StyledEmojis = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-`;
-
-const StyledArrow = styled.img`
-  height: 2.4rem;
-  width: 2.4rem;
-  margin-right: 1rem;
-`;
-
-const StyledButton = styled.button`
-  display: flex;
-  align-items: center;
-  height: 3.6rem;
-  padding: 0.6rem 1.6rem;
-  border-radius: 0.6rem;
-  background: ${({ theme }) => theme.white};
-  border: 1px solid ${({ theme }) => theme.gray400};
-  text-align: center;
-  gap: 0.9rem;
-
-  @media ${({ theme }) => theme.breakpoint.mobile} {
-    padding: 0.6rem 0.8rem;
-  }
-`;
-
-const StyledButtons = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 2.15rem;
-  position: relative;
-
-  @media ${({ theme }) => theme.breakpoint.mobile} {
-    gap: 1.6rem;
-  }
 `;
