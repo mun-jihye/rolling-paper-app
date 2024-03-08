@@ -1,5 +1,4 @@
 import Button from 'components/commons/buttons/Button';
-import GNB from 'components/commons/header/GNB';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -7,42 +6,37 @@ import routes from 'utils/constants/routes';
 
 const ErrorPage = () => {
   return (
-    <Main>
-      <GNB />
-      <Box>
+    <>
+      <Main>
         <TextBox>
           <NumberText>404</NumberText>
           <Text>WHOOPS!!</Text>
           <SubText>is not found</SubText>
           <SubText>something went wrong go back to Home.</SubText>
         </TextBox>
-        <ButtonBox>
-          <Link to={routes.home}>
-            <Button
-              secondary
-              width={'30rem'}
-              height={'5rem'}
-              fontSize={'1.5rem'}
-            >
-              홈으로 가기
-            </Button>
-          </Link>
-        </ButtonBox>
-      </Box>
-    </Main>
+        <Link to={routes.home}>
+          <ButtonStyle
+            secondary
+            width={'30rem'}
+            height={'5rem'}
+            fontSize={'1.5rem'}
+          >
+            홈으로 가기
+          </ButtonStyle>
+        </Link>
+      </Main>
+    </>
   );
 };
 
 const Main = styled.div`
   background-color: ${({ theme }) => theme.purple100};
-  height: 100vh;
+  height: 100%;
+  width: 100%;
   padding: 0 2.4rem;
-`;
-
-const Box = styled.div`
+  position: fixed;
   display: flex;
   align-items: center;
-  height: 90vh;
   @media ${({ theme }) => theme.breakpoint.tablet} {
     flex-direction: column;
   }
@@ -101,17 +95,19 @@ const SubText = styled(Text)`
   }
 `;
 
-const ButtonBox = styled.div`
+const ButtonStyle = styled(Button)`
   position: relative;
   top: 21rem;
   right: 5rem;
   @media ${({ theme }) => theme.breakpoint.tablet} {
-    top: -3rem;
-    right: 49%;
+    margin-bottom: 2.4rem;
+    top: 0;
+    right: 0;
   }
   @media ${({ theme }) => theme.breakpoint.mobile} {
+    margin-bottom: 2.4rem;
     top: 0;
-    right: 49%;
+    right: 0;
   }
 `;
 
