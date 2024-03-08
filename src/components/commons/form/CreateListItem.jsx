@@ -39,7 +39,7 @@ const StyledList = styled.div`
   display: flex;
   flex-direction: column;
 
-  width: 31.8rem;
+  width: 32rem;
   height: 22rem;
   top: 5.8rem;
   padding: 1rem 0.1rem;
