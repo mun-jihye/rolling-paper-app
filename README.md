@@ -71,8 +71,8 @@ https://naver.com
 - 주요 기능: 특정 사람의 롤링페이퍼를 볼수 있습니다. 각 리스트를 누르면 모달 창이 뜨며, 전문을 확인 할 수 있습니다.
 - 무한 스크롤이 구현 되어있습니다.
   <br><br>
-  <img src = "public\images\ReadMeEdit.png" height="265">
-  <img src = "public\images\ReadMeScroll.gif" height="265">
+  <img src = "public\images\ReadMeEdit.png"  width="500">
+  <img src = "public\images\ReadMeScroll.gif" width="500">
 
 ### 포스트 페이지 (주소: /post)
 
@@ -88,7 +88,7 @@ https://naver.com
 
 ### 기타 기능: Sweet Alert
 
-- 사용자가 페이퍼를 삭제 할 때 정말 삭제하고 싶은지 한 번 더 묻는 기능입니다. Sweet Alert를 이용하여 구현 하였습니다.
+- 사용자가 페이퍼를 삭제 할 때 정말 삭제하고 싶은지 한 번 더 묻는 기능입니다. Sweet Alert를 이용하여 구현 하였습니다.<br>
   <img src = "public\images\ReadMeAlert2.png"  width="500" height="320">
 
 <br>
