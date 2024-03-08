@@ -5,6 +5,15 @@ import Portal from './Portal';
 import styled from 'styled-components';
 import Button from 'components/commons/buttons/Button';
 
+/**
+ *
+ * @param {object} props
+ * @param {React.ReactNode} props.children
+ * @param {boolean} props.showModal 모달 보임 여부
+ * @param {Function} props.handleClose 모달 닫힐 시 실행할 함수
+ * @param {boolean} props.isDelete 편집 모드 여부
+ * @returns
+ */
 const Modal = ({ children, showModal, handleClose, isDelete }) => {
   const modalRef = useRef();
   useCloseModal(showModal, handleClose, modalRef);

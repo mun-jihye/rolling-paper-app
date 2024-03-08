@@ -4,6 +4,14 @@ import { formatDate } from 'utils/date';
 import AddCard from './AddCard';
 import FromCardSkeleton from './FromCardSkeleton';
 
+/**
+ *
+ * @param {Object} props
+ * @param {Object} props.datas 서버에서 받아온 메세지들
+ * @param {Boolean} props.isDelete 편집 모드 여부
+ * @param {Boolean} props.isFetchingNextPage 무한 스크롤 로딩 여부
+ * @returns
+ */
 const FromCardList = ({ datas, isDelete, isFetchingNextPage }) => {
   const skeletonCount = 3 - ((datas?.length % 3) + 1);
 
