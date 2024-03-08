@@ -90,7 +90,7 @@ const StyledCard = styled.div`
   cursor: pointer;
 
   &:hover {
-    transform: scale(1.03);
+    transform: scale(1.05);
     transition: transform 0.3s;
   }
 
