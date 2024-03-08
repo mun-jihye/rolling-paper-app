@@ -1,22 +1,26 @@
 import useCloseModal from 'hooks/useCloseModal';
+import { useMediaQuery } from 'react-responsive';
 import React, { useRef } from 'react';
 import Portal from './Portal';
 import styled from 'styled-components';
-import { Button } from 'components/commons/buttons/PrimaryBtn';
+import Button from 'components/commons/buttons/Button';
 
 const Modal = ({ children, showModal, handleClose, isDelete }) => {
   const modalRef = useRef();
   useCloseModal(showModal, handleClose, modalRef);
+  const isMobile = useMediaQuery({ maxWidth: 767 });
+
   return (
-    showModal && (
+    showModal &&
+    !isMobile && (
       <Portal>
         <ModalBackground>
           <ModalInner ref={modalRef}>
             {children}
             <FlexContainer>
-              <Button onClick={handleClose}>
+              <StyledButton width={'28rem'} onClick={handleClose}>
                 {isDelete ? '삭제하기' : '확인'}
-              </Button>
+              </StyledButton>
             </FlexContainer>
           </ModalInner>
         </ModalBackground>
@@ -51,5 +55,13 @@ const FlexContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+const StyledButton = styled(Button)`
+  @media ${({ theme }) => theme.breakpoint.tablet} {
+    width: 28rem;
+  }
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    width: 28rem;
+  }
 `;
 export default Modal;
