@@ -10,23 +10,26 @@ import EmojiBadge from 'components/commons/badges/EmojiBadge';
 import { useGetReactionQuery } from 'hooks/queries/reaction/useGetReactionQuery';
 import { usePostReactionQuery } from 'hooks/queries/reaction/usePostReactionQuery';
 import { useParams } from 'react-router-dom';
+import { errorAlert } from 'utils/errorAlert';
 
 const SubHeader = ({ data }) => {
   const { postId } = useParams();
   const { data: reaction } = useGetReactionQuery(postId);
+  const postReaction = usePostReactionQuery(postId);
+
   const recipientName = data ? data.name : 'Unknown';
   const recipientCount = data ? data.messageCount : '0';
-  const topReactions = data?.topReactions.slice(0, 3) || [];
   const topProfileImages = data?.recentMessages
     .slice(0, 3)
     .map(msg => msg.profileImageURL);
+  const topReactions = reaction?.data.results.slice(0, 3) || [];
   const userReactions = reaction?.data.results.slice(0, 8) || [];
+  const kakaoKey = process.env.REACT_APP_KAKAO_KEY;
 
   const [showShareOptions, setShowShareOptions] = useState(false);
   const [showArrowOptions, setArrowShareOptions] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-  const postReaction = usePostReactionQuery(postId);
 
   const shareOptionsRef = useRef();
   const arrowOptionsRef = useRef();
@@ -54,8 +57,6 @@ const SubHeader = ({ data }) => {
     setShowEmojiPicker(false);
   };
 
-  const kakaoKey = process.env.REACT_APP_KAKAO_KEY;
-
   const handleShareKakao = () => {
     try {
       if (!window.Kakao.isInitialized()) {
@@ -70,7 +71,7 @@ const SubHeader = ({ data }) => {
         },
       });
     } catch (error) {
-      console.error('카카오 공유 기능 에러:', error);
+      errorAlert({ title: '카카오톡 공유 실패' });
     }
   };
 
@@ -82,7 +83,7 @@ const SubHeader = ({ data }) => {
         setShowToast(true);
       })
       .catch(err => {
-        console.error('URL 복사에 실패했습니다.', err);
+        errorAlert({ title: 'url 복사 실패' });
       });
   };
 
@@ -103,6 +104,10 @@ const SubHeader = ({ data }) => {
     postReaction.mutate({ emoji: emojiObject.emoji, type: 'increase' });
   };
 
+  const handleBadgeClick = data => {
+    postReaction.mutate({ emoji: data.emoji, type: 'decrease' });
+  };
+
   return (
     <StyledContainer>
       <ToUser>To. {recipientName}</ToUser>
@@ -121,7 +126,11 @@ const SubHeader = ({ data }) => {
         <StyledDivider />
         <StyledEmojis>
           {topReactions.map((reaction, index) => (
-            <EmojiBadge key={index} data={reaction} />
+            <EmojiBadge
+              key={index}
+              data={reaction}
+              onClick={() => handleBadgeClick(reaction)}
+            />
           ))}
           <StyledArrow onClick={handleArrowClick} src={ArrowDown} alt="Arrow" />
         </StyledEmojis>
