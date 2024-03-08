@@ -6,6 +6,17 @@ import FromTitle from '../cards/FromTitle';
 import CardMessage from '../cards/CardMessage';
 import { Modal } from './modal';
 
+/**
+ * 모달 내부 콘텐츠 컴포넌트
+ * @param {object} props
+ * @param {string} props.profileImageURL 프로필 이미지 경로
+ * @param {string} props.sender 보낸 사람 이름
+ * @param {string} props.relationship
+ * @param {string} props.content 메세지 내용
+ * @param {string} props.formattedDate 포멧팅 된 날짜
+ * @param {string} props.font 서버에서 불러온 폰트
+ * @returns
+ */
 const CardModalContent = ({
   profileImageURL,
   sender,
@@ -29,6 +40,14 @@ const CardModalContent = ({
   );
 };
 
+/**
+ *
+ * @param {object} props
+ * @param {boolean} props.showModal 모달 보임 여부
+ * @param {Function} props.handleClose 모달 닫힐 시 실행할 함수
+ * @param {boolean} props.isDelete 편집모드 여부에 따라 모달 내 버튼이 달라짐
+ * @returns
+ */
 const CardModal = ({
   profileImageURL,
   sender,

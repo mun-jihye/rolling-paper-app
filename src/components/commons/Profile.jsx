@@ -2,9 +2,9 @@ import styled from 'styled-components';
 
 /**
  *
- * @param {object} prop
- * @param {string} prop.src 이미지 주소
- * @param {boolean} iscard
+ * @param {object} props
+ * @param {string} props.src 이미지 주소
+ * @param {boolean} props.iscard 롤링페이퍼 메세지 카드인지 여부
  */
 const Profile = ({ src, $iscard }) => {
   return (

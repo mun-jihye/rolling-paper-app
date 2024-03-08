@@ -7,10 +7,8 @@ import Toast from 'components/commons/toast/Toast';
 import useCloseModal from 'hooks/useCloseModal';
 import EmojiPicker from 'emoji-picker-react';
 import EmojiBadge from 'components/commons/badges/EmojiBadge';
-import {
-  useGetReactionQuery,
-  usePostReactionQuery,
-} from 'hooks/queries/useReactionQuery';
+import { useGetReactionQuery } from 'hooks/queries/reaction/useGetReactionQuery';
+import { usePostReactionQuery } from 'hooks/queries/reaction/usePostReactionQuery';
 import { useParams } from 'react-router-dom';
 
 const SubHeader = ({ data }) => {
