@@ -8,72 +8,91 @@ import {
 import GNB from 'components/commons/header/GNB';
 import Primary from 'components/commons/buttons/PrimaryBtn';
 import person from 'assets/images/profiles/person.svg';
-import profile1 from 'assets/images/profiles/profile1.svg';
-import profile2 from 'assets/images/profiles/profile2.svg';
+import { useParams, useNavigate } from 'react-router-dom';
+import { AUTH } from 'utils/constants/API';
+import { instance } from 'api/';
 
 const MessagePage = () => {
+  const { postId } = useParams();
+  const [imageURLs, setImageURLs] = useState([]);
+  const navigate = useNavigate();
+  const createMessage = data => {
+    return instance.post(`4-24/recipients/${postId}/messages/`, data);
+  };
+
+  useEffect(() => {
+    const getProfileImages = async () => {
+      const response = await instance.get(AUTH.profileImages);
+      setImageURLs(response.data.imageUrls);
+    };
+    getProfileImages();
+  }, []);
+
   const initialSelectedItem = ['지인', 'Noto Sans'];
-  const [formInputs, setFormInputs] = useState({
-    name: '',
-    selectedImage: null,
+  const [formValues, setFormValues] = useState({
+    sender: '',
     relationship: initialSelectedItem[0],
-    editorValue: '',
+    content: '',
     font: initialSelectedItem[1],
+    profileImageURL: null,
   });
+  useEffect(() => {
+    if (imageURLs.length > 0) {
+      setFormValues(prevState => ({
+        ...prevState,
+        profileImageURL: imageURLs[0],
+      }));
+    }
+  }, [imageURLs]);
 
   const [isBtnDisabled, setIsBtnDisabled] = useState(
-    !(formInputs.name && formInputs.editorValue),
+    !(formValues.sender && formValues.content),
   );
 
   const inputDisabled = false;
   const dropDownDisabled = false;
   const error = { message: '' };
 
-  const images = [
-    profile1,
-    profile2,
-    profile1,
-    profile2,
-    profile1,
-    profile2,
-    profile1,
-    profile2,
-    profile1,
-    profile2,
+  const listItems = ['친구', '지인', '동료', '가족'];
+  const listFontFamily = [
+    'Noto Sans',
+    'Pretendard',
+    '나눔명조',
+    '나눔손글씨 손편지체',
   ];
 
-  const listItems = ['친구', '지인', '동료', '가족'];
-  const listFontFamily = ['Noto Sans', 'Pretendard'];
-
   const handleInputChange = e => {
-    setFormInputs(prevState => ({ ...prevState, name: e.target.value }));
+    setFormValues(prevState => ({ ...prevState, sender: e.target.value }));
   };
 
   const handleImageChange = image => {
-    setFormInputs(prevState => ({ ...prevState, selectedImage: image }));
+    setFormValues(prevState => ({ ...prevState, profileImageURL: image }));
   };
 
   const handleRelationshipChange = relationship => {
-    setFormInputs(prevState => ({ ...prevState, relationship }));
+    setFormValues(prevState => ({ ...prevState, relationship }));
   };
 
   const handleEditorChange = e => {
-    setFormInputs(prevState => ({ ...prevState, editorValue: e.target.value }));
+    setFormValues(prevState => ({ ...prevState, content: e.target.value }));
   };
 
   const handleFontChange = font => {
-    setFormInputs(prevState => ({ ...prevState, font }));
+    setFormValues(prevState => ({ ...prevState, font }));
   };
 
-  const handleSubmit = event => {
-    event.preventDefault();
+  const handleSubmit = async e => {
+    e.preventDefault();
+    const jsonFormValues = JSON.stringify(formValues);
+    try {
+      const response = await createMessage(jsonFormValues);
+      navigate(`/post/${response.data.recipientId}`);
+    } catch (err) {}
   };
 
   useEffect(() => {
-    setIsBtnDisabled(
-      !(formInputs.name.trim() && formInputs.editorValue.trim()),
-    );
-  }, [formInputs.name, formInputs.editorValue]);
+    setIsBtnDisabled(!(formValues.sender.trim() && formValues.content.trim()));
+  }, [formValues.sender, formValues.content]);
 
   return (
     <>
@@ -90,15 +109,15 @@ const MessagePage = () => {
           <ProfileContainer>
             <Description>프로필 이미지</Description>
             <div className="container">
-              <ProfileImg $selectedImage={formInputs.selectedImage}>
-                {!formInputs.selectedImage && (
+              <ProfileImg $selectedImage={formValues.profileImageURL}>
+                {!formValues.profileImageURL && (
                   <img src={person} alt="기본 이미지" />
                 )}
               </ProfileImg>
               <div>
                 <h3>프로필 이미지를 선택해주세요!</h3>
                 <SampleImages>
-                  {images.map((image, index) => (
+                  {imageURLs.map((image, index) => (
                     <img
                       key={index}
                       src={image}

@@ -13,11 +13,14 @@ function App() {
     <Routes>
       <Route path={routes.home} element={<LandingPage />}></Route>
       <Route path={routes.list} element={<ListPage />}></Route>
-      <Route path={routes.papers} element={<PapersPage />}></Route>
+      <Route path={`${routes.papers}/:sort`} element={<PapersPage />}></Route>
       <Route path={`${routes.post}/:postId`} element={<EditPage />}></Route>
+      <Route
+        path={`${routes.post}/:postId/message`}
+        element={<MessagePage />}
+      ></Route>
       <Route path={routes.post} element={<PostPage />}></Route>
       <Route path={routes.error} element={<ErrorPage />}></Route>
-      <Route path={routes.message} element={<MessagePage />}></Route>
     </Routes>
   );
 }

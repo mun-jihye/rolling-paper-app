@@ -100,12 +100,12 @@ const StyledButton = styled(Button)`
   right: 0;
   @media ${({ theme }) => theme.breakpoint.tablet} {
     position: fixed;
-    bottom: 0;
+    bottom: 2.4rem;
     right: auto;
   }
   @media ${({ theme }) => theme.breakpoint.mobile} {
     position: fixed;
-    bottom: 0;
+    bottom: 2.4rem;
     right: auto;
   }
 `;
