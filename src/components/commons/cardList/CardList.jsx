@@ -96,7 +96,7 @@ function CardList({
           style={{ transform: `translate(${slidePosition}rem)` }}
         >
           {isLoading
-            ? [0, 1, 2, 3].map(index => (
+            ? Array.from({ length: 4 }).map((_, index) => (
                 <Card key={index + 1} isLoading={isLoading} />
               ))
             : cards?.map(card => {

@@ -52,11 +52,9 @@ const PapersPage = () => {
               return <PapersPageCard key={data.id} data={data} />;
             })}
             {isFetchingNextPage
-              ? Array(4)
-                  .fill(1)
-                  .map((_, index) => (
-                    <PapersPageCard key={index + 1} isLoading={true} />
-                  ))
+              ? Array.from({ length: 4 }).map((_, index) => (
+                  <PapersPageCard key={index + 1} isLoading={true} />
+                ))
               : !isError && <div ref={ref} />}
           </PapersContainer>
         </PapersPageMainContainer>
