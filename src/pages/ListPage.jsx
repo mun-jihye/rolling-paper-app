@@ -12,16 +12,16 @@ const ListPage = () => {
   const deviceType = useDeviceType();
 
   const {
-    data: lastestList,
-    isLoading: isLastestListLoading,
-    isError: isLastestListError,
-  } = useGetRecipientsInOrderQuery();
-
-  const {
     data: topRatedList,
     isLoading: isTopRatedListLoading,
     isError: isTopRatedListError,
   } = useGetRecipientsInOrderQuery('like');
+
+  const {
+    data: lastestList,
+    isLoading: isLastestListLoading,
+    isError: isLastestListError,
+  } = useGetRecipientsInOrderQuery('date');
 
   return (
     <div>

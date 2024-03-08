@@ -4,12 +4,22 @@ import arrowImg from 'assets/images/cardList/arrow.png';
 import { useEffect, useRef, useState } from 'react';
 import Error from '../error/Error';
 
+/**
+ * 롤링 페이퍼 목록을 보여주는 캐러셀 컴포넌트
+ *
+ * @param {number} carouselMargin container 내부의 캐러셀이 가지는 가로 여백
+ * @param {Object} data 롤링 페이퍼에 들어갈 정보
+ * @param {boolean} isLoading data 를 서버에서 불러오는 도중 인지에 대한 여부
+ * @param {boolean} isError data 를 서버에서 불러오는 중 오류 발생에 대한 여부
+ * @param {string} className styled.components 에서 스타일 재사용을 위한 prop
+ * @returns {JSX.Element}
+ */
 function CardList({
   carouselMargin = 0,
-  className,
   data: cards,
   isLoading,
   isError,
+  className,
 }) {
   const [containerWidth, setContainerWidth] = useState();
   const [carouselLength, setCarouselLength] = useState();

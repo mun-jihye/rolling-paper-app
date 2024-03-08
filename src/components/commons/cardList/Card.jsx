@@ -9,6 +9,14 @@ import { Link } from 'react-router-dom';
 import routes from 'utils/constants/routes';
 import React from 'react';
 
+/**
+ * 롤링 페이퍼 개체를 보여주는 카드 컴포넌트
+ *
+ * @param {Object} data 롤링 페이퍼에 들어갈 정보
+ * @param {boolean} isLoading data 를 서버에서 불러오는 중 인지에 대한 여부
+ * @param {string} className styled.components 에서 스타일 재사용을 위한 prop
+ * @returns {JSX.Element}
+ */
 function Card({ data, isLoading, className }) {
   return isLoading ? (
     <LoadingCard className={className} />
