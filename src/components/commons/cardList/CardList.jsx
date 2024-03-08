@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import Card from './Card';
-import arrowImg from 'assets/images/cardList/arrow.png';
 import { useEffect, useRef, useState } from 'react';
 import Error from '../error/Error';
+import ArrowButton from './ArrowButton';
 
 /**
  * 롤링 페이퍼 목록을 보여주는 캐러셀 컴포넌트
@@ -23,7 +23,6 @@ function CardList({
 }) {
   const [containerWidth, setContainerWidth] = useState();
   const [carouselLength, setCarouselLength] = useState();
-  // slidePosition 은 px 단위가 아닌 rem 단위
   const [slidePosition, setSlidePosition] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [startTouchPosition, setStartTouchPosition] = useState(0);
@@ -110,22 +109,10 @@ function CardList({
           {isError && <Error />}
         </StyledSlideBar>
         {slidePosition < 0 && (
-          <ArrowButton
-            onClick={handleLeftClick}
-            $position="left"
-            src={arrowImg}
-            alt="previous"
-            disabled={!!isLoading}
-          />
+          <ArrowButton onClick={handleLeftClick} position="left" />
         )}
         {slidePosition > -(29.5 * (cards?.length - 4) - 2) && (
-          <ArrowButton
-            onClick={handleRightClick}
-            $position="right"
-            src={arrowImg}
-            alt="next"
-            disabled={!!isLoading}
-          />
+          <ArrowButton onClick={handleRightClick} position="right" />
         )}
       </StyledContainer>
     </StyledContainer>
@@ -163,22 +150,6 @@ const StyledSlideBar = styled.div`
 
   @media (min-width: 75rem) {
     justify-content: ${({ $cardCount }) => ($cardCount < 4 ? 'center' : '')};
-  }
-`;
-
-const ArrowButton = styled.img`
-  display: none;
-  width: 4rem;
-  transform: ${({ $position }) =>
-    $position === 'left' ? 'rotate(180deg)' : ''};
-  position: absolute;
-  left: ${({ $position }) => ($position === 'left' ? -1.5 : '')}rem;
-  right: ${({ $position }) => ($position === 'right' ? -1.5 : '')}rem;
-  top: 42.3%;
-  cursor: pointer;
-
-  @media (min-width: 75rem) {
-    display: block;
   }
 `;
 
