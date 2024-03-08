@@ -2,6 +2,12 @@ import { getRecipientList } from 'api/recipient';
 import { useInfiniteQuery } from 'react-query';
 import { errorAlert } from 'utils/errorAlert';
 
+/**
+ * 메세지 조회 쿼리
+ * @param {Number} postId 롤링페이퍼 대상 id
+ * @param {Number} limit 서버에서 불러올 메세지 개수
+ * @returns
+ */
 export const useGetMessagesQuery = (postId, limit = 5) => {
   return useInfiniteQuery({
     queryKey: ['messages', postId],
