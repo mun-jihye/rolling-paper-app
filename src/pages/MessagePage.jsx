@@ -6,20 +6,64 @@ import {
   TextFieldTextEditor,
 } from 'components/commons/form';
 import GNB from 'components/commons/header/GNB';
-import Primary from 'components/commons/buttons/PrimaryBtn';
+import Button from 'components/commons/buttons/Button';
 import person from 'assets/images/profiles/person.svg';
 import { useParams, useNavigate } from 'react-router-dom';
 import { AUTH } from 'utils/constants/API';
 import { instance } from 'api/';
+import { createMessage } from 'api/recipient';
+import { errorAlert } from 'utils/errorAlert';
 
 const MessagePage = () => {
+  /**
+   * @description 필요한 date를 useParams로 가져오고 있다.
+   */
   const { postId } = useParams();
+  /**
+   * @description 필요한 state를 선언하고 있다.
+   */
   const [imageURLs, setImageURLs] = useState([]);
-  const navigate = useNavigate();
-  const createMessage = data => {
-    return instance.post(`4-24/recipients/${postId}/messages/`, data);
-  };
+  const [isBtnDisabled, setIsBtnDisabled] = useState(false);
 
+  /**
+   * @description 아래의 코드에서 필요한 상수와 함수를 선언하고 있다.
+   */
+  const inputDisabled = false;
+  const dropDownDisabled = false;
+  const error = { message: '' };
+  const listItems = ['친구', '지인', '동료', '가족'];
+  const listFontFamily = [
+    'Noto Sans',
+    'Pretendard',
+    '나눔명조',
+    '나눔손글씨 손편지체',
+  ];
+  const navigate = useNavigate();
+  /**
+   * @description TextFieldDropDown의 props로 전달될 기본값 데이터를 선언하고 있다.
+   */
+  const initialSelectedItem = ['지인', 'Noto Sans'];
+  /**
+   * @description submit 발생 시 전달될 데이터를 저장하는 state를 선언하고 있다.
+   */
+  const [formValues, setFormValues] = useState({
+    sender: '',
+    relationship: initialSelectedItem[0],
+    content: '',
+    font: initialSelectedItem[1],
+    profileImageURL: null,
+  });
+
+  /**
+   * @description formValues의 두 입력값을 비교해서 둘 다 빈 문자열이 아닐 때 Button을 활성화한다.
+   */
+  useEffect(() => {
+    setIsBtnDisabled(!(formValues.sender.trim() && formValues.content.trim()));
+  }, [formValues.sender, formValues.content]);
+
+  /**
+   * @description 프로필 이미지로 사용하기 위해 필요한 데이터를 get 요청으로 받아오고 있다.
+   */
   useEffect(() => {
     const getProfileImages = async () => {
       const response = await instance.get(AUTH.profileImages);
@@ -28,14 +72,9 @@ const MessagePage = () => {
     getProfileImages();
   }, []);
 
-  const initialSelectedItem = ['지인', 'Noto Sans'];
-  const [formValues, setFormValues] = useState({
-    sender: '',
-    relationship: initialSelectedItem[0],
-    content: '',
-    font: initialSelectedItem[1],
-    profileImageURL: null,
-  });
+  /**
+   * @description useEffect로 프로필 이미지를 불러온 다음에, 해당 이미지에서 index0인 이미지를 기본값으로 선언하고 있다.
+   */
   useEffect(() => {
     if (imageURLs.length > 0) {
       setFormValues(prevState => ({
@@ -43,56 +82,63 @@ const MessagePage = () => {
         profileImageURL: imageURLs[0],
       }));
     }
-  }, [imageURLs]);
+  }, []);
 
-  const [isBtnDisabled, setIsBtnDisabled] = useState(
-    !(formValues.sender && formValues.content),
-  );
-
-  const inputDisabled = false;
-  const dropDownDisabled = false;
-  const error = { message: '' };
-
-  const listItems = ['친구', '지인', '동료', '가족'];
-  const listFontFamily = [
-    'Noto Sans',
-    'Pretendard',
-    '나눔명조',
-    '나눔손글씨 손편지체',
-  ];
-
+  /**
+   * @description formValues의 sender 속성의 값을 이벤트 객체의 값으로 변경한다.
+   */
   const handleInputChange = e => {
     setFormValues(prevState => ({ ...prevState, sender: e.target.value }));
   };
 
+  /**
+   * @description formValues의 ProfileImageURL 속성의 값을 이벤트 객체로 변경한다.
+   */
   const handleImageChange = image => {
     setFormValues(prevState => ({ ...prevState, profileImageURL: image }));
   };
 
+  /**
+   * @description formValues의 relationship 속성의 값을 이벤트 객체로 변경한다.
+   */
   const handleRelationshipChange = relationship => {
     setFormValues(prevState => ({ ...prevState, relationship }));
   };
 
+  /**
+   * @description formValues의 content 속성의 값을 이벤트 객체의 값으로 변경한다.
+   */
   const handleEditorChange = e => {
     setFormValues(prevState => ({ ...prevState, content: e.target.value }));
   };
 
+  /**
+   * @description formValues의 font 속성의 값을 이벤트 객체로 변경한다.
+   */
   const handleFontChange = font => {
     setFormValues(prevState => ({ ...prevState, font }));
   };
 
-  const handleSubmit = async e => {
-    e.preventDefault();
-    const jsonFormValues = JSON.stringify(formValues);
+  /**
+   * @description sumbmit 발생 시 api post 요청을 보낸 후, /post/recipientId 의 주소로 이동하는 함수를 선언하고 있다.
+   * @requires {@link createMessage} {@link navigate}
+   */
+  const submitForm = async () => {
     try {
-      const response = await createMessage(jsonFormValues);
+      const response = await createMessage(postId, formValues);
       navigate(`/post/${response.data.recipientId}`);
-    } catch (err) {}
+    } catch (err) {
+      errorAlert('/Post{id}/message 페이지 생성에 실패했습니다.');
+    }
   };
 
-  useEffect(() => {
-    setIsBtnDisabled(!(formValues.sender.trim() && formValues.content.trim()));
-  }, [formValues.sender, formValues.content]);
+  /**
+   * @description sumbmit 발생 시 기본동작을 취소하고 submitForm을 실행한다.
+   */
+  const handleSubmit = e => {
+    e.preventDefault();
+    submitForm();
+  };
 
   return (
     <>
@@ -241,6 +287,7 @@ const SampleImages = styled.div`
   flex-direction: row;
   justify-content: space-between;
   width: 60.5rem;
+  cursor: pointer;
   img {
     width: 5.6rem;
     height: 5.6rem;
@@ -277,7 +324,7 @@ const FontSelectContainer = styled.div`
   margin-bottom: 3.8rem;
 `;
 const FontFamilyDropDown = styled(TextFieldDropDown)``;
-const StyledPrimary = styled(Primary)`
+const StyledPrimary = styled(Button)`
   width: 72rem;
 `;
 

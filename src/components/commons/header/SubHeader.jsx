@@ -7,16 +7,13 @@ import Toast from 'components/commons/toast/Toast';
 import useCloseModal from 'hooks/useCloseModal';
 import EmojiPicker from 'emoji-picker-react';
 import EmojiBadge from 'components/commons/badges/EmojiBadge';
-import {
-  useGetReactionQuery,
-  usePostReactionQuery,
-} from 'hooks/queries/useReactionQuery';
+import { useGetReactionQuery } from 'hooks/queries/reaction/useGetReactionQuery';
+import { usePostReactionQuery } from 'hooks/queries/reaction/usePostReactionQuery';
 import { useParams } from 'react-router-dom';
 
 const SubHeader = ({ data }) => {
   const { postId } = useParams();
   const { data: reaction } = useGetReactionQuery(postId);
-  const postReaction = usePostReactionQuery(postId);
   const recipientName = data ? data.name : 'Unknown';
   const recipientCount = data ? data.messageCount : '0';
   const topReactions = data?.topReactions.slice(0, 3) || [];
@@ -29,13 +26,7 @@ const SubHeader = ({ data }) => {
   const [showArrowOptions, setArrowShareOptions] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-  const [selectedEmoji, setSelectedEmoji] = useState({
-    emoji: null,
-    type: 'increase',
-  });
-
-  //출력 콘솔이 너무 많이 찍혀서 주석 처리
-  // console.log(selectedEmoji);
+  const postReaction = usePostReactionQuery(postId);
 
   const shareOptionsRef = useRef();
   const arrowOptionsRef = useRef();
@@ -108,9 +99,8 @@ const SubHeader = ({ data }) => {
   };
 
   const onEmojiClick = emojiObject => {
-    setSelectedEmoji({ emoji: emojiObject.emoji });
     setShowEmojiPicker(false);
-    // postReaction.mutate(selectedEmoji);
+    postReaction.mutate({ emoji: emojiObject.emoji, type: 'increase' });
   };
 
   return (
@@ -121,7 +111,9 @@ const SubHeader = ({ data }) => {
           {topProfileImages?.map((image, index) => (
             <StyledProfile key={index} src={image} alt={`Profile ${index}`} />
           ))}
-          <StyledProfileNum>+{recipientCount - 3}</StyledProfileNum>
+          {recipientCount > 3 && (
+            <StyledProfileNum>+{recipientCount - 3}</StyledProfileNum>
+          )}
         </StyledProfiles>
         <StyledMessage>
           <StyledEmp>{recipientCount}</StyledEmp>명이 작성했어요!
