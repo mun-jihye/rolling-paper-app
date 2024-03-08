@@ -10,6 +10,19 @@ import IconButton from 'components/commons/buttons/IconButton';
 import { useDeleteMessageQuery } from 'hooks/queries/useEditQuery';
 import { deleteAlert } from 'utils/deleteAlert';
 
+/**
+ *
+ * @param {object} props
+ * @param {object} props.profileImageURL
+ * @param {object} props.sender
+ * @param {object} props.relationship
+ * @param {object} props.content
+ * @param {object} props.formattedDate
+ * @param {object} props.isDelete
+ * @param {object} props.messageId 삭제 요청을 보낼때 필요한 메세지 아이디
+ * @param {object} props.font
+ * @returns
+ */
 const FromCard = ({
   profileImageURL,
   sender,

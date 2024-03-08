@@ -60,5 +60,6 @@ export const useGetMessagesQuery = (postId, limit = 5) => {
       return nextPage;
     },
     retry: false,
+    onError: () => errorAlert({ title: '롤링페이퍼 메세지 조회 실패' }),
   });
 };
