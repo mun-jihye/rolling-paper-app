@@ -1,4 +1,4 @@
-import style from 'styled-components';
+import styled from 'styled-components';
 import { theme } from 'styles/theme';
 
 const CreateListItem = ({
@@ -29,7 +29,7 @@ const CreateListItem = ({
   );
 };
 
-const StyledList = style.div`
+const StyledList = styled.div`
   border-radius: 0.8rem;
   border: 1px solid ${theme.gray300};
   box-shadow: 0px 2px 12px 0px #00000014;
@@ -42,13 +42,12 @@ const StyledList = style.div`
   width: 31.8rem;
   height: 22rem;
   top: 5.8rem;
-  left-right: 0;
   padding: 1rem 0.1rem;
   z-index: 2;
 
   overflow: scroll;
 `;
-const StyledListItem = style.button`
+const StyledListItem = styled.button`
   width: 31.6rem;
   height: 5rem;
   padding: 1.2rem 1.6rem;

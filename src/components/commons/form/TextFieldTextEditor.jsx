@@ -1,4 +1,4 @@
-import style from 'styled-components';
+import styled from 'styled-components';
 import bold from 'assets/images/forms/bold_icon.svg';
 import italic from 'assets/images/forms/italics.svg';
 import underScore from 'assets/images/forms/under_score.svg';
@@ -45,42 +45,41 @@ export default function TextFieldTextEditor({ handleChange }) {
   );
 }
 
-const StyledContainer = style.div`
+const StyledContainer = styled.div`
   border-radius: 0.8rem;
   border: 1px solid ${({ theme }) => theme.gray300};
 
   width: 72rem;
   height: 26rem;
   padding: 0.1rem 0.1rem 1.6rem;
-  posision: relative;
+  position: relative;
 
   display: flex;
   flex-direction: column;
-  
 `;
 
-const ButtonContainer = style.div`
+const ButtonContainer = styled.div`
   height: 4.9rem;
   padding: 1.4rem;
   background-color: ${({ theme }) => theme.gray200};
   display: flex;
 `;
 
-const StyledImg = style.div`
+const StyledImg = styled.div`
   height: 2.4rem;
   display: flex;
   gap: 0.2rem;
   margin-right: 1.6rem;
 
   & > img {
-  width: 2.4rem;
-  height: 2.4rem;
-  object-fit: fill;
-  padding: 0.5rem;
+    width: 2.4rem;
+    height: 2.4rem;
+    object-fit: fill;
+    padding: 0.5rem;
   }
 `;
 
-const StyledTextInput = style.textarea`
+const StyledTextInput = styled.textarea`
   color: ${({ theme }) => theme.gray900};
   width: 68.8rem;
   height: 17.8rem;
