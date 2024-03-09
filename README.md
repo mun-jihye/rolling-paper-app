@@ -120,6 +120,7 @@ https://naver.com
 | ------------------------------------- | ------------------------------------------- | ------------------------------------- |
 
 | ![delete_mode](public/images/mobileDeleteMode.png) | ![delete](public/images/mobileDelete.png) | ![deleteComplete](public/images/mobileDeleteComplete.png) |
+| ------------------------------------- | ------------------------------------------- | ------------------------------------- |
 
 <br>
 
