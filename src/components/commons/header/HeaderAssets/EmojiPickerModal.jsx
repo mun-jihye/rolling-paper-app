@@ -17,6 +17,6 @@ export const StyledEmojiPicker = styled.div`
   right: 95%;
   z-index: 200;
   @media ${({ theme }) => theme.breakpoint.mobile} {
-    right: 195%;
+    right: 85%;
   }
 `;
