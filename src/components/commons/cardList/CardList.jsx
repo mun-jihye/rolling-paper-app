@@ -73,9 +73,12 @@ function CardList({
   }
 
   useEffect(() => {
-    setContainerWidth(containerRef?.current?.offsetWidth - carouselMargin * 20);
+    const viewportWidthOfContainer = containerRef?.current?.offsetWidth;
+    const viewportWidthOfCard = cardRef?.current?.offsetWidth;
+
+    setContainerWidth(viewportWidthOfContainer - carouselMargin * 20);
     setCarouselLength(
-      cardRef?.current?.offsetWidth === 208
+      viewportWidthOfCard === 208
         ? 220 * cards?.length - 12
         : 295 * cards?.length - 20,
     );
