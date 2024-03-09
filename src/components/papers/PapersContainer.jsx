@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const PapersContainer = styled.main`
+const PapersContainer = styled.div`
   width: 100%;
   display: flex;
   gap: 2rem;

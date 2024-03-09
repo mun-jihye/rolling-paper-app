@@ -5,7 +5,7 @@ import useDeviceType from 'hooks/useDeviceType';
 import { Link } from 'react-router-dom';
 import routes from 'utils/constants/routes';
 import GNB from 'components/commons/header/GNB';
-import { useGetRecipientsInOrderQuery } from 'hooks/queries/useListQuery';
+import { useGetRecipientsInOrderQuery } from 'hooks/queries/list/useListQuery';
 import Footer from 'components/list/Footer';
 import ListPageMainContainer from 'components/list/ListPageMainContainer';
 import ListName from 'components/list/ListName';
