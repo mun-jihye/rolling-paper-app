@@ -10,7 +10,6 @@ const TopEmoji = ({
   setArrowShareOptions,
   showArrowOptions,
 }) => {
-  console.log(topReactions);
   const handleBadgeClick = data => {
     postReaction.mutate({ emoji: data.emoji, type: 'decrease' });
   };
