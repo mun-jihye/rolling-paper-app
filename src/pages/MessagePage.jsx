@@ -9,15 +9,17 @@ import GNB from 'components/commons/header/GNB';
 import Button from 'components/commons/buttons/Button';
 import person from 'assets/images/profiles/person.svg';
 import { useParams, useNavigate } from 'react-router-dom';
-import { createMessage } from 'api/recipient';
-import { errorAlert } from 'utils/errorAlert';
 import { useGetProfileImagesQuery } from 'hooks/queries/post/useGetProfileImageQuery';
+import { usePostMessagesQuery } from 'hooks/queries/post/usePostMessagesQuery';
+import { infoAlert } from 'utils/infoAlert';
+import routes from 'utils/constants/routes';
+import Loader from 'components/commons/Loader';
 
 const MessagePage = () => {
   const { postId } = useParams();
   const { data: profileImages } = useGetProfileImagesQuery();
   const profileImageUrls = profileImages?.data.imageUrls;
-
+  const postMessages = usePostMessagesQuery(postId);
   const [isBtnDisabled, setIsBtnDisabled] = useState(false);
 
   const inputDisabled = false;
@@ -38,7 +40,7 @@ const MessagePage = () => {
     relationship: initialSelectedItem[0],
     content: '',
     font: initialSelectedItem[1],
-    profileImageURL: profileImageUrls[0],
+    profileImageURL: null,
   });
 
   useEffect(() => {
@@ -64,14 +66,22 @@ const MessagePage = () => {
   const handleFontChange = font => {
     setFormValues(prevState => ({ ...prevState, font }));
   };
+  useEffect(() => {
+    if (formValues.profileImageURL === null && profileImageUrls?.length > 0) {
+      setFormValues(prevFormValues => ({
+        ...prevFormValues,
+        profileImageURL: profileImageUrls[0],
+      }));
+    }
+  }, [formValues.profileImageURL, profileImageUrls]);
 
   const submitForm = async () => {
-    try {
-      const response = await createMessage(postId, formValues);
-      navigate(`/post/${response.data.recipientId}`);
-    } catch (err) {
-      errorAlert('/Post{id}/message 페이지 생성에 실패했습니다.');
-    }
+    postMessages.mutate(formValues, {
+      onSuccess: () => {
+        infoAlert({ title: '요청이 성공했습니다.' });
+        navigate(`${routes.post}/${postId}`);
+      },
+    });
   };
 
   const handleSubmit = e => {
