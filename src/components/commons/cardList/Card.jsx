@@ -9,6 +9,14 @@ import { Link } from 'react-router-dom';
 import routes from 'utils/constants/routes';
 import React from 'react';
 
+/**
+ * 롤링 페이퍼 개체를 보여주는 카드 컴포넌트
+ *
+ * @param {Object} data 롤링 페이퍼에 들어갈 정보
+ * @param {boolean} isLoading data 를 서버에서 불러오는 중 인지에 대한 여부
+ * @param {string} className styled.components 에서 스타일 재사용을 위한 prop
+ * @returns {JSX.Element}
+ */
 function Card({ data, isLoading, className }) {
   return isLoading ? (
     <LoadingCard className={className} />
@@ -60,7 +68,7 @@ const StyledCard = styled.div`
   width: 20.8rem;
   height: 23.2rem;
   border-radius: 1.6rem;
-  border: 0.1rem solid rgba(0, 0, 0, 0.1);
+  border: none;
   background: ${({ theme, $data }) =>
     $data?.backgroundImageURL
       ? `linear-gradient(180deg, rgba(0, 0, 0, 0.54) 0%, rgba(0, 0, 0, 0.54) 100%), url(${$data?.backgroundImageURL})`
@@ -82,7 +90,7 @@ const StyledCard = styled.div`
   cursor: pointer;
 
   &:hover {
-    transform: scale(1.03);
+    transform: scale(1.05);
     transition: transform 0.3s;
   }
 
