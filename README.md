@@ -119,8 +119,8 @@ https://naver.com
 | ![post](public/images/mobilePost.png) | ![message](public/images/mobileMessage.png) | ![edit](public/images/mobileEdit.png) |
 | ------------------------------------- | ------------------------------------------- | ------------------------------------- |
 
-| ![delete_mode](public/images/mobileDeleteMode.png) | ![delete](public/images/mobileDelete.png) | ![deleteComplete](public/images/mobileDeleteComplete.png) |
-| ------------------------------------- | ------------------------------------------- | ------------------------------------- |
+| ![delete_mode](public/images/mobileDeleteMode.png) | ![delete](public/images/mobileDelete.png) | ![deleteComplete](public/images/mobileDComplete.png) |
+| -------------------------------------------------- | ----------------------------------------- | ---------------------------------------------------- |
 
 <br>
 
