@@ -12,23 +12,17 @@ import { errorAlert } from 'utils/errorAlert';
 
 const PostPage = () => {
   /**
-   * @description 사용할 state를 선언하고 초기값을 선언하고 있다.
+   * @description Postpage의 동작을 수행하고 있다.
+   * @requires {@link instance} {@link AUTH} {@link createRecipients}
    */
   const [toggleState, setToggleState] = useState('컬러');
   const [imageURLs, setImageURLs] = useState([]);
 
-  /**
-   * @description 아래의 코드에서 사용하기 위한 상수와 함수를 선언하고 있다.
-   */
   const colors = ['beige', 'purple', 'blue', 'green'];
   const inputDisabled = false;
   const error = { message: '' };
   const navigate = useNavigate();
 
-  /**
-   * @description 페이지가 호출될 때 딱 한번 backgroundImages를 불러온다.
-   * @requires {@link instance} {@link AUTH}
-   */
   useEffect(() => {
     const getBackgroundImages = async () => {
       const response = await instance.get(AUTH.backgroundImages);
@@ -37,33 +31,21 @@ const PostPage = () => {
     getBackgroundImages();
   }, []);
 
-  /**
-   * @description toggleState의 값에 따라 서로 다른 값을 반환한다. toggleState가 변화했을 때만 다시 실행된다.
-   */
   const items = useMemo(() => {
     return toggleState === '컬러'
       ? colors.map(color => `${color}200`)
       : imageURLs;
   }, [toggleState]);
 
-  /**
-   * @description items 변수가 선언된 이후에 선언되어야 할 state를 선언하고 있다.
-   */
   const [background, setBackground] = useState(items[0]);
   const [isBtnDisabled, setIsBtnDisabled] = useState(true);
 
-  /**
-   * @description submit 발생 시 전달될 데이터를 담고 있는 state를 선언하고 있다.
-   */
   const [formValues, setFormValues] = useState({
     name: '',
     backgroundColor: toggleState === '컬러' ? items[0] : 'beige',
     backgroundImageURL: toggleState === '이미지' ? items[0] : null,
   });
 
-  /**
-   * @description 이벤트 객체의 값이 비어있지 않으면 Button을 활성화시킨다.
-   */
   const handleChange = e => {
     if (!e.target.value) {
       setIsBtnDisabled(true);
@@ -76,19 +58,10 @@ const PostPage = () => {
     });
   };
 
-  /**
-   * @description 이벤트 객체의 내부 문자열을 toggleState의 새로운 값으로 변경한다.
-   */
   const handleToggle = e => {
     const newToggleState = e.target.innerText;
     setToggleState(newToggleState);
   };
-
-  /**
-   * @param {*} background state background; Options에서 사용한다.
-   * @param {*} index 선택한 요소의 index
-   * @description 선택한 요소를 state formValues에 저장한다.
-   */
 
   const handleSelect = (background, index) => {
     setFormValues(prevState => ({
@@ -99,10 +72,6 @@ const PostPage = () => {
     }));
   };
 
-  /**
-   * @description form의 내용을 submit하는 함수를 선언하고 있다.
-   * @requires {@link createRecipients}
-   */
   const submitForm = async () => {
     try {
       const response = await createRecipients(formValues);
@@ -112,9 +81,6 @@ const PostPage = () => {
     }
   };
 
-  /**
-   * @description 기본동작을 없애고 submitForm을 실행한다.
-   */
   const handleSubmit = e => {
     e.preventDefault();
     submitForm();
@@ -197,6 +163,9 @@ const InputContainer = styled.div`
 
 const NameInput = styled(TextFieldInput)`
   width: 72rem;
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    width: 32rem;
+  }
 `;
 
 const SelectContainer = styled.div`
@@ -207,6 +176,9 @@ const SelectContainer = styled.div`
   position: relative;
   padding-top: 5rem;
   gap: 0.4rem;
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    width: 32rem;
+  }
 `;
 const Description = styled.div`
   margin-bottom: 2.4rem;
@@ -236,6 +208,15 @@ const StyledBtn = styled(Button)`
   font-size: 1.8rem;
   line-height: 2.8rem;
   letter-spacing: -0.01em;
+  @media ${({ theme }) => theme.breakpoint.tablet} {
+    position: fixed;
+    bottom: 2.4rem;
+  }
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    width: 32rem;
+    position: fixed;
+    bottom: 2.4rem;
+  }
 `;
 
 export default PostPage;

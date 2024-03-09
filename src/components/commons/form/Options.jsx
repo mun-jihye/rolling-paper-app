@@ -55,6 +55,7 @@ const PreviewBlocks = styled.div`
   position: relative;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   gap: 1.2rem;
   .container {
     width: 16.8rem;
@@ -65,6 +66,10 @@ const PreviewBlocks = styled.div`
     justify-content: center;
     align-items: center;
     background-size: cover;
+    @media ${({ theme }) => theme.breakpoint.mobile} {
+      width: 15.4rem;
+      height: 15.4rem;
+    }
   }
 
   .checkbox {
