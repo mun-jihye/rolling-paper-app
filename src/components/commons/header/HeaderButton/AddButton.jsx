@@ -11,6 +11,6 @@ export const AddButton = ({ onClick, text }) => (
 
 const AddText = styled.div`
   @media (max-width: 768px) {
-    width: 100px;
+    display: none;
   }
 `;

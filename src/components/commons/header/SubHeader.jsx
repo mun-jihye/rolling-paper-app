@@ -133,6 +133,7 @@ const ArrowOptions = styled.div`
   }
   @media ${({ theme }) => theme.breakpoint.mobile} {
     grid-template-columns: repeat(3, 1fr);
+    right: 20rem;
   }
 `;
 
