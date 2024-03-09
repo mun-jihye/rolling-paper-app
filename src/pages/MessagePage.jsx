@@ -6,27 +6,35 @@ import {
   TextFieldTextEditor,
 } from 'components/commons/form';
 import GNB from 'components/commons/header/GNB';
-import Primary from 'components/commons/buttons/PrimaryBtn';
+import Button from 'components/commons/buttons/Button';
 import person from 'assets/images/profiles/person.svg';
 import { useParams, useNavigate } from 'react-router-dom';
 import { AUTH } from 'utils/constants/API';
 import { instance } from 'api/';
+import { createMessage } from 'api/recipient';
+import { errorAlert } from 'utils/errorAlert';
 
 const MessagePage = () => {
+  /**
+   * @description MessagePage의 동작을 수행하고 있다.
+   * {@link createMessage} {@link navigate}
+   */
   const { postId } = useParams();
-  const [imageURLs, setImageURLs] = useState([]);
-  const navigate = useNavigate();
-  const createMessage = data => {
-    return instance.post(`4-24/recipients/${postId}/messages/`, data);
-  };
 
-  useEffect(() => {
-    const getProfileImages = async () => {
-      const response = await instance.get(AUTH.profileImages);
-      setImageURLs(response.data.imageUrls);
-    };
-    getProfileImages();
-  }, []);
+  const [imageURLs, setImageURLs] = useState([]);
+  const [isBtnDisabled, setIsBtnDisabled] = useState(false);
+
+  const inputDisabled = false;
+  const dropDownDisabled = false;
+  const error = { message: '' };
+  const listItems = ['친구', '지인', '동료', '가족'];
+  const listFontFamily = [
+    'Noto Sans',
+    'Pretendard',
+    '나눔명조',
+    '나눔손글씨 손편지체',
+  ];
+  const navigate = useNavigate();
 
   const initialSelectedItem = ['지인', 'Noto Sans'];
   const [formValues, setFormValues] = useState({
@@ -36,6 +44,19 @@ const MessagePage = () => {
     font: initialSelectedItem[1],
     profileImageURL: null,
   });
+
+  useEffect(() => {
+    setIsBtnDisabled(!(formValues.sender.trim() && formValues.content.trim()));
+  }, [formValues.sender, formValues.content]);
+
+  useEffect(() => {
+    const getProfileImages = async () => {
+      const response = await instance.get(AUTH.profileImages);
+      setImageURLs(response.data.imageUrls);
+    };
+    getProfileImages();
+  }, []);
+
   useEffect(() => {
     if (imageURLs.length > 0) {
       setFormValues(prevState => ({
@@ -43,23 +64,7 @@ const MessagePage = () => {
         profileImageURL: imageURLs[0],
       }));
     }
-  }, [imageURLs]);
-
-  const [isBtnDisabled, setIsBtnDisabled] = useState(
-    !(formValues.sender && formValues.content),
-  );
-
-  const inputDisabled = false;
-  const dropDownDisabled = false;
-  const error = { message: '' };
-
-  const listItems = ['친구', '지인', '동료', '가족'];
-  const listFontFamily = [
-    'Noto Sans',
-    'Pretendard',
-    '나눔명조',
-    '나눔손글씨 손편지체',
-  ];
+  }, []);
 
   const handleInputChange = e => {
     setFormValues(prevState => ({ ...prevState, sender: e.target.value }));
@@ -81,18 +86,19 @@ const MessagePage = () => {
     setFormValues(prevState => ({ ...prevState, font }));
   };
 
-  const handleSubmit = async e => {
-    e.preventDefault();
-    const jsonFormValues = JSON.stringify(formValues);
+  const submitForm = async () => {
     try {
-      const response = await createMessage(jsonFormValues);
+      const response = await createMessage(postId, formValues);
       navigate(`/post/${response.data.recipientId}`);
-    } catch (err) {}
+    } catch (err) {
+      errorAlert('/Post{id}/message 페이지 생성에 실패했습니다.');
+    }
   };
 
-  useEffect(() => {
-    setIsBtnDisabled(!(formValues.sender.trim() && formValues.content.trim()));
-  }, [formValues.sender, formValues.content]);
+  const handleSubmit = e => {
+    e.preventDefault();
+    submitForm();
+  };
 
   return (
     <>
@@ -196,6 +202,9 @@ const Description = styled.div`
 const NameInput = styled(TextFieldInput)`
   width: 72rem;
   margin-top: 1.2rem;
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    width: 32rem;
+  }
 `;
 
 const ProfileContainer = styled.div`
@@ -210,12 +219,19 @@ const ProfileContainer = styled.div`
   margin-bottom: 5rem;
 
   position: relative;
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    width: 32rem;
+  }
   .container {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     gap: 1.2rem;
+    height: 9.4rem;
+    @media ${({ theme }) => theme.breakpoint.mobile} {
+      height: 17rem;
+    }
   }
   h3 {
     font-size: 1.6rem;
@@ -240,12 +256,21 @@ const SampleImages = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  flex-wrap: wrap;
   width: 60.5rem;
+  cursor: pointer;
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    width: 20.8rem;
+  }
   img {
     width: 5.6rem;
     height: 5.6rem;
     border-radius: 10rem;
     border: 0.1rem;
+    @media ${({ theme }) => theme.breakpoint.mobile} {
+      width: 4rem;
+      height: 4rem;
+    }
   }
 `;
 const RelationshipContainer = styled.div`
@@ -258,7 +283,11 @@ const RelationshipContainer = styled.div`
 
   position: relative;
 `;
-const RelationshipDropDown = styled(TextFieldDropDown)``;
+const RelationshipDropDown = styled(TextFieldDropDown)`
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    width: 32rem;
+  }
+`;
 const TextEditorContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -267,7 +296,11 @@ const TextEditorContainer = styled.div`
   gap: 1.2rem;
   margin-bottom: 5rem;
 `;
-const TextEditor = styled(TextFieldTextEditor)``;
+const TextEditor = styled(TextFieldTextEditor)`
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    width: 32rem;
+  }
+`;
 const FontSelectContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -275,10 +308,27 @@ const FontSelectContainer = styled.div`
   align-items: flex-start;
   gap: 1.2rem;
   margin-bottom: 3.8rem;
+  @media ${({ theme }) => theme.breakpoint.tablet} {
+    margin-bottom: 6.2rem;
+  }
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    margin-bottom: 3.8rem;
+  }
 `;
 const FontFamilyDropDown = styled(TextFieldDropDown)``;
-const StyledPrimary = styled(Primary)`
+const StyledPrimary = styled(Button)`
   width: 72rem;
+  z-index: 1;
+
+  @media ${({ theme }) => theme.breakpoint.tablet} {
+    position: fixed;
+    bottom: 2.4rem;
+  }
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    width: 32rem;
+    position: fixed;
+    bottom: 2.4rem;
+  }
 `;
 
 export default MessagePage;
