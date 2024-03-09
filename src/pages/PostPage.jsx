@@ -3,29 +3,48 @@ import styled from 'styled-components';
 import GNB from 'components/commons/header/GNB';
 import { TextFieldInput, Options } from 'components/commons/form';
 import ToggleBtn from 'components/commons/buttons/ToggleBtn';
-import Primary from 'components/commons/buttons/PrimaryBtn';
-import nation1 from 'assets/backgrounds/nation1.svg';
-import nation2 from 'assets/backgrounds/nation2.svg';
+import Button from 'components/commons/buttons/Button';
+import { createRecipients } from 'api/recipient';
+import { AUTH } from 'utils/constants/API';
+import { instance } from 'api/';
+import { useNavigate } from 'react-router-dom';
+import { errorAlert } from 'utils/errorAlert';
 
 const PostPage = () => {
+  /**
+   * @description Postpage의 동작을 수행하고 있다.
+   * @requires {@link instance} {@link AUTH} {@link createRecipients}
+   */
   const [toggleState, setToggleState] = useState('컬러');
+  const [imageURLs, setImageURLs] = useState([]);
+
   const colors = ['beige', 'purple', 'blue', 'green'];
+  const inputDisabled = false;
+  const error = { message: '' };
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const getBackgroundImages = async () => {
+      const response = await instance.get(AUTH.backgroundImages);
+      setImageURLs(response.data.imageUrls);
+    };
+    getBackgroundImages();
+  }, []);
+
   const items = useMemo(() => {
     return toggleState === '컬러'
       ? colors.map(color => `${color}200`)
-      : [nation1, nation2, nation1, nation2];
+      : imageURLs;
   }, [toggleState]);
 
   const [background, setBackground] = useState(items[0]);
   const [isBtnDisabled, setIsBtnDisabled] = useState(true);
+
   const [formValues, setFormValues] = useState({
-    textFieldInput: '',
-    backgroundColor: toggleState === '컬러' ? items[0] : null,
+    name: '',
+    backgroundColor: toggleState === '컬러' ? items[0] : 'beige',
     backgroundImageURL: toggleState === '이미지' ? items[0] : null,
   });
-  const inputDisabled = false;
-
-  const error = { message: '' };
 
   const handleChange = e => {
     if (!e.target.value) {
@@ -35,12 +54,12 @@ const PostPage = () => {
     }
     setFormValues({
       ...formValues,
-      textFieldInput: e.target.value,
+      name: e.target.value,
     });
   };
 
   const handleToggle = e => {
-    const newToggleState = e.target.innerText.toLowerCase();
+    const newToggleState = e.target.innerText;
     setToggleState(newToggleState);
   };
 
@@ -48,24 +67,30 @@ const PostPage = () => {
     setFormValues(prevState => ({
       ...prevState,
       backgroundColor:
-        toggleState === '컬러' ? items[index].replace(/[0-9]/g, '') : null,
+        toggleState === '컬러' ? items[index].replace(/[0-9]/g, '') : 'beige',
       backgroundImageURL: toggleState === '이미지' ? items[index] : null,
     }));
   };
 
+  const submitForm = async () => {
+    try {
+      const response = await createRecipients(formValues);
+      navigate(`/post/${response.data.id}`);
+    } catch (err) {
+      errorAlert('/Post 페이지 생성에 실패했습니다.');
+    }
+  };
+
   const handleSubmit = e => {
     e.preventDefault();
-    // this.props.history.push({
-    //   pathname: '/post/{id}',
-    //   state: { formValues },
-    // });
+    submitForm();
   };
 
   useEffect(() => {
     setFormValues(prevState => ({
       ...prevState,
       backgroundColor:
-        toggleState === '컬러' ? items[0].replace(/[0-9]/g, '') : null,
+        toggleState === '컬러' ? items[0].replace(/[0-9]/g, '') : 'beige',
       backgroundImageURL: toggleState === '이미지' ? items[0] : null,
     }));
   }, [toggleState]);
@@ -138,6 +163,9 @@ const InputContainer = styled.div`
 
 const NameInput = styled(TextFieldInput)`
   width: 72rem;
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    width: 32rem;
+  }
 `;
 
 const SelectContainer = styled.div`
@@ -148,6 +176,9 @@ const SelectContainer = styled.div`
   position: relative;
   padding-top: 5rem;
   gap: 0.4rem;
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    width: 32rem;
+  }
 `;
 const Description = styled.div`
   margin-bottom: 2.4rem;
@@ -171,12 +202,21 @@ const Description = styled.div`
 const StyledOptions = styled(Options)`
   padding: 4.5rem 0;
 `;
-const StyledBtn = styled(Primary)`
+const StyledBtn = styled(Button)`
   width: 72rem;
 
   font-size: 1.8rem;
   line-height: 2.8rem;
   letter-spacing: -0.01em;
+  @media ${({ theme }) => theme.breakpoint.tablet} {
+    position: fixed;
+    bottom: 2.4rem;
+  }
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    width: 32rem;
+    position: fixed;
+    bottom: 2.4rem;
+  }
 `;
 
 export default PostPage;

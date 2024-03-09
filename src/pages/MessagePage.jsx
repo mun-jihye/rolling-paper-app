@@ -6,74 +6,99 @@ import {
   TextFieldTextEditor,
 } from 'components/commons/form';
 import GNB from 'components/commons/header/GNB';
-import Primary from 'components/commons/buttons/PrimaryBtn';
+import Button from 'components/commons/buttons/Button';
 import person from 'assets/images/profiles/person.svg';
-import profile1 from 'assets/images/profiles/profile1.svg';
-import profile2 from 'assets/images/profiles/profile2.svg';
+import { useParams, useNavigate } from 'react-router-dom';
+import { AUTH } from 'utils/constants/API';
+import { instance } from 'api/';
+import { createMessage } from 'api/recipient';
+import { errorAlert } from 'utils/errorAlert';
 
 const MessagePage = () => {
-  const initialSelectedItem = ['지인', 'Noto Sans'];
-  const [formInputs, setFormInputs] = useState({
-    name: '',
-    selectedImage: null,
-    relationship: initialSelectedItem[0],
-    editorValue: '',
-    font: initialSelectedItem[1],
-  });
+  /**
+   * @description MessagePage의 동작을 수행하고 있다.
+   * {@link createMessage} {@link navigate}
+   */
+  const { postId } = useParams();
 
-  const [isBtnDisabled, setIsBtnDisabled] = useState(
-    !(formInputs.name && formInputs.editorValue),
-  );
+  const [imageURLs, setImageURLs] = useState([]);
+  const [isBtnDisabled, setIsBtnDisabled] = useState(false);
 
   const inputDisabled = false;
   const dropDownDisabled = false;
   const error = { message: '' };
-
-  const images = [
-    profile1,
-    profile2,
-    profile1,
-    profile2,
-    profile1,
-    profile2,
-    profile1,
-    profile2,
-    profile1,
-    profile2,
-  ];
-
   const listItems = ['친구', '지인', '동료', '가족'];
-  const listFontFamily = ['Noto Sans', 'Pretendard'];
+  const listFontFamily = [
+    'Noto Sans',
+    'Pretendard',
+    '나눔명조',
+    '나눔손글씨 손편지체',
+  ];
+  const navigate = useNavigate();
+
+  const initialSelectedItem = ['지인', 'Noto Sans'];
+  const [formValues, setFormValues] = useState({
+    sender: '',
+    relationship: initialSelectedItem[0],
+    content: '',
+    font: initialSelectedItem[1],
+    profileImageURL: null,
+  });
+
+  useEffect(() => {
+    setIsBtnDisabled(!(formValues.sender.trim() && formValues.content.trim()));
+  }, [formValues.sender, formValues.content]);
+
+  useEffect(() => {
+    const getProfileImages = async () => {
+      const response = await instance.get(AUTH.profileImages);
+      setImageURLs(response.data.imageUrls);
+    };
+    getProfileImages();
+  }, []);
+
+  useEffect(() => {
+    if (imageURLs.length > 0) {
+      setFormValues(prevState => ({
+        ...prevState,
+        profileImageURL: imageURLs[0],
+      }));
+    }
+  }, []);
 
   const handleInputChange = e => {
-    setFormInputs(prevState => ({ ...prevState, name: e.target.value }));
+    setFormValues(prevState => ({ ...prevState, sender: e.target.value }));
   };
 
   const handleImageChange = image => {
-    setFormInputs(prevState => ({ ...prevState, selectedImage: image }));
+    setFormValues(prevState => ({ ...prevState, profileImageURL: image }));
   };
 
   const handleRelationshipChange = relationship => {
-    setFormInputs(prevState => ({ ...prevState, relationship }));
+    setFormValues(prevState => ({ ...prevState, relationship }));
   };
 
   const handleEditorChange = e => {
-    setFormInputs(prevState => ({ ...prevState, editorValue: e.target.value }));
+    setFormValues(prevState => ({ ...prevState, content: e.target.value }));
   };
 
   const handleFontChange = font => {
-    setFormInputs(prevState => ({ ...prevState, font }));
+    setFormValues(prevState => ({ ...prevState, font }));
   };
 
-  const handleSubmit = event => {
-    event.preventDefault();
+  const submitForm = async () => {
+    try {
+      const response = await createMessage(postId, formValues);
+      navigate(`/post/${response.data.recipientId}`);
+    } catch (err) {
+      errorAlert('/Post{id}/message 페이지 생성에 실패했습니다.');
+    }
   };
 
-  useEffect(() => {
-    setIsBtnDisabled(
-      !(formInputs.name.trim() && formInputs.editorValue.trim()),
-    );
-  }, [formInputs.name, formInputs.editorValue]);
+  const handleSubmit = e => {
+    e.preventDefault();
+    submitForm();
+  };
 
   return (
     <>
@@ -90,15 +115,15 @@ const MessagePage = () => {
           <ProfileContainer>
             <Description>프로필 이미지</Description>
             <div className="container">
-              <ProfileImg $selectedImage={formInputs.selectedImage}>
-                {!formInputs.selectedImage && (
+              <ProfileImg $selectedImage={formValues.profileImageURL}>
+                {!formValues.profileImageURL && (
                   <img src={person} alt="기본 이미지" />
                 )}
               </ProfileImg>
               <div>
                 <h3>프로필 이미지를 선택해주세요!</h3>
                 <SampleImages>
-                  {images.map((image, index) => (
+                  {imageURLs.map((image, index) => (
                     <img
                       key={index}
                       src={image}
@@ -177,6 +202,9 @@ const Description = styled.div`
 const NameInput = styled(TextFieldInput)`
   width: 72rem;
   margin-top: 1.2rem;
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    width: 32rem;
+  }
 `;
 
 const ProfileContainer = styled.div`
@@ -191,12 +219,19 @@ const ProfileContainer = styled.div`
   margin-bottom: 5rem;
 
   position: relative;
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    width: 32rem;
+  }
   .container {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     gap: 1.2rem;
+    height: 9.4rem;
+    @media ${({ theme }) => theme.breakpoint.mobile} {
+      height: 17rem;
+    }
   }
   h3 {
     font-size: 1.6rem;
@@ -221,12 +256,21 @@ const SampleImages = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  flex-wrap: wrap;
   width: 60.5rem;
+  cursor: pointer;
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    width: 20.8rem;
+  }
   img {
     width: 5.6rem;
     height: 5.6rem;
     border-radius: 10rem;
     border: 0.1rem;
+    @media ${({ theme }) => theme.breakpoint.mobile} {
+      width: 4rem;
+      height: 4rem;
+    }
   }
 `;
 const RelationshipContainer = styled.div`
@@ -239,7 +283,11 @@ const RelationshipContainer = styled.div`
 
   position: relative;
 `;
-const RelationshipDropDown = styled(TextFieldDropDown)``;
+const RelationshipDropDown = styled(TextFieldDropDown)`
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    width: 32rem;
+  }
+`;
 const TextEditorContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -248,7 +296,11 @@ const TextEditorContainer = styled.div`
   gap: 1.2rem;
   margin-bottom: 5rem;
 `;
-const TextEditor = styled(TextFieldTextEditor)``;
+const TextEditor = styled(TextFieldTextEditor)`
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    width: 32rem;
+  }
+`;
 const FontSelectContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -256,10 +308,27 @@ const FontSelectContainer = styled.div`
   align-items: flex-start;
   gap: 1.2rem;
   margin-bottom: 3.8rem;
+  @media ${({ theme }) => theme.breakpoint.tablet} {
+    margin-bottom: 6.2rem;
+  }
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    margin-bottom: 3.8rem;
+  }
 `;
 const FontFamilyDropDown = styled(TextFieldDropDown)``;
-const StyledPrimary = styled(Primary)`
+const StyledPrimary = styled(Button)`
   width: 72rem;
+  z-index: 1;
+
+  @media ${({ theme }) => theme.breakpoint.tablet} {
+    position: fixed;
+    bottom: 2.4rem;
+  }
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    width: 32rem;
+    position: fixed;
+    bottom: 2.4rem;
+  }
 `;
 
 export default MessagePage;

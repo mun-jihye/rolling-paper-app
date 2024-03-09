@@ -1,12 +1,12 @@
 // import MainHeader from 'components/commons/header/MainHeader';
 import React from 'react';
 import styled from 'styled-components';
-import GNB from 'components/commons/header/GNB';
 import cardImg from 'assets/images/landingPage/cardImg.png';
 import emojiImg from 'assets/images/landingPage/emojiImg.png';
 import Button from 'components/commons/buttons/Button';
 import { Link } from 'react-router-dom';
 import routes from 'utils/constants/routes';
+import GNB from 'components/commons/header/GNB';
 
 const LandingPage = () => {
   return (
@@ -43,7 +43,7 @@ const LandingPage = () => {
         </BlueBoxReverse>
         <ButtonBox>
           <Link to={routes.list}>
-            <Button width={'28rem'}>구경해보기</Button>
+            <ButtonStyle width={'28rem'}>구경해보기</ButtonStyle>
           </Link>
         </ButtonBox>
       </Main>
@@ -56,6 +56,7 @@ const Main = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 0 2.4rem 4rem;
+  margin-bottom: 3rem;
 `;
 
 const BlueBox = styled.div`
@@ -63,26 +64,21 @@ const BlueBox = styled.div`
   flex-direction: row;
   justify-content: space-around;
   background-color: #f6f8ff;
-  margin: 3rem;
+  margin: 2.4rem 0 0;
   width: 120rem;
   border-radius: 1.6rem;
-  @media (min-width: '1248px') {
-    width: 100%;
-    margin: 0 2.4rem;
-  }
   @media ${({ theme }) => theme.breakpoint.tablet} {
     width: 100%;
-    margin: 2.4rem;
     flex-direction: column;
   }
   @media ${({ theme }) => theme.breakpoint.mobile} {
     flex-direction: column;
     width: 100%;
-    margin: 2.4rem;
   }
 `;
 const BlueBoxReverse = styled(BlueBox)`
   flex-direction: row-reverse;
+  margin-bottom: 2.4rem;
   @media ${({ theme }) => theme.breakpoint.tablet} {
     flex-direction: column;
   }
@@ -162,16 +158,36 @@ const EmojiImg = styled(CardImg)`
     width: 100%;
   }
 `;
+
 const ButtonBox = styled.div`
   @media ${({ theme }) => theme.breakpoint.tablet} {
-    position: absolute;
-    top: 95%;
-    right: 96.6%;
+    position: fixed;
+    width: 100%;
+    height: 6.5rem;
+    bottom: 0;
+    left: 0;
+    background-color: white;
   }
   @media ${({ theme }) => theme.breakpoint.mobile} {
-    position: absolute;
-    bottom: 8%;
-    right: 94%;
+    position: fixed;
+    width: 100%;
+    height: 6.5rem;
+    bottom: 0;
+    left: 0;
+    background-color: white;
+  }
+`;
+
+const ButtonStyle = styled(Button)`
+  @media ${({ theme }) => theme.breakpoint.tablet} {
+    margin: 2.4rem;
+    bottom: 0;
+    left: 0;
+  }
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    margin: 0 2.4rem 2.4rem;
+    bottom: 0;
+    right: 0;
   }
 `;
 

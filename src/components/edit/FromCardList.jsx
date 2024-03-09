@@ -1,10 +1,20 @@
 import styled from 'styled-components';
-import React from 'react';
 import FromCard from './FromCard';
 import { formatDate } from 'utils/date';
 import AddCard from './AddCard';
+import FromCardSkeleton from './FromCardSkeleton';
 
-const FromCardList = ({ datas, isDelete }) => {
+/**
+ *
+ * @param {Object} props
+ * @param {Object} props.datas 서버에서 받아온 메세지들
+ * @param {Boolean} props.isDelete 편집 모드 여부
+ * @param {Boolean} props.isFetchingNextPage 무한 스크롤 로딩 여부
+ * @returns
+ */
+const FromCardList = ({ datas, isDelete, isFetchingNextPage }) => {
+  const skeletonCount = 3 - ((datas?.length % 3) + 1);
+
   return (
     <GridContainer>
       <AddCard isDelete={isDelete} />
@@ -16,11 +26,13 @@ const FromCardList = ({ datas, isDelete }) => {
           relationship,
           content,
           createdAt,
+          font,
         } = data;
         const formattedDate = formatDate(createdAt);
         return (
           <FromCard
             key={id}
+            font={font}
             messageId={id}
             profileImageURL={profileImageURL}
             sender={sender}
@@ -31,6 +43,10 @@ const FromCardList = ({ datas, isDelete }) => {
           />
         );
       })}
+      {isFetchingNextPage &&
+        Array.from({ length: skeletonCount }).map((_, index) => (
+          <FromCardSkeleton key={index} />
+        ))}
     </GridContainer>
   );
 };

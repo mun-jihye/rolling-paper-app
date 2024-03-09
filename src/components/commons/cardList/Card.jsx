@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes, useTheme } from 'styled-components';
 import Profile from 'components/commons/Profile';
 import bluePattern from 'assets/images/cardList/pattern_blue.png';
 import greenPattern from 'assets/images/cardList/pattern_green.png';
@@ -9,14 +9,41 @@ import { Link } from 'react-router-dom';
 import routes from 'utils/constants/routes';
 import React from 'react';
 
-function Card({ data, isLoading }) {
+/**
+ * 롤링 페이퍼 개체를 보여주는 카드 컴포넌트
+ *
+ * @param {Object} data 롤링 페이퍼에 들어갈 정보
+ * @param {boolean} isLoading data 를 서버에서 불러오는 중 인지에 대한 여부
+ * @param {string} className styled.components 에서 스타일 재사용을 위한 prop
+ * @returns {JSX.Element}
+ */
+function Card({ data, isLoading, className }) {
+  const theme = useTheme();
+
+  const hasPhotoImg = Boolean(data?.backgroundImageURL);
+
+  const photoBackgroundOverlay = `linear-gradient(180deg, rgba(0, 0, 0, 0.54) 0%, rgba(0, 0, 0, 0.54) 100%)`;
+  const photoBackground = `${photoBackgroundOverlay}, url(${data?.backgroundImageURL})`;
+
+  const defaultColor = theme[BACK_GROUND[data?.backgroundColor || 'beige'][0]];
+  const defaultImg = BACK_GROUND[data?.backgroundColor || 'beige'][1];
+  const colorBackground = `url(${defaultImg}), ${defaultColor}`;
+
+  const cardBackground = hasPhotoImg ? photoBackground : colorBackground;
+
   return isLoading ? (
-    <LoadingCard />
+    <LoadingCard className={className} />
   ) : (
     <Link to={`${routes.post}/${data?.id}`}>
-      <StyledCard $data={data}>
+      <StyledCard
+        className={className}
+        $background={cardBackground}
+        $hasPhotoImg={hasPhotoImg}
+      >
         <StyledContainer $isProfile={true}>
-          <StyledH3tag $data={data}>{`To. ${data?.name}`}</StyledH3tag>
+          <StyledH3tag
+            $hasPhotoImg={hasPhotoImg}
+          >{`To. ${data?.name}`}</StyledH3tag>
           <StyledContainer $isImage={true}>
             {data?.recentMessages?.map((message, index) => {
               return (
@@ -29,8 +56,8 @@ function Card({ data, isLoading }) {
               <LastProfile>+{data?.messageCount - 3}</LastProfile>
             )}
           </StyledContainer>
-          <StyledText $data={data}>
-            <StyledText $data={data} $isNumber={true}>
+          <StyledText $hasPhotoImg={hasPhotoImg}>
+            <StyledText $hasPhotoImg={hasPhotoImg} $isNumber={true}>
               {data?.messageCount}
             </StyledText>
             명이 작성했어요!
@@ -60,48 +87,34 @@ const StyledCard = styled.div`
   width: 20.8rem;
   height: 23.2rem;
   border-radius: 1.6rem;
-  border: 0.1rem solid rgba(0, 0, 0, 0.1);
-  background: ${({ theme, $data }) =>
-    $data?.backgroundImageURL
-      ? // 배경 이미지가 존재할 경우, 배경을 이미지로 설정
-        `linear-gradient(180deg, rgba(0, 0, 0, 0.54) 0%, rgba(0, 0, 0, 0.54) 100%), url(${$data?.backgroundImageURL})`
-      : // 배경 이미지 없으면 원하는 색의 default 배경 설정
-        theme[BACK_GROUND[$data ? $data?.backgroundColor : 'beige'][0]]};
-  background-image: ${({ $data }) =>
-    $data?.backgroundImageURL
-      ? ''
-      : `url(${BACK_GROUND[$data ? $data?.backgroundColor : 'beige'][1]})`};
-  background-position: ${({ $data }) =>
-    $data?.backgroundImageURL ? 'center' : 'right bottom'};
+  border: none;
+  background: ${({ $background }) => $background};
+  background-position: ${({ $hasPhotoImg }) =>
+    $hasPhotoImg ? 'center' : 'right bottom'};
   background-repeat: no-repeat;
-  background-size: ${({ $data }) =>
-    $data?.backgroundImageURL ? 'cover' : '10.74rem'};
+  background-size: ${({ $hasPhotoImg }) =>
+    $hasPhotoImg ? 'cover' : '10.74rem'};
   box-shadow: 0 0.2rem 1.2rem 0 rgba(0, 0, 0, 0.08);
   cursor: pointer;
 
   &:hover {
-    transform: scale(1.03);
-    transition: transform 0.5s;
-  }
-
-  &:active {
-    transform: scale(0.9);
-    transition: transform 0.5s;
+    transform: scale(1.05);
+    transition: transform 0.3s;
   }
 
   @media (min-width: 48rem) {
     padding: 3rem 2.4rem 2rem;
     width: 27.5rem;
     height: 26rem;
-    background-size: ${({ $data }) =>
-      $data?.backgroundImageURL ? 'cover' : '14.2rem'};
+    background-size: ${({ $hasPhotoImg }) =>
+      $hasPhotoImg ? 'cover' : '14.2rem'};
   }
 `;
 
 const StyledH3tag = styled.h3`
   overflow: hidden;
-  color: ${({ theme, $data }) =>
-    $data?.backgroundImageURL ? theme.white : theme.gray900};
+  color: ${({ theme, $hasPhotoImg }) =>
+    $hasPhotoImg ? theme.white : theme.gray900};
   text-overflow: ellipsis;
   font-size: 1.8rem;
   font-style: normal;
@@ -116,10 +129,9 @@ const StyledH3tag = styled.h3`
   }
 `;
 
-const StyledText = styled.div`
-  display: inline-block;
-  color: ${({ theme, $data }) =>
-    $data?.backgroundImageURL ? theme.white : theme.gray700};
+const StyledText = styled.span`
+  color: ${({ theme, $hasPhotoImg }) =>
+    $hasPhotoImg ? theme.white : theme.gray700};
   font-size: 1.4rem;
   font-style: normal;
   font-weight: ${({ $isNumber }) => ($isNumber ? '700' : '400')};
@@ -139,19 +151,15 @@ const StyledContainer = styled.div`
   gap: ${({ $isBadge, $isImage }) =>
     $isBadge ? '0.4rem' : $isImage ? 0 : '1.2rem'};
 
-  & div {
-    height: ${({ $isBadge, $isImage }) =>
-      $isBadge ? '3.2rem' : $isImage && '2.8rem'};
-  }
+  height: ${({ $isBadge, $isImage }) =>
+    $isBadge ? '3.2rem' : $isImage && '2.8rem'};
 
   @media (min-width: 48rem) {
     gap: ${({ $isBadge, $isImage }) =>
       $isBadge ? '0.8rem' : $isImage ? 0 : '1.2rem'};
 
-    & div {
-      height: ${({ $isBadge, $isImage }) =>
-        $isBadge ? '3.6rem' : $isImage && '2.8rem'};
-    }
+    height: ${({ $isBadge, $isImage }) =>
+      $isBadge ? '3.6rem' : $isImage && '2.8rem'};
   }
 `;
 
@@ -191,15 +199,29 @@ const LastProfile = styled.div`
 
 const CardEmojiBadge = styled(EmojiBadge)`
   align-items: start;
+  width: auto;
+  height: 3.6rem;
+
+  & div {
+    line-height: 2.3rem;
+  }
+
+  & div:first-child {
+    line-height: 2.4rem;
+  }
 
   @media (max-width: 48rem) {
-    width: 5.5rem;
     height: 3.2rem;
+    padding: 0.6rem 0.8rem;
 
     & div {
       font-size: 1.4rem;
-      line-height: 1.6rem;
+      line-height: 2rem;
       letter-spacing: -0.007rem;
+    }
+
+    & div:first-child {
+      line-height: 2.2rem;
     }
   }
 `;

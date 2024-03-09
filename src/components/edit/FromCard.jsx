@@ -7,9 +7,22 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import CardModal from 'components/commons/modal/CardModal';
 import IconButton from 'components/commons/buttons/IconButton';
-import { useDeleteMessageQuery } from 'hooks/queries/useEditQuery';
+import { useDeleteMessageQuery } from 'hooks/queries/edit/useDeleteMessageQuery';
 import { deleteAlert } from 'utils/deleteAlert';
 
+/**
+ *
+ * @param {object} props
+ * @param {object} props.profileImageURL
+ * @param {object} props.sender
+ * @param {object} props.relationship
+ * @param {object} props.content
+ * @param {object} props.formattedDate
+ * @param {object} props.isDelete
+ * @param {object} props.messageId 삭제 요청을 보낼때 필요한 메세지 아이디
+ * @param {object} props.font
+ * @returns
+ */
 const FromCard = ({
   profileImageURL,
   sender,
@@ -18,6 +31,7 @@ const FromCard = ({
   formattedDate,
   isDelete,
   messageId,
+  font,
 }) => {
   const [showModal, setShowModal] = useState(false);
   const deleteMessage = useDeleteMessageQuery(messageId);
@@ -53,11 +67,12 @@ const FromCard = ({
         </Header>
         <Hr />
         <Content>
-          <CardMessage message={content} $ismodal={false} />
+          <CardMessage font={font} message={content} $ismodal={false} />
           <Date date={formattedDate} $ismodal={false} />
         </Content>
       </CardContainer>
       <CardModal
+        font={font}
         showModal={showModal}
         handleClose={handleClose}
         isDelete={isDelete}

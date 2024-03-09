@@ -4,7 +4,7 @@ import MainHeader from 'components/commons/header/MainHeader';
 import SubHeader from 'components/commons/header/SubHeader';
 import useDeviceType from 'hooks/useDeviceType';
 
-const GNB = () => {
+const GNB = ({ data }) => {
   const location = useLocation();
   const { pathname } = location;
 
@@ -17,16 +17,20 @@ const GNB = () => {
   const shouldShowMainHeader =
     isTabletOrPC || (isMobile && (isEditPage || !isPostPage));
 
-  const shouldShowMainHeaderButton = pathname === '/' || pathname === '/list';
+  const shouldShowMainHeaderButton =
+    pathname === '/' ||
+    pathname === '/list' ||
+    pathname === '/papers/like' ||
+    pathname === '/papers/date';
   const shouldShowSubHeader = isEditPage || (isMobile && isEditPage);
 
   return (
     <>
       <StickyContainer>
         {shouldShowMainHeader && (
-          <MainHeader showButton={shouldShowMainHeaderButton} />
+          <MainHeader showButton={shouldShowMainHeaderButton} data={data} />
         )}
-        {shouldShowSubHeader && <SubHeader />}
+        {shouldShowSubHeader && <SubHeader data={data} />}
       </StickyContainer>
     </>
   );

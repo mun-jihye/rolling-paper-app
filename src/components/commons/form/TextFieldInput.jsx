@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import style from 'styled-components';
+import styled from 'styled-components';
 import { InputStatus } from 'components/commons/form';
 
 export default function TextFieldInput({
@@ -58,12 +58,12 @@ export default function TextFieldInput({
   );
 }
 
-const StyledDiv = style.div`
+const StyledDiv = styled.div`
   display: flex;
   flex-direction: column;
-  `;
+`;
 
-const StyledInput = style.input`
+const StyledInput = styled.input`
   border-radius: 0.8rem;
   border: ${props => props.$status.border};
   color: ${props => props.$status.color};
@@ -79,7 +79,7 @@ const StyledInput = style.input`
   width: 32rem;
 `;
 
-const StyledSpan = style.span`
+const StyledSpan = styled.span`
   color: ${({ theme }) => theme.error};
 
   font-weight: 400;
