@@ -15,10 +15,6 @@ import { createMessage } from 'api/recipient';
 import { errorAlert } from 'utils/errorAlert';
 
 const MessagePage = () => {
-  /**
-   * @description MessagePage의 동작을 수행하고 있다.
-   * {@link createMessage} {@link navigate}
-   */
   const { postId } = useParams();
 
   const [imageURLs, setImageURLs] = useState([]);

@@ -11,10 +11,6 @@ import { useNavigate } from 'react-router-dom';
 import { errorAlert } from 'utils/errorAlert';
 
 const PostPage = () => {
-  /**
-   * @description Postpage의 동작을 수행하고 있다.
-   * @requires {@link instance} {@link AUTH} {@link createRecipients}
-   */
   const [toggleState, setToggleState] = useState('컬러');
   const [imageURLs, setImageURLs] = useState([]);
 
