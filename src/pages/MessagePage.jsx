@@ -9,19 +9,16 @@ import GNB from 'components/commons/header/GNB';
 import Button from 'components/commons/buttons/Button';
 import person from 'assets/images/profiles/person.svg';
 import { useParams, useNavigate } from 'react-router-dom';
-import { AUTH } from 'utils/constants/API';
-import { instance } from 'api/';
-import { createMessage } from 'api/recipient';
-import { errorAlert } from 'utils/errorAlert';
+import { useGetProfileImagesQuery } from 'hooks/queries/post/useGetProfileImageQuery';
+import { usePostMessagesQuery } from 'hooks/queries/post/usePostMessagesQuery';
+import { infoAlert } from 'utils/infoAlert';
+import routes from 'utils/constants/routes';
 
 const MessagePage = () => {
-  /**
-   * @description MessagePage의 동작을 수행하고 있다.
-   * {@link createMessage} {@link navigate}
-   */
   const { postId } = useParams();
-
-  const [imageURLs, setImageURLs] = useState([]);
+  const { data: profileImages } = useGetProfileImagesQuery();
+  const profileImageUrls = profileImages?.data.imageUrls;
+  const postMessages = usePostMessagesQuery(postId);
   const [isBtnDisabled, setIsBtnDisabled] = useState(false);
 
   const inputDisabled = false;
@@ -49,23 +46,6 @@ const MessagePage = () => {
     setIsBtnDisabled(!(formValues.sender.trim() && formValues.content.trim()));
   }, [formValues.sender, formValues.content]);
 
-  useEffect(() => {
-    const getProfileImages = async () => {
-      const response = await instance.get(AUTH.profileImages);
-      setImageURLs(response.data.imageUrls);
-    };
-    getProfileImages();
-  }, []);
-
-  useEffect(() => {
-    if (imageURLs.length > 0) {
-      setFormValues(prevState => ({
-        ...prevState,
-        profileImageURL: imageURLs[0],
-      }));
-    }
-  }, []);
-
   const handleInputChange = e => {
     setFormValues(prevState => ({ ...prevState, sender: e.target.value }));
   };
@@ -85,14 +65,22 @@ const MessagePage = () => {
   const handleFontChange = font => {
     setFormValues(prevState => ({ ...prevState, font }));
   };
+  useEffect(() => {
+    if (formValues.profileImageURL === null && profileImageUrls?.length > 0) {
+      setFormValues(prevFormValues => ({
+        ...prevFormValues,
+        profileImageURL: profileImageUrls[0],
+      }));
+    }
+  }, [formValues.profileImageURL, profileImageUrls]);
 
   const submitForm = async () => {
-    try {
-      const response = await createMessage(postId, formValues);
-      navigate(`/post/${response.data.recipientId}`);
-    } catch (err) {
-      errorAlert('/Post{id}/message 페이지 생성에 실패했습니다.');
-    }
+    postMessages.mutate(formValues, {
+      onSuccess: () => {
+        infoAlert({ title: '메세지 생성 성공' });
+        navigate(`${routes.post}/${postId}`);
+      },
+    });
   };
 
   const handleSubmit = e => {
@@ -123,7 +111,7 @@ const MessagePage = () => {
               <div>
                 <h3>프로필 이미지를 선택해주세요!</h3>
                 <SampleImages>
-                  {imageURLs.map((image, index) => (
+                  {profileImageUrls?.map((image, index) => (
                     <img
                       key={index}
                       src={image}
