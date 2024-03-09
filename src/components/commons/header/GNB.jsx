@@ -18,7 +18,7 @@ const GNB = ({ data }) => {
     isTabletOrPC || (isMobile && (isEditPage || !isPostPage));
 
   const shouldShowMainHeaderButton =
-    pathname === '/' || pathname === '/list' || pathname === '/page';
+    pathname === '/' || pathname === '/list' || pathname === '/pages';
   const shouldShowSubHeader = isEditPage || (isMobile && isEditPage);
 
   return (
