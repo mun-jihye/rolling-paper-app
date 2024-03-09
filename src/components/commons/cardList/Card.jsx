@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes, useTheme } from 'styled-components';
 import Profile from 'components/commons/Profile';
 import bluePattern from 'assets/images/cardList/pattern_blue.png';
 import greenPattern from 'assets/images/cardList/pattern_green.png';
@@ -18,13 +18,32 @@ import React from 'react';
  * @returns {JSX.Element}
  */
 function Card({ data, isLoading, className }) {
+  const theme = useTheme();
+
+  const hasPhotoImg = Boolean(data?.backgroundImageURL);
+
+  const photoBackgroundOverlay = `linear-gradient(180deg, rgba(0, 0, 0, 0.54) 0%, rgba(0, 0, 0, 0.54) 100%)`;
+  const photoBackground = `${photoBackgroundOverlay}, url(${data?.backgroundImageURL})`;
+
+  const defaultColor = theme[BACK_GROUND[data?.backgroundColor || 'beige'][0]];
+  const defaultImg = BACK_GROUND[data?.backgroundColor || 'beige'][1];
+  const colorBackground = `url(${defaultImg}), ${defaultColor}`;
+
+  const cardBackground = hasPhotoImg ? photoBackground : colorBackground;
+
   return isLoading ? (
     <LoadingCard className={className} />
   ) : (
     <Link to={`${routes.post}/${data?.id}`}>
-      <StyledCard $data={data} className={className}>
+      <StyledCard
+        className={className}
+        $background={cardBackground}
+        $hasPhotoImg={hasPhotoImg}
+      >
         <StyledContainer $isProfile={true}>
-          <StyledH3tag $data={data}>{`To. ${data?.name}`}</StyledH3tag>
+          <StyledH3tag
+            $hasPhotoImg={hasPhotoImg}
+          >{`To. ${data?.name}`}</StyledH3tag>
           <StyledContainer $isImage={true}>
             {data?.recentMessages?.map((message, index) => {
               return (
@@ -37,8 +56,8 @@ function Card({ data, isLoading, className }) {
               <LastProfile>+{data?.messageCount - 3}</LastProfile>
             )}
           </StyledContainer>
-          <StyledText $data={data}>
-            <StyledText $data={data} $isNumber={true}>
+          <StyledText $hasPhotoImg={hasPhotoImg}>
+            <StyledText $hasPhotoImg={hasPhotoImg} $isNumber={true}>
               {data?.messageCount}
             </StyledText>
             명이 작성했어요!
@@ -69,23 +88,12 @@ const StyledCard = styled.div`
   height: 23.2rem;
   border-radius: 1.6rem;
   border: none;
-  background: ${({ theme, $data }) =>
-    $data?.backgroundImageURL
-      ? `linear-gradient(180deg, rgba(0, 0, 0, 0.54) 0%, rgba(0, 0, 0, 0.54) 100%), url(${$data?.backgroundImageURL})`
-      : theme[
-          BACK_GROUND[
-            $data?.backgroundColor ? $data?.backgroundColor : 'beige'
-          ][0]
-        ]};
-  background-image: ${({ $data }) =>
-    $data?.backgroundImageURL
-      ? ''
-      : `url(${BACK_GROUND[$data?.backgroundColor ? $data?.backgroundColor : 'beige'][1]})`};
-  background-position: ${({ $data }) =>
-    $data?.backgroundImageURL ? 'center' : 'right bottom'};
+  background: ${({ $background }) => $background};
+  background-position: ${({ $hasPhotoImg }) =>
+    $hasPhotoImg ? 'center' : 'right bottom'};
   background-repeat: no-repeat;
-  background-size: ${({ $data }) =>
-    $data?.backgroundImageURL ? 'cover' : '10.74rem'};
+  background-size: ${({ $hasPhotoImg }) =>
+    $hasPhotoImg ? 'cover' : '10.74rem'};
   box-shadow: 0 0.2rem 1.2rem 0 rgba(0, 0, 0, 0.08);
   cursor: pointer;
 
@@ -98,15 +106,15 @@ const StyledCard = styled.div`
     padding: 3rem 2.4rem 2rem;
     width: 27.5rem;
     height: 26rem;
-    background-size: ${({ $data }) =>
-      $data?.backgroundImageURL ? 'cover' : '14.2rem'};
+    background-size: ${({ $hasPhotoImg }) =>
+      $hasPhotoImg ? 'cover' : '14.2rem'};
   }
 `;
 
 const StyledH3tag = styled.h3`
   overflow: hidden;
-  color: ${({ theme, $data }) =>
-    $data?.backgroundImageURL ? theme.white : theme.gray900};
+  color: ${({ theme, $hasPhotoImg }) =>
+    $hasPhotoImg ? theme.white : theme.gray900};
   text-overflow: ellipsis;
   font-size: 1.8rem;
   font-style: normal;
@@ -122,8 +130,8 @@ const StyledH3tag = styled.h3`
 `;
 
 const StyledText = styled.span`
-  color: ${({ theme, $data }) =>
-    $data?.backgroundImageURL ? theme.white : theme.gray700};
+  color: ${({ theme, $hasPhotoImg }) =>
+    $hasPhotoImg ? theme.white : theme.gray700};
   font-size: 1.4rem;
   font-style: normal;
   font-weight: ${({ $isNumber }) => ($isNumber ? '700' : '400')};
