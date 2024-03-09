@@ -113,11 +113,13 @@ https://naver.com
 
 ### 반응형 (Mobile)
 
-| ![landing](public/images/mobileLanding.png)        | ![list](public/images/mobileList.png)       | ![paper](public/images/mobilePaper.png)                   |
-| -------------------------------------------------- | ------------------------------------------- | --------------------------------------------------------- |
-| ![post](public/images/mobilePost.png)              | ![message](public/images/mobileMessage.png) | ![edit](public/images/mobileEdit.png)                     |
-| -------------------------------------------------- | ------------------------------------------- | ---------------------------------------                   |
-| ![delete_mode](public/images/mobileDeleteMode.png) | ![delete](public/images/mobileDelete.png)   | ![deleteComplete](public/images/mobileDeleteComplete.png) |
+| ![landing](public/images/mobileLanding.png) | ![list](public/images/mobileList.png) | ![paper](public/images/mobilePaper.png) |
+| ------------------------------------------- | ------------------------------------- | --------------------------------------- |
+
+| ![post](public/images/mobilePost.png) | ![message](public/images/mobileMessage.png) | ![edit](public/images/mobileEdit.png) |
+| ------------------------------------- | ------------------------------------------- | ------------------------------------- |
+
+| ![delete_mode](public/images/mobileDeleteMode.png) | ![delete](public/images/mobileDelete.png) | ![deleteComplete](public/images/mobileDeleteComplete.png) |
 
 <br>
 
