@@ -13,7 +13,6 @@ import { useGetProfileImagesQuery } from 'hooks/queries/post/useGetProfileImageQ
 import { usePostMessagesQuery } from 'hooks/queries/post/usePostMessagesQuery';
 import { infoAlert } from 'utils/infoAlert';
 import routes from 'utils/constants/routes';
-import Loader from 'components/commons/Loader';
 
 const MessagePage = () => {
   const { postId } = useParams();
@@ -78,7 +77,7 @@ const MessagePage = () => {
   const submitForm = async () => {
     postMessages.mutate(formValues, {
       onSuccess: () => {
-        infoAlert({ title: '요청이 성공했습니다.' });
+        infoAlert({ title: '메세지 생성 성공' });
         navigate(`${routes.post}/${postId}`);
       },
     });
