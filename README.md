@@ -102,10 +102,13 @@ https://naver.com
 
 | ![landing](public/images/TabletLanding.png) | ![list](public/images/TabletList.png)   |
 | ------------------------------------------- | --------------------------------------- |
+
 | ![paper](public/images/TabletPaper.png)     | ![post](public/images/TabletPost.png)   |
 | ----------------------------------------    | -------------------------------------   |
+
 | ![Message](public/images/TabletMessage.png) | ![edit](public/images/TabletEdit.png)   |
 | ----------------------------------------    | -------------------------------------   |
+
 | ![Modal](public/images/TabletModal.png)     | ![emoji](public/images/TabletEmoji.png) |
 | ----------------------------------------    | -------------------------------------   |
 
@@ -113,9 +116,12 @@ https://naver.com
 
 | ![landing](public/images/mobileLanding.png)        | ![list](public/images/mobileList.png)       | ![paper](public/images/mobilePaper.png) |
 | -------------------------------------------------- | ------------------------------------------- | --------------------------------------- |
+
 | ![post](public/images/mobilePost.png)              | ![message](public/images/mobileMessage.png) | ![edit](public/images/mobileEdit.png)   |
 | -------------------------------------------------- | ------------------------------------------- | --------------------------------------- |
+
 | ![delete_mode](public/images/mobileDeleteMode.png) | ![delete](public/images/mobileDelete.png)   |                                         |
+| -------------------------------------------------- | ------------------------------------------- | --------------------------------------- |
 
 <br>
 
