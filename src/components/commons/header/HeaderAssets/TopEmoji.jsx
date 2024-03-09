@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import EmojiBadge from '../badges/EmojiBadge';
+import EmojiBadge from '../../badges/EmojiBadge';
 import ArrowDown from 'assets/images/headers/ArrowDown.svg';
 
 const TopEmoji = ({
