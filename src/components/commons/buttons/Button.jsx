@@ -1,6 +1,18 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
+/**
+ *
+ * @param {object} props primary, secondary, outline 버튼 불러오기
+ * @param {string} props.width 버튼 가로 길이
+ * @param {string} props.heigth 버튼 세로 길이
+ * @param {string} props.fontSize 버튼 폰트 사이즈
+ * @param {string} props.fontWeight 버튼 폰트 굵기
+ * @param {React.ReactNode} props.children
+ * @param {React.MouseEventHandler<HTMLButtonElement>} props.onClick 버튼 클릭시 동작 함수
+ * @returns
+ */
+
 function Button({
   width,
   height,
