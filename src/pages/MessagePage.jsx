@@ -9,15 +9,15 @@ import GNB from 'components/commons/header/GNB';
 import Button from 'components/commons/buttons/Button';
 import person from 'assets/images/profiles/person.svg';
 import { useParams, useNavigate } from 'react-router-dom';
-import { AUTH } from 'utils/constants/API';
-import { instance } from 'api/';
 import { createMessage } from 'api/recipient';
 import { errorAlert } from 'utils/errorAlert';
+import { useGetProfileImagesQuery } from 'hooks/queries/post/useGetProfileImageQuery';
 
 const MessagePage = () => {
   const { postId } = useParams();
+  const { data: profileImages } = useGetProfileImagesQuery();
+  const profileImageUrls = profileImages?.data.imageUrls;
 
-  const [imageURLs, setImageURLs] = useState([]);
   const [isBtnDisabled, setIsBtnDisabled] = useState(false);
 
   const inputDisabled = false;
@@ -38,29 +38,12 @@ const MessagePage = () => {
     relationship: initialSelectedItem[0],
     content: '',
     font: initialSelectedItem[1],
-    profileImageURL: null,
+    profileImageURL: profileImageUrls[0],
   });
 
   useEffect(() => {
     setIsBtnDisabled(!(formValues.sender.trim() && formValues.content.trim()));
   }, [formValues.sender, formValues.content]);
-
-  useEffect(() => {
-    const getProfileImages = async () => {
-      const response = await instance.get(AUTH.profileImages);
-      setImageURLs(response.data.imageUrls);
-    };
-    getProfileImages();
-  }, []);
-
-  useEffect(() => {
-    if (imageURLs.length > 0) {
-      setFormValues(prevState => ({
-        ...prevState,
-        profileImageURL: imageURLs[0],
-      }));
-    }
-  }, []);
 
   const handleInputChange = e => {
     setFormValues(prevState => ({ ...prevState, sender: e.target.value }));
@@ -119,7 +102,7 @@ const MessagePage = () => {
               <div>
                 <h3>프로필 이미지를 선택해주세요!</h3>
                 <SampleImages>
-                  {imageURLs.map((image, index) => (
+                  {profileImageUrls?.map((image, index) => (
                     <img
                       key={index}
                       src={image}
