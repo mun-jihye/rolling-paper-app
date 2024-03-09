@@ -3,6 +3,7 @@ import FromCard from './FromCard';
 import { formatDate } from 'utils/date';
 import AddCard from './AddCard';
 import FromCardSkeleton from './FromCardSkeleton';
+import NullCard from './NullCard';
 
 /**
  *
@@ -18,6 +19,7 @@ const FromCardList = ({ datas, isDelete, isFetchingNextPage }) => {
   return (
     <GridContainer>
       <AddCard isDelete={isDelete} />
+      {isDelete && datas.length === 0 && <NullCard />}
       {datas?.map(data => {
         const {
           id,
