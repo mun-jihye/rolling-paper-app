@@ -20,7 +20,7 @@ function App() {
         element={<MessagePage />}
       ></Route>
       <Route path={routes.post} element={<PostPage />}></Route>
-      <Route path={routes.error} element={<ErrorPage />}></Route>
+      <Route path="*" element={<ErrorPage />} />
     </Routes>
   );
 }
