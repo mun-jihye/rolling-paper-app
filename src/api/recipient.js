@@ -25,8 +25,8 @@ export const createRecipients = data => {
 };
 /**
  *
- * @param {*} Id postId; 생성된 메시지가 어느 페이지에 추가될 지 정하는 변수값
- * @param {*} data 생성된 메시지에 전달된 데이터
+ * @param {Number} Id postId; 생성된 메시지가 어느 페이지에 추가될 지 정하는 변수값
+ * @param {Object} data 생성된 메시지에 전달된 데이터
  * @returns
  */
 export const createMessage = (Id, data) => {

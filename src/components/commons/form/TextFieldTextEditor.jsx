@@ -10,12 +10,12 @@ import bullet from 'assets/images/forms/bullet.svg';
 import fill from 'assets/images/forms/fill.svg';
 import fontSize from 'assets/images/forms/font_size.svg';
 
-export default function TextFieldTextEditor({ handleChange }) {
+export default function TextFieldTextEditor({ handleChange, ...props }) {
   const handleInputChange = e => {
     handleChange(e);
   };
   return (
-    <StyledContainer>
+    <StyledContainer {...props}>
       <ButtonContainer>
         <StyledImg>
           <img src={bold} alt="bold" />
@@ -81,7 +81,6 @@ const StyledImg = styled.div`
 
 const StyledTextInput = styled.textarea`
   color: ${({ theme }) => theme.gray900};
-  width: 68.8rem;
   height: 17.8rem;
   margin: 1.6rem;
 
