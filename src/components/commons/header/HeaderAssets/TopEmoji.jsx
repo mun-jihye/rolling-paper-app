@@ -10,6 +10,7 @@ const TopEmoji = ({
   setArrowShareOptions,
   showArrowOptions,
 }) => {
+  console.log(topReactions);
   const handleBadgeClick = data => {
     postReaction.mutate({ emoji: data.emoji, type: 'decrease' });
   };
@@ -22,13 +23,19 @@ const TopEmoji = ({
   return (
     <>
       <StyledEmojis>
-        {topReactions.map((reaction, index) => (
-          <EmojiBadge
-            key={index}
-            data={reaction}
-            onClick={() => handleBadgeClick(reaction)}
-          />
-        ))}
+        {topReactions.map((reaction, index) => {
+          if (reaction.count > 0) {
+            return (
+              <EmojiBadge
+                key={index}
+                data={reaction}
+                onClick={() => handleBadgeClick(reaction)}
+              />
+            );
+          } else {
+            return null;
+          }
+        })}
         <StyledArrow onClick={handleArrowClick} src={ArrowDown} alt="Arrow" />
       </StyledEmojis>
     </>
