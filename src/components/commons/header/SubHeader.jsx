@@ -1,15 +1,18 @@
 import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
-import AddImage from 'assets/images/headers/AddImage.svg';
 import useCloseModal from 'hooks/useCloseModal';
-import EmojiPicker from 'emoji-picker-react';
 import EmojiBadge from 'components/commons/badges/EmojiBadge';
+import TopEmoji from './HeaderAssets/TopEmoji';
+import Share from './HeaderButton/ShareButton';
 import { useGetReactionQuery } from 'hooks/queries/reaction/useGetReactionQuery';
 import { usePostReactionQuery } from 'hooks/queries/reaction/usePostReactionQuery';
 import { useParams } from 'react-router-dom';
-import TopEmoji from './TopEmoji';
-import { StyledButton, StyledButtons } from './ButtonContainer';
-import Share from './Share';
+import { StyledButtons } from './HeaderStyled/ButtonContainer';
+import { StyledDivider } from './HeaderStyled/Dividers';
+import { StyledEmojiPicker } from './HeaderAssets/EmojiPickerModal';
+import { EmojiPickerModal } from './HeaderAssets/EmojiPickerModal';
+import { Profiles } from './HeaderAssets/Profiles';
+import { AddButton } from './HeaderButton/AddButton';
 
 const SubHeader = ({ data }) => {
   const { postId } = useParams();
@@ -20,7 +23,7 @@ const SubHeader = ({ data }) => {
   const recipientCount = data ? data.messageCount : '0';
   const topProfileImages = data?.recentMessages
     .slice(0, 3)
-    .map(msg => msg.profileImageURL);
+    .map(msg => msg.profileImageURL || []);
   const topReactions = reaction?.data.results.slice(0, 3) || [];
   const userReactions = reaction?.data.results.slice(0, 8) || [];
 
@@ -64,17 +67,15 @@ const SubHeader = ({ data }) => {
       <ToUser>To. {recipientName}</ToUser>
       <StyledSection>
         <StyledProfiles>
-          {topProfileImages?.map((image, index) => (
-            <StyledProfile key={index} src={image} alt={`Profile ${index}`} />
-          ))}
-          {recipientCount > 3 && (
-            <StyledProfileNum>+{recipientCount - 3}</StyledProfileNum>
-          )}
+          <Profiles
+            profileImages={topProfileImages}
+            profileCount={recipientCount}
+          />
         </StyledProfiles>
         <StyledMessage>
           <StyledEmp>{recipientCount}</StyledEmp>명이 작성했어요!
         </StyledMessage>
-        <StyledDivider />
+        <StyledDivider type={true} />
         <TopEmoji
           topReactions={topReactions}
           setShowEmojiPicker={setShowEmojiPicker}
@@ -91,18 +92,13 @@ const SubHeader = ({ data }) => {
               ))}
             </ArrowOptions>
           )}
-          <AddButton
-            src={AddImage}
-            alt="Add"
-            text="추가"
-            onClick={handleAddClick}
-          />
+          <AddButton onClick={handleAddClick} text="추가" />
           {showEmojiPicker && (
             <StyledEmojiPicker ref={emojiPickerRef}>
-              <EmojiPicker onEmojiClick={onEmojiClick} />
+              <EmojiPickerModal onEmojiClick={onEmojiClick} />
             </StyledEmojiPicker>
           )}
-          <StyledDivider2 />
+          <StyledDivider type={false} />
           <Share
             setArrowShareOptions={setArrowShareOptions}
             setShowEmojiPicker={setShowEmojiPicker}
@@ -117,31 +113,6 @@ const SubHeader = ({ data }) => {
 };
 
 export default SubHeader;
-
-const AddButton = ({ src, alt, onClick, text }) => (
-  <StyledButton onClick={onClick}>
-    <img src={src} alt={alt} />
-    <AddText>{text}</AddText>
-  </StyledButton>
-);
-
-const StyledEmojiPicker = styled.div`
-  position: absolute;
-  width: 14rem;
-  height: 10.1rem;
-  top: 120%;
-  right: 114%;
-  z-index: 200;
-  @media ${({ theme }) => theme.breakpoint.mobile} {
-    right: 195%;
-  }
-`;
-
-const AddText = styled.div`
-  @media (max-width: 768px) {
-    display: none;
-  }
-`;
 
 const ArrowOptions = styled.div`
   max-width: 31.2rem;
@@ -204,37 +175,6 @@ const ToUser = styled.div`
   }
 `;
 
-const StyledProfileNum = styled.div`
-  width: 2.8rem;
-  height: 2.8rem;
-  left: 4.8rem;
-  border: 0.1rem;
-  background: ${({ theme }) => theme.white};
-  border: 0.1rem solid ${({ theme }) => theme.gray200};
-  border-radius: 14rem;
-  font-family: Pretendard;
-  font-size: 1.2rem;
-  line-height: 1.8rem;
-  text-align: left;
-  padding: 0.4rem 0.4rem;
-
-  @media ${({ theme }) => theme.breakpoint.tablet} {
-    display: none;
-  }
-`;
-
-const StyledProfile = styled.img`
-  width: 2.8rem;
-  height: 2.8rem;
-  border-radius: 14rem;
-  margin-right: -0.8rem;
-  border: 0.14rem solid ${({ theme }) => theme.white};
-
-  @media ${({ theme }) => theme.breakpoint.tablet} {
-    display: none;
-  }
-`;
-
 const StyledProfiles = styled.div`
   display: flex;
   margin-right: 1.5rem;
@@ -263,25 +203,4 @@ const StyledEmp = styled.p`
   @media ${({ theme }) => theme.breakpoint.mobile} {
     display: none;
   }
-`;
-
-const StyledDivider = styled.div`
-  height: 2.5rem;
-  width: 0.15rem;
-  background-color: ${({ theme }) => theme.gray200};
-  margin: 0 2rem;
-
-  @media ${({ theme }) => theme.breakpoint.tablet} {
-    display: none;
-  }
-
-  @media ${({ theme }) => theme.breakpoint.mobile} {
-    display: none;
-  }
-`;
-
-const StyledDivider2 = styled.div`
-  height: 2.5rem;
-  width: 0.1rem;
-  background-color: ${({ theme }) => theme.gray200};
 `;
