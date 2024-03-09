@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import style from 'styled-components';
+import styled from 'styled-components';
 import { DropDownStatus } from './DropDownStatus';
 import arrowUp from 'assets/images/forms/arrow_top.svg';
 import arrowDown from 'assets/images/forms/arrow_down.svg';
@@ -77,7 +77,7 @@ export default function TextFieldDropDown({
   );
 }
 
-const StyledDiv = style.div`
+const StyledDiv = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -92,7 +92,7 @@ const StyledDiv = style.div`
   }
 `;
 
-const StyledDropDownButton = style.button`
+const StyledDropDownButton = styled.button`
   border-radius: 0.8rem;
   border: ${props => props.$status.border};
   background-color: ${props => props.$status.backgroundColor};
@@ -104,7 +104,7 @@ const StyledDropDownButton = style.button`
   gap: 1rem;
 `;
 
-const StyledDropDownText = style.span`
+const StyledDropDownText = styled.span`
   color: ${props => props.$status.color};
 
   font-weight: 400;
@@ -115,10 +115,9 @@ const StyledDropDownText = style.span`
   position: absolute;
   top: 1.4rem;
   left: 1.2rem;
-
 `;
 
-const StyledSpan = style.span`
+const StyledSpan = styled.span`
   color: ${({ theme }) => theme.error};
   color: ${({ theme }) => theme.error};
 

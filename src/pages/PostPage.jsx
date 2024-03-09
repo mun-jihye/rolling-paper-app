@@ -8,11 +8,19 @@ import { createRecipients } from 'api/recipient';
 import { AUTH } from 'utils/constants/API';
 import { instance } from 'api/';
 import { useNavigate } from 'react-router-dom';
+import { errorAlert } from 'utils/errorAlert';
 
 const PostPage = () => {
+  /**
+   * @description Postpage의 동작을 수행하고 있다.
+   * @requires {@link instance} {@link AUTH} {@link createRecipients}
+   */
   const [toggleState, setToggleState] = useState('컬러');
-  const colors = ['beige', 'purple', 'blue', 'green'];
   const [imageURLs, setImageURLs] = useState([]);
+
+  const colors = ['beige', 'purple', 'blue', 'green'];
+  const inputDisabled = false;
+  const error = { message: '' };
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,14 +39,12 @@ const PostPage = () => {
 
   const [background, setBackground] = useState(items[0]);
   const [isBtnDisabled, setIsBtnDisabled] = useState(true);
+
   const [formValues, setFormValues] = useState({
     name: '',
     backgroundColor: toggleState === '컬러' ? items[0] : 'beige',
     backgroundImageURL: toggleState === '이미지' ? items[0] : null,
   });
-  const inputDisabled = false;
-
-  const error = { message: '' };
 
   const handleChange = e => {
     if (!e.target.value) {
@@ -53,7 +59,7 @@ const PostPage = () => {
   };
 
   const handleToggle = e => {
-    const newToggleState = e.target.innerText.toLowerCase();
+    const newToggleState = e.target.innerText;
     setToggleState(newToggleState);
   };
 
@@ -66,13 +72,18 @@ const PostPage = () => {
     }));
   };
 
-  const handleSubmit = async e => {
-    e.preventDefault();
-    const jsonFormValues = JSON.stringify(formValues);
+  const submitForm = async () => {
     try {
-      const response = await createRecipients(jsonFormValues);
+      const response = await createRecipients(formValues);
       navigate(`/post/${response.data.id}`);
-    } catch (err) {}
+    } catch (err) {
+      errorAlert('/Post 페이지 생성에 실패했습니다.');
+    }
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    submitForm();
   };
 
   useEffect(() => {
@@ -152,6 +163,9 @@ const InputContainer = styled.div`
 
 const NameInput = styled(TextFieldInput)`
   width: 72rem;
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    width: 32rem;
+  }
 `;
 
 const SelectContainer = styled.div`
@@ -162,6 +176,9 @@ const SelectContainer = styled.div`
   position: relative;
   padding-top: 5rem;
   gap: 0.4rem;
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    width: 32rem;
+  }
 `;
 const Description = styled.div`
   margin-bottom: 2.4rem;
@@ -191,6 +208,15 @@ const StyledBtn = styled(Button)`
   font-size: 1.8rem;
   line-height: 2.8rem;
   letter-spacing: -0.01em;
+  @media ${({ theme }) => theme.breakpoint.tablet} {
+    position: fixed;
+    bottom: 2.4rem;
+  }
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    width: 32rem;
+    position: fixed;
+    bottom: 2.4rem;
+  }
 `;
 
 export default PostPage;

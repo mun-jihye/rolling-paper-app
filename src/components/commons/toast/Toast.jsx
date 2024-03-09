@@ -3,6 +3,14 @@ import styled from 'styled-components';
 import { fadeIn } from './Animation';
 import icon from 'assets/images/toast/completed.png';
 
+/**
+ *
+ * @param {object} props
+ * @param {Function} props.setIsAlert 토스트 창 보임 여부를 결정할 함수
+ * @param {boolean} props.toast 토스트 창 보임 여부
+ * @param {string} props.positionLeft 토스트 창 위치 - 왼쪽으로 얼마나 움직일지 결정
+ * @returns
+ */
 const Toast = ({ setIsAlert, toast, positionLeft }) => {
   useEffect(() => {
     const timer = setTimeout(() => {

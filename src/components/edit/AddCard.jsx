@@ -5,6 +5,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 import routes from 'utils/constants/routes';
 import styled from 'styled-components';
 
+/**
+ *
+ * @param {object} props
+ * @param {boolean} props.isDelete 편집 모드 여부
+ * @returns
+ */
 const AddCard = ({ isDelete }) => {
   const { postId } = useParams();
   const navigate = useNavigate();

@@ -4,7 +4,7 @@ import GNB from 'components/commons/header/GNB';
 import styled from 'styled-components';
 import { Link, useParams } from 'react-router-dom';
 import routes from 'utils/constants/routes';
-import { useGetRecipientsAllQuery } from 'hooks/queries/usePapersQuery';
+import { useGetRecipientsAllQuery } from 'hooks/queries/papers/usePapersQuery';
 import { useInView } from 'react-intersection-observer';
 import { useEffect } from 'react';
 import Loader from 'components/commons/Loader';

@@ -1,9 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const EmojiBadge = ({ className, data }) => {
+/**
+ * 이모지 벳지 컴포넌트
+ * @param {object} props
+ * @param {string} props.className
+ * @param {object} props.data 이모지 개수, 이모지
+ * @param {React.MouseEventHandler<HTMLButtonElement>} props.onClick 벳지 클릭시 동작 함수
+ * @returns
+ */
+const EmojiBadge = ({ className, data, onClick }) => {
   return (
-    <StyledContainer className={className}>
+    <StyledContainer className={className} onClick={onClick}>
       <Emoji>{data?.emoji}</Emoji>
       <Count>{data?.count}</Count>
     </StyledContainer>
