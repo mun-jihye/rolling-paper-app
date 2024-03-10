@@ -87,9 +87,11 @@ const SubHeader = ({ data }) => {
         <StyledButtons>
           {showArrowOptions && (
             <ArrowOptions ref={arrowOptionsRef}>
-              {userReactions.map((emoji, id) => (
-                <EmojiBadge key={id} data={emoji} />
-              ))}
+              {userReactions
+                .filter(reaction => reaction.count > 0)
+                .map((emoji, id) => (
+                  <EmojiBadge key={id} data={emoji} />
+                ))}
             </ArrowOptions>
           )}
           <AddButton onClick={handleAddClick} text="추가" />
