@@ -7,24 +7,6 @@ const GlobalStyle = createGlobalStyle`
     font-weight: normal;
     font-style: normal;
   }
-  @font-face {
-    font-family: 'Nanum Myeongjo';
-    src: url('/fonts/NanumMyeongjo.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-  }
-  @font-face {
-    font-family: 'Noto Sans KR';
-    src: url('/fonts/NotoSansKR.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-  }
-  @font-face {
-    font-family: 'Pretendard';
-    src: url('/fonts/Pretendard.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-  }
   * {
     box-sizing: border-box; 
     margin: 0;
