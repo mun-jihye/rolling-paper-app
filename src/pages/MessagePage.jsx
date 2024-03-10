@@ -99,11 +99,7 @@ const MessagePage = () => {
   }, [dropDownOpen]);
 
   const handleTextEditorClick = e => {
-    postMessages.mutate({
-      onSuccess: () => {
-        infoAlert({ title: '현재 지원되지 않는 기능입니다.' });
-      },
-    });
+    infoAlert({ title: '현재 지원되지 않는 기능입니다.' });
   };
 
   const handleSubmit = e => {
