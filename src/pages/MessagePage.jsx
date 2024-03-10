@@ -20,6 +20,7 @@ const MessagePage = () => {
   const profileImageUrls = profileImages?.data.imageUrls;
   const postMessages = usePostMessagesQuery(postId);
   const [isBtnDisabled, setIsBtnDisabled] = useState(false);
+  const [dropDownOpen, setDropdownOpen] = useState(false);
 
   const inputDisabled = false;
   const dropDownDisabled = false;
@@ -83,6 +84,20 @@ const MessagePage = () => {
     });
   };
 
+  const handleClick = e => {
+    setDropdownOpen(true);
+  };
+
+  const handleBlur = e => {
+    setDropdownOpen(false);
+  };
+
+  useEffect(() => {
+    if (dropDownOpen) {
+      window.scrollTo(0, document.body.scrollHeight);
+    }
+  }, [dropDownOpen]);
+
   const handleSubmit = e => {
     e.preventDefault();
     submitForm();
@@ -137,7 +152,7 @@ const MessagePage = () => {
             <Description>내용을 입력해주세요</Description>
             <TextEditor handleChange={handleEditorChange} />
           </TextEditorContainer>
-          <FontSelectContainer>
+          <FontSelectContainer dropDownOpen={dropDownOpen}>
             <Description>폰트 선택</Description>
             <FontFamilyDropDown
               disabled={dropDownDisabled}
@@ -145,6 +160,8 @@ const MessagePage = () => {
               initialSelectedItem={initialSelectedItem[1]}
               listItems={listFontFamily}
               handleChange={handleFontChange}
+              onClick={handleClick}
+              onBlur={handleBlur}
             />
           </FontSelectContainer>
           <StyledPrimary disabled={isBtnDisabled} onClick={handleSubmit}>
@@ -246,6 +263,7 @@ const SampleImages = styled.div`
   justify-content: space-between;
   flex-wrap: wrap;
   width: 60.5rem;
+  margin-top: 0.5rem;
   cursor: pointer;
   @media ${({ theme }) => theme.breakpoint.mobile} {
     width: 20.8rem;
@@ -296,6 +314,7 @@ const FontSelectContainer = styled.div`
   align-items: flex-start;
   gap: 1.2rem;
   margin-bottom: 3.8rem;
+  margin-bottom: ${props => props.dropDownOpen && '22rem'};
   @media ${({ theme }) => theme.breakpoint.tablet} {
     margin-bottom: 6.2rem;
   }
