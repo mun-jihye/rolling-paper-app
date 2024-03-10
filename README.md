@@ -16,7 +16,7 @@
 
 ## 💾 배포 주소
 
-https://naver.com
+https://rolling-paper-24.netlify.app
 <br><br>
 
 ## 🎀프로젝트에 대한 소개
