@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { errorAlert } from 'utils/errorAlert';
-import Toast from '../toast/Toast';
+import Toast from '../../toast/Toast';
 import ShareImage from 'assets/images/headers/ShareImage.svg';
-import { StyledButton } from './ButtonContainer';
+import { StyledButton } from '../HeaderStyled/ButtonContainer';
 
 const Share = ({
   setArrowShareOptions,

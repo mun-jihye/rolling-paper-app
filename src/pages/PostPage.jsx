@@ -4,37 +4,28 @@ import GNB from 'components/commons/header/GNB';
 import { TextFieldInput, Options } from 'components/commons/form';
 import ToggleBtn from 'components/commons/buttons/ToggleBtn';
 import Button from 'components/commons/buttons/Button';
-import { createRecipients } from 'api/recipient';
-import { AUTH } from 'utils/constants/API';
-import { instance } from 'api/';
 import { useNavigate } from 'react-router-dom';
-import { errorAlert } from 'utils/errorAlert';
+import { useGetBackgroundImageQuery } from 'hooks/queries/post/useGetBackgroundImageQuery';
+import { usePostRecipientQuery } from 'hooks/queries/post/usePostRecipientQuery';
+import { infoAlert } from 'utils/infoAlert';
+import routes from 'utils/constants/routes';
 
 const PostPage = () => {
-  /**
-   * @description Postpage의 동작을 수행하고 있다.
-   * @requires {@link instance} {@link AUTH} {@link createRecipients}
-   */
   const [toggleState, setToggleState] = useState('컬러');
-  const [imageURLs, setImageURLs] = useState([]);
-
   const colors = ['beige', 'purple', 'blue', 'green'];
   const inputDisabled = false;
   const error = { message: '' };
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const getBackgroundImages = async () => {
-      const response = await instance.get(AUTH.backgroundImages);
-      setImageURLs(response.data.imageUrls);
-    };
-    getBackgroundImages();
-  }, []);
+  const { data: backgroundImage } = useGetBackgroundImageQuery();
+  const postRecipient = usePostRecipientQuery();
+  const backgroundImageUrls = backgroundImage?.data.imageUrls;
 
   const items = useMemo(() => {
     return toggleState === '컬러'
       ? colors.map(color => `${color}200`)
-      : imageURLs;
+      : backgroundImageUrls;
+    // eslint-disable-next-line
   }, [toggleState]);
 
   const [background, setBackground] = useState(items[0]);
@@ -73,12 +64,13 @@ const PostPage = () => {
   };
 
   const submitForm = async () => {
-    try {
-      const response = await createRecipients(formValues);
-      navigate(`/post/${response.data.id}`);
-    } catch (err) {
-      errorAlert('/Post 페이지 생성에 실패했습니다.');
-    }
+    postRecipient.mutate(formValues, {
+      onSuccess: res => {
+        const postId = res.data.id;
+        infoAlert({ title: '롤링페이퍼 대상 생성 성공' });
+        navigate(`${routes.post}/${postId}`);
+      },
+    });
   };
 
   const handleSubmit = e => {
@@ -93,6 +85,7 @@ const PostPage = () => {
         toggleState === '컬러' ? items[0].replace(/[0-9]/g, '') : 'beige',
       backgroundImageURL: toggleState === '이미지' ? items[0] : null,
     }));
+    // eslint-disable-next-line
   }, [toggleState]);
 
   return (
