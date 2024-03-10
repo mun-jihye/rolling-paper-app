@@ -66,7 +66,11 @@ function Card({ data, isLoading, className }) {
         <StyledHrtag />
         <StyledContainer $isBadge={true}>
           {data?.topReactions?.map(reaction => {
-            return <CardEmojiBadge key={reaction?.id} data={reaction} />;
+            return (
+              reaction?.count > 0 && (
+                <CardEmojiBadge key={reaction?.id} data={reaction} />
+              )
+            );
           })}
         </StyledContainer>
       </StyledCard>
