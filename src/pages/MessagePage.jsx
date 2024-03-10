@@ -231,7 +231,7 @@ const ProfileContainer = styled.div`
   align-items: flex-start;
 
   width: 72rem;
-  gap: 3.2rem;
+  gap: 0.5rem;
   margin-top: 5rem;
   margin-bottom: 5rem;
 
