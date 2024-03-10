@@ -27,11 +27,10 @@ const Modal = ({ children, showModal, handleClose, isDelete }) => {
   }, []);
 
   return (
-    showModal &&
-    !isMobile && (
+    showModal && (
       <Portal>
         <ModalBackground>
-          <ModalInner ref={modalRef}>
+          <ModalInner ref={modalRef} isMobile={isMobile}>
             {children}
             <FlexContainer>
               <StyledButton width={'28rem'} onClick={handleClose}>
@@ -61,7 +60,7 @@ const ModalBackground = styled.div`
 `;
 const ModalInner = styled.div`
   width: 60rem;
-  height: 47.6rem;
+  height: ${({ isMobile }) => (isMobile ? '40rem' : '47,6rem')};
   background-color: ${({ theme }) => theme.white};
   border-radius: 1.6rem;
   padding: 3.5rem;
