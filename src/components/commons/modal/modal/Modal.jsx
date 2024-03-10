@@ -1,6 +1,6 @@
 import useCloseModal from 'hooks/useCloseModal';
 import { useMediaQuery } from 'react-responsive';
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Portal from './Portal';
 import styled from 'styled-components';
 import Button from 'components/commons/buttons/Button';
@@ -18,6 +18,13 @@ const Modal = ({ children, showModal, handleClose, isDelete }) => {
   const modalRef = useRef();
   useCloseModal(showModal, handleClose, modalRef);
   const isMobile = useMediaQuery({ maxWidth: 767 });
+
+  useEffect(() => {
+    document.body.style.cssText = `overflow: hidden;`;
+    return () => {
+      document.body.style.cssText = `position: ""; top: "";`;
+    };
+  }, []);
 
   return (
     showModal &&
