@@ -11,7 +11,7 @@ import person from 'assets/images/profiles/person.svg';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useGetProfileImagesQuery } from 'hooks/queries/post/useGetProfileImageQuery';
 import { usePostMessagesQuery } from 'hooks/queries/post/usePostMessagesQuery';
-import { infoAlert } from 'utils/infoAlert';
+import { infoAlert, successAlert } from 'utils/alert';
 import routes from 'utils/constants/routes';
 
 const MessagePage = () => {
@@ -20,6 +20,7 @@ const MessagePage = () => {
   const profileImageUrls = profileImages?.data.imageUrls;
   const postMessages = usePostMessagesQuery(postId);
   const [isBtnDisabled, setIsBtnDisabled] = useState(false);
+  const [dropDownOpen, setDropdownOpen] = useState(false);
 
   const inputDisabled = false;
   const dropDownDisabled = false;
@@ -77,10 +78,28 @@ const MessagePage = () => {
   const submitForm = async () => {
     postMessages.mutate(formValues, {
       onSuccess: () => {
-        infoAlert({ title: '메세지 생성 성공' });
+        successAlert({ title: '메세지 생성 성공' });
         navigate(`${routes.post}/${postId}`);
       },
     });
+  };
+
+  const handleClick = e => {
+    setDropdownOpen(true);
+  };
+
+  const handleBlur = e => {
+    setDropdownOpen(false);
+  };
+
+  useEffect(() => {
+    if (dropDownOpen) {
+      window.scrollTo(0, document.body.scrollHeight);
+    }
+  }, [dropDownOpen]);
+
+  const handleTextEditorClick = e => {
+    infoAlert({ title: '현재 지원되지 않는 기능입니다.' });
   };
 
   const handleSubmit = e => {
@@ -135,9 +154,13 @@ const MessagePage = () => {
           </RelationshipContainer>
           <TextEditorContainer>
             <Description>내용을 입력해주세요</Description>
-            <TextEditor handleChange={handleEditorChange} />
+            <TextEditor
+              handleChange={handleEditorChange}
+              onClick={handleTextEditorClick}
+              handleTextEditorClick={handleTextEditorClick}
+            />
           </TextEditorContainer>
-          <FontSelectContainer>
+          <FontSelectContainer $dropDownOpen={dropDownOpen}>
             <Description>폰트 선택</Description>
             <FontFamilyDropDown
               disabled={dropDownDisabled}
@@ -145,6 +168,8 @@ const MessagePage = () => {
               initialSelectedItem={initialSelectedItem[1]}
               listItems={listFontFamily}
               handleChange={handleFontChange}
+              onClick={handleClick}
+              onBlur={handleBlur}
             />
           </FontSelectContainer>
           <StyledPrimary disabled={isBtnDisabled} onClick={handleSubmit}>
@@ -202,7 +227,7 @@ const ProfileContainer = styled.div`
   align-items: flex-start;
 
   width: 72rem;
-  gap: 3.2rem;
+  gap: 0.5rem;
   margin-top: 5rem;
   margin-bottom: 5rem;
 
@@ -246,6 +271,7 @@ const SampleImages = styled.div`
   justify-content: space-between;
   flex-wrap: wrap;
   width: 60.5rem;
+  margin-top: 0.5rem;
   cursor: pointer;
   @media ${({ theme }) => theme.breakpoint.mobile} {
     width: 20.8rem;
@@ -296,6 +322,7 @@ const FontSelectContainer = styled.div`
   align-items: flex-start;
   gap: 1.2rem;
   margin-bottom: 3.8rem;
+  margin-bottom: ${props => props.dropDownOpen && '22rem'};
   @media ${({ theme }) => theme.breakpoint.tablet} {
     margin-bottom: 6.2rem;
   }
