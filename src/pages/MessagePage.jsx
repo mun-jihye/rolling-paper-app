@@ -11,7 +11,7 @@ import person from 'assets/images/profiles/person.svg';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useGetProfileImagesQuery } from 'hooks/queries/post/useGetProfileImageQuery';
 import { usePostMessagesQuery } from 'hooks/queries/post/usePostMessagesQuery';
-import { infoAlert } from 'utils/infoAlert';
+import { infoAlert, successAlert } from 'utils/alert';
 import routes from 'utils/constants/routes';
 
 const MessagePage = () => {
@@ -78,7 +78,7 @@ const MessagePage = () => {
   const submitForm = async () => {
     postMessages.mutate(formValues, {
       onSuccess: () => {
-        infoAlert({ title: '메세지 생성 성공' });
+        successAlert({ title: '메세지 생성 성공' });
         navigate(`${routes.post}/${postId}`);
       },
     });

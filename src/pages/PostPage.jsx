@@ -7,7 +7,7 @@ import Button from 'components/commons/buttons/Button';
 import { useNavigate } from 'react-router-dom';
 import { useGetBackgroundImageQuery } from 'hooks/queries/post/useGetBackgroundImageQuery';
 import { usePostRecipientQuery } from 'hooks/queries/post/usePostRecipientQuery';
-import { infoAlert } from 'utils/infoAlert';
+import { successAlert } from 'utils/alert';
 import routes from 'utils/constants/routes';
 
 const PostPage = () => {
@@ -67,7 +67,7 @@ const PostPage = () => {
     postRecipient.mutate(formValues, {
       onSuccess: res => {
         const postId = res.data.id;
-        infoAlert({ title: '롤링페이퍼 대상 생성 성공' });
+        successAlert({ title: '롤링페이퍼 대상 생성 성공' });
         navigate(`${routes.post}/${postId}`);
       },
     });
