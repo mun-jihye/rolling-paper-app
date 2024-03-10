@@ -22,13 +22,19 @@ const TopEmoji = ({
   return (
     <>
       <StyledEmojis>
-        {topReactions.map((reaction, index) => (
-          <EmojiBadge
-            key={index}
-            data={reaction}
-            onClick={() => handleBadgeClick(reaction)}
-          />
-        ))}
+        {topReactions.map((reaction, index) => {
+          if (reaction.count > 0) {
+            return (
+              <EmojiBadge
+                key={index}
+                data={reaction}
+                onClick={() => handleBadgeClick(reaction)}
+              />
+            );
+          } else {
+            return null;
+          }
+        })}
         <StyledArrow onClick={handleArrowClick} src={ArrowDown} alt="Arrow" />
       </StyledEmojis>
     </>
@@ -44,6 +50,7 @@ const StyledArrow = styled.img`
   height: 2.4rem;
   width: 2.4rem;
   margin-right: 1rem;
+  cursor: pointer;
 `;
 
 export default TopEmoji;

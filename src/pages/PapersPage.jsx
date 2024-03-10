@@ -35,28 +35,28 @@ const PapersPage = () => {
   return (
     <div>
       <GNB />
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <PapersPageMainContainer>
-          <PapersPageListName>
-            모든 롤링 페이퍼 🌈
-            <Link to={routes.list}>
-              <GoBackButton>돌아가기</GoBackButton>
-            </Link>
-          </PapersPageListName>
-          <PapersContainer $count={paperData?.length}>
-            {paperData?.map(data => {
+      <PapersPageMainContainer>
+        <PapersPageListName>
+          모든 롤링 페이퍼 🌈
+          <Link to={routes.list}>
+            <GoBackButton>돌아가기</GoBackButton>
+          </Link>
+        </PapersPageListName>
+        <PapersContainer $count={paperData?.length}>
+          {isLoading ? (
+            <Loader />
+          ) : (
+            paperData?.map(data => {
               return <PapersPageCard key={data.id} data={data} />;
-            })}
-            {isFetchingNextPage
-              ? Array.from({ length: 4 }).map((_, index) => (
-                  <PapersPageCard key={index + 1} isLoading={true} />
-                ))
-              : !isError && <div ref={ref} />}
-          </PapersContainer>
-        </PapersPageMainContainer>
-      )}
+            })
+          )}
+          {isFetchingNextPage
+            ? Array.from({ length: 4 }).map((_, index) => (
+                <PapersPageCard key={index + 1} isLoading={true} />
+              ))
+            : !isError && !isLoading && <div ref={ref} />}
+        </PapersContainer>
+      </PapersPageMainContainer>
       {isError && <ErrorContainer>{<Error />}</ErrorContainer>}
       <Footer />
     </div>

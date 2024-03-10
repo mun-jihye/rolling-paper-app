@@ -87,9 +87,11 @@ const SubHeader = ({ data }) => {
         <StyledButtons>
           {showArrowOptions && (
             <ArrowOptions ref={arrowOptionsRef}>
-              {userReactions.map((emoji, id) => (
-                <EmojiBadge key={id} data={emoji} />
-              ))}
+              {userReactions
+                .filter(reaction => reaction.count > 0)
+                .map((emoji, id) => (
+                  <EmojiBadge key={id} data={emoji} />
+                ))}
             </ArrowOptions>
           )}
           <AddButton onClick={handleAddClick} text="추가" />
@@ -133,6 +135,7 @@ const ArrowOptions = styled.div`
   }
   @media ${({ theme }) => theme.breakpoint.mobile} {
     grid-template-columns: repeat(3, 1fr);
+    left: -25rem;
   }
 `;
 

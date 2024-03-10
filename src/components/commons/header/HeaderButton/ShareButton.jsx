@@ -77,7 +77,6 @@ const ShareButton = ({ src, alt, onClick }) => (
 const ShareButtonList = styled.div`
   position: absolute;
   width: 14rem;
-  height: 10.1rem;
   border-radius: 0.8rem;
   border: 0.1rem;
   background-color: ${({ theme }) => theme.white};
@@ -102,7 +101,6 @@ const ShareButtonText = styled.div`
   background-color: ${({ theme }) => theme.white};
   border-radius: 0.8rem;
   margin: 0;
-
   &:hover {
     background-color: ${({ theme }) => theme.gray200};
   }
