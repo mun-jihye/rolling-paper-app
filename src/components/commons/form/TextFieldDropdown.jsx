@@ -87,7 +87,7 @@ const StyledDiv = styled.div`
     width: 1.6rem;
     height: 1.6rem;
     position: absolute;
-    left: 30rem;
+    left: 29rem;
     top: 1.8rem;
   }
 `;
