@@ -98,6 +98,10 @@ const MessagePage = () => {
     }
   }, [dropDownOpen]);
 
+  const handleTextEditorClick = e => {
+    infoAlert({ title: '현재 지원되지 않는 기능입니다.' });
+  };
+
   const handleSubmit = e => {
     e.preventDefault();
     submitForm();
@@ -150,9 +154,13 @@ const MessagePage = () => {
           </RelationshipContainer>
           <TextEditorContainer>
             <Description>내용을 입력해주세요</Description>
-            <TextEditor handleChange={handleEditorChange} />
+            <TextEditor
+              handleChange={handleEditorChange}
+              onClick={handleTextEditorClick}
+              handleTextEditorClick={handleTextEditorClick}
+            />
           </TextEditorContainer>
-          <FontSelectContainer dropDownOpen={dropDownOpen}>
+          <FontSelectContainer $dropDownOpen={dropDownOpen}>
             <Description>폰트 선택</Description>
             <FontFamilyDropDown
               disabled={dropDownDisabled}
