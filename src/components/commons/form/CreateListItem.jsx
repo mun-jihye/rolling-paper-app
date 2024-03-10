@@ -57,6 +57,7 @@ const StyledListItem = styled.button`
   font-size: 1.6rem;
   line-height: 2.6rem;
   letter-spacing: -0.001em;
+  text-align: left;
   color: ${theme.gray900};
   background-color: #fff;
 
