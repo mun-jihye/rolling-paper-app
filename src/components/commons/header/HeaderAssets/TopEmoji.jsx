@@ -50,6 +50,7 @@ const StyledArrow = styled.img`
   height: 2.4rem;
   width: 2.4rem;
   margin-right: 1rem;
+  cursor: pointer;
 `;
 
 export default TopEmoji;
