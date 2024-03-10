@@ -11,16 +11,22 @@ const NullCard = () => {
     navigate(`${routes.post}/${postId}/message`);
   };
   return (
-    <CardContainer>
+    <StyledNull>
       <Text>
         <Warn>휑...😅</Warn>
         메세지가 존재하지 않습니다. <br />
         메세지를 생성해주세요!
         <Link onClick={handleClick}>메세지 생성하러 가기 👉</Link>
       </Text>
-    </CardContainer>
+    </StyledNull>
   );
 };
+const StyledNull = styled(CardContainer)`
+  cursor: auto;
+  &:hover {
+    transform: none;
+  }
+`;
 const Text = styled.div`
   height: 100%;
   display: flex;

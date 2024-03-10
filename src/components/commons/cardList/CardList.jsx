@@ -52,7 +52,7 @@ function CardList({
     const currentTouchPosition = event.touches[0].clientX;
     const difference = startTouchPosition - currentTouchPosition;
 
-    setSlidePosition(slidePosition - difference / 10);
+    setSlidePosition(slidePosition - difference / 5);
     setStartTouchPosition(currentTouchPosition);
   }
 
@@ -144,7 +144,7 @@ const StyledContainer = styled.div`
 const StyledSlideBar = styled.div`
   display: flex;
   gap: 1.2rem;
-  transition: transform 0.5s;
+  transition: transform 0.7s;
   margin-left: ${({ $carouselMargin }) => $carouselMargin}rem;
 
   @media (min-width: 48rem) {

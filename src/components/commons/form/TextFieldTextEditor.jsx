@@ -10,28 +10,37 @@ import bullet from 'assets/images/forms/bullet.svg';
 import fill from 'assets/images/forms/fill.svg';
 import fontSize from 'assets/images/forms/font_size.svg';
 
-export default function TextFieldTextEditor({ handleChange, ...props }) {
+export default function TextFieldTextEditor({
+  handleChange,
+  onClick,
+  handleTextEditorClick,
+  ...props
+}) {
   const handleInputChange = e => {
     handleChange(e);
+  };
+
+  const handleButtonClick = e => {
+    handleTextEditorClick(e);
   };
   return (
     <StyledContainer {...props}>
       <ButtonContainer>
-        <StyledImg>
+        <StyledImg onClick={handleButtonClick}>
           <img src={bold} alt="bold" />
           <img src={italic} alt="italic" />
           <img src={underScore} alt="underScore" />
         </StyledImg>
-        <StyledImg>
+        <StyledImg onClick={handleButtonClick}>
           <img src={centerAligned} alt="centerAligned" />
           <img src={rightAligned} alt="rightAligned" />
           <img src={justify} alt="justify" />
         </StyledImg>
-        <StyledImg>
+        <StyledImg onClick={handleButtonClick}>
           <img src={numbering} alt="numbering" />
           <img src={bullet} alt="bullet" />
         </StyledImg>
-        <StyledImg>
+        <StyledImg onClick={handleButtonClick}>
           <img src={fill} alt="fill" />
           <img src={fontSize} alt="fontSize" />
         </StyledImg>

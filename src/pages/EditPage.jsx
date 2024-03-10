@@ -74,6 +74,7 @@ const EditPage = () => {
           ) : (
             <>
               <FromCardList
+                postId={postId}
                 datas={messageData}
                 isDelete={isDelete}
                 isFetchingNextPage={isFetchingNextPage}

@@ -13,7 +13,7 @@ import NullCard from './NullCard';
  * @param {Boolean} props.isFetchingNextPage 무한 스크롤 로딩 여부
  * @returns
  */
-const FromCardList = ({ datas, isDelete, isFetchingNextPage }) => {
+const FromCardList = ({ datas, isDelete, isFetchingNextPage, postId }) => {
   const skeletonCount = 3 - ((datas?.length % 3) + 1);
 
   return (
@@ -35,6 +35,7 @@ const FromCardList = ({ datas, isDelete, isFetchingNextPage }) => {
           <FromCard
             key={id}
             font={font}
+            postId={postId}
             messageId={id}
             profileImageURL={profileImageURL}
             sender={sender}
