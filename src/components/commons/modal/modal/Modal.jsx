@@ -1,5 +1,4 @@
 import useCloseModal from 'hooks/useCloseModal';
-import { useMediaQuery } from 'react-responsive';
 import React, { useEffect, useRef } from 'react';
 import Portal from './Portal';
 import styled from 'styled-components';
@@ -17,20 +16,21 @@ import Button from 'components/commons/buttons/Button';
 const Modal = ({ children, showModal, handleClose, isDelete }) => {
   const modalRef = useRef();
   useCloseModal(showModal, handleClose, modalRef);
-  const isMobile = useMediaQuery({ maxWidth: 767 });
 
   useEffect(() => {
-    document.body.style.cssText = `overflow: hidden;`;
-    return () => {
-      document.body.style.cssText = `position: ""; top: "";`;
-    };
-  }, []);
+    if (showModal) {
+      document.body.style.cssText = `overflow: hidden;`;
+      return () => {
+        document.body.style.cssText = `position: ""; top: "";`;
+      };
+    }
+  }, [showModal]);
 
   return (
     showModal && (
       <Portal>
         <ModalBackground>
-          <ModalInner ref={modalRef} isMobile={isMobile}>
+          <ModalInner ref={modalRef}>
             {children}
             <FlexContainer>
               <StyledButton width={'28rem'} onClick={handleClose}>
@@ -60,11 +60,14 @@ const ModalBackground = styled.div`
 `;
 const ModalInner = styled.div`
   width: 60rem;
-  height: ${({ isMobile }) => (isMobile ? '40rem' : '47,6rem')};
+  height: 47.6rem;
   background-color: ${({ theme }) => theme.white};
   border-radius: 1.6rem;
   padding: 3.5rem;
   box-shadow: 0px 2px 12px 0px #00000014;
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    height: 40rem;
+  }
 `;
 const FlexContainer = styled.div`
   display: flex;
