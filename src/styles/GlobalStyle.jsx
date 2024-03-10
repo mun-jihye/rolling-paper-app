@@ -1,12 +1,35 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
-  @import url(//fonts.googleapis.com/earlyaccess/nanummyeongjo.css);
+  @font-face {
+    font-family: '나눔손글씨 손편지체'; 
+    src: url('/fonts/나눔손글씨 손편지체.ttf') format('truetype'); 
+    font-weight: normal;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'Nanum Myeongjo';
+    src: url('/fonts/NanumMyeongjo.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'Noto Sans KR';
+    src: url('/fonts/NotoSansKR.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'Pretendard';
+    src: url('/fonts/Pretendard.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
   * {
     box-sizing: border-box; 
     margin: 0;
     padding: 0;
-    font-family: 'Pretendard', "Noto Sans KR","Nanum Myeongjo",sans-serif;
+    font-family: 'Pretendard', "Noto Sans KR","Nanum Myeongjo","나눔손글씨 손편지체", sans-serif;
   }
   html,
   body {
