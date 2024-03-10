@@ -32,9 +32,10 @@ const FromCard = ({
   isDelete,
   messageId,
   font,
+  postId,
 }) => {
   const [showModal, setShowModal] = useState(false);
-  const deleteMessage = useDeleteMessageQuery(messageId);
+  const deleteMessage = useDeleteMessageQuery(messageId, postId);
 
   const handleClick = () => {
     setShowModal(true);

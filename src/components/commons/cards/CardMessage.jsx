@@ -38,7 +38,7 @@ const Message = styled.div`
   @media ${({ theme }) => theme.breakpoint.mobile} {
     font-size: 1.5rem;
     line-height: 2.2rem;
-    max-height: 6.5rem;
+    max-height: ${({ ismodal }) => (ismodal ? '20.5rem' : '6.5rem')};
     -webkit-line-clamp: 3;
   }
 `;
