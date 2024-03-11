@@ -142,5 +142,5 @@ Instaling
 
 |                                      FE                                       |                                      FE                                       |
 | :---------------------------------------------------------------------------: | :---------------------------------------------------------------------------: |
-|                    [김창민](https://github.com/jinwooseok)                    |                   [진찬용](https://github.com/Jin-Chanyong)                   |
-| <img src="https://avatars.githubusercontent.com/u/101163507?v=4" width="200"> | <img src="https://avatars.githubusercontent.com/u/155409604?v=4" width="200"> |
+|                    [김창민](https://github.com/changmin6362)                    |                   [진찬용](https://github.com/Jin-Chanyong)                   |
+| <img src="https://avatars.githubusercontent.com/u/149885312?v=4" width="200"> | <img src="https://avatars.githubusercontent.com/u/155409604?v=4" width="200"> |
